@@ -16,7 +16,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Platform',
     liveUrl: 'https://zynnco-rkgn4e6vy-wali-muhammad-s-projects.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/zynnco',
-    accentColor: '#C9A96E', // Champagne gold
+    accentColor: '#FFB800', // Molten Gold
     orbitalAngle: toAngle(0),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -32,7 +32,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Platform',
     liveUrl: 'https://corpassion-events.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/corpassion-events',
-    accentColor: '#8B5CF6', // Violet
+    accentColor: '#7C3AED', // Ultraviolet
     orbitalAngle: toAngle(1),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -48,7 +48,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Creative Tech',
     liveUrl: 'https://3d-resume-builder-self.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/resume-australia',
-    accentColor: '#06B6D4', // Cyan
+    accentColor: '#00F0FF', // Electric Cyan
     orbitalAngle: toAngle(2),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -64,7 +64,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Platform',
     liveUrl: 'https://nexus-bay.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/nexusbay-digital',
-    accentColor: '#3B82F6', // Blue
+    accentColor: '#3B82F6', // Cobalt Laser
     orbitalAngle: toAngle(3),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -80,7 +80,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'E-Commerce',
     liveUrl: 'https://amirs-kalonji-oil.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/amirs-kalonji-oil-website',
-    accentColor: '#10B981', // Emerald
+    accentColor: '#10B981', // Neon Emerald
     orbitalAngle: toAngle(4),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -96,7 +96,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Web App',
     liveUrl: 'https://fatima-ali-wedding.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/fatima-ali-wedding',
-    accentColor: '#F43F5E', // Rose
+    accentColor: '#FF2E93', // Hyper Magenta
     orbitalAngle: toAngle(5),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -112,7 +112,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'E-Commerce',
     liveUrl: 'https://federal-sanitary.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/federal-sanitary',
-    accentColor: '#F59E0B', // Amber
+    accentColor: '#F59E0B', // Amber Flame
     orbitalAngle: toAngle(6),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -128,7 +128,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'FinTech',
     liveUrl: 'https://market-structure.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/fintech-risk-engine',
-    accentColor: '#EF4444', // Red
+    accentColor: '#EF4444', // Crimson Pulse
     orbitalAngle: toAngle(7),
     orbitalRadius: ORBITAL_RADIUS,
   },

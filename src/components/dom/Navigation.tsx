@@ -5,10 +5,10 @@ import { usePortfolioStore } from '@/store/usePortfolioStore';
 
 const SECTIONS = [
   { id: 0, label: 'Entry Gate', targetProgress: 0.0 },
-  { id: 1, label: 'Overview', targetProgress: 0.25 },
-  { id: 2, label: 'Showroom', targetProgress: 0.5 },
-  { id: 3, label: 'Architecture', targetProgress: 0.75 },
-  { id: 4, label: 'Contact', targetProgress: 1.0 },
+  { id: 1, label: 'Overview', targetProgress: 0.08 },
+  { id: 2, label: 'Showroom', targetProgress: 0.45 },
+  { id: 3, label: 'Architecture', targetProgress: 0.76 },
+  { id: 4, label: 'Contact', targetProgress: 0.95 },
 ];
 
 export function Navigation() {

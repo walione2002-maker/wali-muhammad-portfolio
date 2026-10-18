@@ -62,56 +62,57 @@ export function TechStack() {
   return (
     <section
       id="tech-stack"
-      className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-16 py-28 max-w-7xl mx-auto"
+      className="w-full h-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-center py-6 sm:py-8 overflow-y-auto sm:overflow-visible"
       aria-label="Engineering & FinTech Architecture Stack"
     >
-      <div className="max-w-3xl mb-16">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono uppercase tracking-[0.2em] mb-4">
-          <span>03 // Technical Substrate · Wireframe State Active</span>
+      <div className="max-w-3xl mb-8 sm:mb-12">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-mono uppercase tracking-[0.2em] mb-3 shadow-[0_0_15px_rgba(0,240,255,0.15)]">
+          <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+          <span>03 // Technical Substrate · Wireframe Geometry Active</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold font-display tracking-tight text-white">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight text-white leading-tight drop-shadow-md">
           Engineering & FinTech Architecture Stack
         </h2>
-        <p className="mt-4 text-sm sm:text-base text-slate-400 font-light leading-relaxed">
+        <p className="mt-3 text-xs sm:text-sm text-slate-300 font-light leading-relaxed max-w-2xl">
           The 3D centerpiece behind this section is rendered in wireframe mode, exposing the underlying geometry just as this architecture matrix exposes the foundational engineering stack behind every deployment.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-5xl">
         {categories.map((cat, idx) => {
           const Icon = cat.icon;
           return (
             <div
               key={idx}
-              className="p-8 rounded-2xl bg-[#12121A]/70 border border-white/[0.08] backdrop-blur-xl hover:border-white/[0.15] transition-all duration-300"
+              className="p-5 sm:p-6 rounded-2xl bg-[#0E1322]/85 border border-white/[0.08] backdrop-blur-2xl hover:border-white/[0.2] transition-all duration-300 group shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]"
             >
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-4">
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center border"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center border group-hover:scale-110 transition-transform"
                   style={{
-                    borderColor: `${cat.accent}40`,
+                    borderColor: `${cat.accent}50`,
                     backgroundColor: `${cat.accent}15`,
                     color: cat.accent,
                   }}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className="w-4 h-4" />
                 </div>
-                <h3 className="text-xl font-bold font-display text-white">
+                <h3 className="text-lg font-bold font-display text-white">
                   {cat.title}
                 </h3>
               </div>
 
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {cat.skills.map((skill, sIdx) => (
                   <li
                     key={sIdx}
-                    className="flex items-center gap-2 text-xs font-mono text-slate-300 bg-white/[0.03] px-3 py-2 rounded-lg border border-white/[0.04]"
+                    className="flex items-center gap-2 text-xs font-mono text-slate-300 bg-white/[0.03] px-2.5 py-1.5 rounded-lg border border-white/[0.04]"
                   >
                     <span
-                      className="w-1.5 h-1.5 rounded-full"
+                      className="w-1.5 h-1.5 rounded-full flex-shrink-0"
                       style={{ backgroundColor: cat.accent }}
                     />
-                    <span>{skill}</span>
+                    <span className="truncate">{skill}</span>
                   </li>
                 ))}
               </ul>

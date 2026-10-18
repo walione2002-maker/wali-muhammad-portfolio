@@ -15,13 +15,13 @@ export function useSectionDetection() {
     if (scrollProgress >= 0.85) {
       newIndex = 4;
       newSection = 'contact-portal';
-    } else if (scrollProgress >= 0.65) {
+    } else if (scrollProgress >= 0.66) {
       newIndex = 3;
       newSection = 'tech-stack';
-    } else if (scrollProgress >= 0.35) {
+    } else if (scrollProgress >= 0.22) {
       newIndex = 2;
       newSection = 'project-showroom';
-    } else if (scrollProgress >= 0.15) {
+    } else if (scrollProgress >= 0.04) {
       newIndex = 1;
       newSection = 'executive-overview';
     } else {

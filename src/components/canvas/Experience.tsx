@@ -18,7 +18,7 @@ export function Experience() {
         key={`canvas-${contextLossCount}`}
         gl={{
           antialias: qualityTier !== 'low',
-          alpha: false,
+          alpha: true,
           powerPreference: 'high-performance',
         }}
         dpr={
@@ -44,7 +44,6 @@ export function Experience() {
           pointerEvents: 'none',
         }}
       >
-        <color attach="background" args={['#0A0A0F']} />
         <CameraRig />
         <Lighting />
         <Centerpiece />

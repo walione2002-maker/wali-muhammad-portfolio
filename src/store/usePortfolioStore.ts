@@ -27,6 +27,8 @@ export interface PortfolioState {
   // ── Project interaction ─────────────────────────────────
   /** ID of the project card currently hovered/focused (null = none) */
   activeProjectId: string | null;
+  /** Index 0–7 of the active project in the 3D orbital showroom */
+  activeProjectIndex: number;
 
   // ── Performance ─────────────────────────────────────────
   /** GPU capability tier detected at mount (drives LOD, post-processing) */
@@ -42,6 +44,7 @@ export interface PortfolioState {
   setScrollProgress: (val: number) => void;
   setActiveSection: (section: SectionName, index: number) => void;
   setActiveProjectId: (id: string | null) => void;
+  setActiveProjectIndex: (index: number) => void;
   setQualityTier: (tier: QualityTier) => void;
   incrementContextLoss: () => void;
 }
@@ -53,6 +56,7 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
   activeSection: 'entry-gate',
   activeSectionIndex: 0,
   activeProjectId: null,
+  activeProjectIndex: 0,
   qualityTier: 'high',
   contextLossCount: 0,
 
@@ -62,6 +66,7 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
   setActiveSection: (section, index) =>
     set({ activeSection: section, activeSectionIndex: index }),
   setActiveProjectId: (id) => set({ activeProjectId: id }),
+  setActiveProjectIndex: (index) => set({ activeProjectIndex: index }),
   setQualityTier: (tier) => set({ qualityTier: tier }),
   incrementContextLoss: () =>
     set((s) => ({ contextLossCount: s.contextLossCount + 1 })),
