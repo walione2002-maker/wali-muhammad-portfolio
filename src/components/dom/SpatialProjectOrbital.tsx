@@ -21,8 +21,13 @@ export function SpatialProjectOrbital() {
   // Current orbital rotation angle in radians (full 360 sweep across Section 2)
   const currentOrbitAngle = showroomProgress * (Math.PI * 2);
 
-  // Compute 3D spatial properties for each card
+  const touchStartXRef = React.useRef<number | null>(null);
+  const touchStartYRef = React.useRef<number | null>(null);
+
+  // Compute 3D spatial properties for each card with mobile optimizations
   const cardsSpatialData = useMemo(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
     return PROJECTS.map((project, i) => {
       const baseAngle = i * ((Math.PI * 2) / PROJECTS.length);
       let deltaAngle = (baseAngle - currentOrbitAngle) % (Math.PI * 2);
@@ -36,15 +41,17 @@ export function SpatialProjectOrbital() {
       const absDelta = Math.abs(deltaAngle);
       const isFront = absDelta < Math.PI / 8;
 
-      // 3D Spatial coordinates
-      // X spreads horizontally, Z recedes deep into space
-      const radiusX = typeof window !== 'undefined' && window.innerWidth < 768 ? 260 : 440;
+      // 3D Spatial coordinates optimized for mobile portrait & desktop
+      const radiusX = isMobile ? 180 : 440;
       const x = sinVal * radiusX;
-      const z = (cosVal - 1) * 350; // 0px at front, -700px at back
-      const rotY = -deltaAngle * 35; // Slight inward face towards core
-      const scale = 0.68 + 0.32 * ((cosVal + 1) / 2);
+      const z = (cosVal - 1) * (isMobile ? 220 : 350);
+      const rotY = -deltaAngle * (isMobile ? 20 : 35);
+      const scale = isMobile
+        ? 0.75 + 0.25 * ((cosVal + 1) / 2)
+        : 0.68 + 0.32 * ((cosVal + 1) / 2);
       const opacity = Math.max(0.15, Math.min(1, 0.2 + 0.8 * ((cosVal + 1) / 2)));
-      const blurPx = Math.max(0, (1 - cosVal) * 3.5);
+      // Strictly zero filter blur on mobile to guarantee 60 FPS in iOS Safari & Android WebKit
+      const blurPx = isMobile ? 0 : Math.max(0, (1 - cosVal) * 3.5);
 
       return {
         project,
@@ -57,6 +64,7 @@ export function SpatialProjectOrbital() {
         blurPx,
         isFront,
         absDelta,
+        isMobile,
       };
     });
   }, [currentOrbitAngle]);
@@ -107,44 +115,78 @@ export function SpatialProjectOrbital() {
     scrollToProject(nextIdx);
   };
 
+  const onTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      touchStartXRef.current = e.touches[0].clientX;
+      touchStartYRef.current = e.touches[0].clientY;
+    }
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null || touchStartYRef.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaX = touchEndX - touchStartXRef.current;
+    const deltaY = touchEndY - touchStartYRef.current;
+
+    // Detect horizontal swipe (horizontal delta > vertical delta and > 40px)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+      if (deltaX < 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
+  };
+
   return (
-    <div className="relative w-full h-full flex flex-col justify-between py-6 sm:py-10">
+    <div
+      className="relative w-full h-full flex flex-col justify-between py-3 sm:py-10 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] touch-pan-y"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Top Section Header */}
-      <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 pointer-events-auto z-20">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-12 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-2 sm:gap-4 pointer-events-auto z-20">
         <div>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-mono uppercase tracking-[0.2em] mb-2 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
-            <Layers className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-0.5 sm:py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em] mb-1 sm:mb-2 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+            <Layers className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             <span>02 // 3D Spatial Orbital Constellation</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight text-white drop-shadow-md">
+          <h2 className="text-xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight text-white drop-shadow-md leading-tight">
             The 8 Live Deployments Showroom
           </h2>
-          <p className="mt-1 text-xs sm:text-sm text-slate-300 font-light max-w-xl">
-            Scroll to orbit around the 3D centerpiece. Each project sweeps into forward focus in 3D perspective, synchronized with its satellite node.
+          <p className="hidden sm:block mt-1 text-xs sm:text-sm text-slate-300 font-light max-w-xl">
+            Scroll or swipe to orbit around the 3D centerpiece. Each project sweeps into forward focus in 3D perspective, synchronized with its satellite node.
           </p>
         </div>
 
         {/* Orbit Step Controls */}
-        <div className="flex items-center gap-2 font-mono text-xs text-slate-300 bg-surface-secondary/90 px-3.5 py-2 rounded-xl border border-white/10 backdrop-blur-xl">
+        <div className="flex items-center gap-2 font-mono text-[11px] sm:text-xs text-slate-300 bg-surface-secondary/90 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl border border-white/10 backdrop-blur-xl">
           <button
             onClick={handlePrev}
-            className="p-1 rounded-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-1 focus:ring-cyan-400"
+            className="p-1 rounded-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-1 focus:ring-cyan-400 touch-manipulation"
             aria-label="Previous project in orbit"
           >
-            <ChevronLeft className="w-4 h-4 text-cyan-400" />
+            <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
           </button>
 
-          <span className="px-2 text-slate-200">
+          <span className="px-1.5 sm:px-2 text-slate-200">
             {PROJECTS.findIndex((p) => p.id === activeProjectId) + 1} / {PROJECTS.length}
           </span>
 
           <button
             onClick={handleNext}
-            className="p-1 rounded-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-1 focus:ring-cyan-400"
+            className="p-1 rounded-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-1 focus:ring-cyan-400 touch-manipulation"
             aria-label="Next project in orbit"
           >
-            <ChevronRight className="w-4 h-4 text-cyan-400" />
+            <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
           </button>
+
+          <span className="sm:hidden text-[9px] font-mono text-cyan-400/70 border-l border-white/10 pl-2">
+            Swipe ↔
+          </span>
         </div>
       </div>
 
@@ -156,7 +198,7 @@ export function SpatialProjectOrbital() {
           transformStyle: 'preserve-3d',
         }}
       >
-        {cardsSpatialData.map(({ project, x, z, rotY, scale, opacity, blurPx, isFront, i }) => {
+        {cardsSpatialData.map(({ project, x, z, rotY, scale, opacity, blurPx, isFront, isMobile, i }) => {
           return (
             <div
               key={project.id}
@@ -166,12 +208,12 @@ export function SpatialProjectOrbital() {
               className="absolute transition-all duration-300 ease-out select-none will-change-transform"
               style={{
                 width: '100%',
-                maxWidth: '460px',
-                transform: `translate3d(${x}px, 0px, ${z}px) rotateY(${rotY}deg) scale(${scale})`,
+                maxWidth: isMobile ? 'min(92vw, 390px)' : '460px',
+                transform: `translate3d(${x}px, ${isMobile ? 24 : 0}px, ${z}px) rotateY(${rotY}deg) scale(${scale})`,
                 opacity: opacity,
-                filter: `blur(${blurPx}px)`,
+                filter: blurPx > 0 ? `blur(${blurPx}px)` : undefined,
                 zIndex: isFront ? 30 : Math.round(50 + z / 10),
-                pointerEvents: isFront ? 'auto' : Math.abs(x) < 320 ? 'auto' : 'none',
+                pointerEvents: isFront ? 'auto' : !isMobile && Math.abs(x) < 320 ? 'auto' : 'none',
                 cursor: !isFront ? 'pointer' : 'default',
               }}
             >

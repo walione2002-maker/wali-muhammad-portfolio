@@ -10,11 +10,17 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const hasEntered = usePortfolioStore((s) => s.hasEntered);
 
   useEffect(() => {
+    const isMobile =
+      typeof window !== 'undefined' &&
+      (window.innerWidth < 768 || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0));
+
     const lenis = new Lenis({
-      duration: 1.4,
+      duration: isMobile ? 0.95 : 1.3,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 1.5,
+      syncTouch: true,
+      syncTouchLerp: 0.08,
+      touchMultiplier: 1.0,
     });
     lenisRef.current = lenis;
 
@@ -34,6 +40,11 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       setScrollProgress(progress);
     });
 
+    const handleResize = () => {
+      lenis.resize();
+    };
+    window.addEventListener('resize', handleResize);
+
     let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
@@ -42,6 +53,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     rafId = requestAnimationFrame(raf);
 
     return () => {
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(rafId);
       lenis.destroy();
       lenisRef.current = null;

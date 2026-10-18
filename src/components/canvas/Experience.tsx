@@ -12,8 +12,20 @@ export function Experience() {
   const qualityTier = usePortfolioStore((s) => s.qualityTier);
   const contextLossCount = usePortfolioStore((s) => s.contextLossCount);
 
+  const isMobile =
+    typeof window !== 'undefined' &&
+    (window.innerWidth < 768 || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0));
+
+  const dprConfig: [number, number] | number = isMobile
+    ? [1, 1.5]
+    : qualityTier === 'low'
+      ? 1
+      : qualityTier === 'medium'
+        ? [1, 1.5]
+        : [1, 2];
+
   return (
-    <div className="fixed inset-0 pointer-events-none z-0">
+    <div className="fixed inset-0 pointer-events-none z-0 h-[100dvh] w-screen">
       <Canvas
         key={`canvas-${contextLossCount}`}
         gl={{
@@ -21,13 +33,7 @@ export function Experience() {
           alpha: true,
           powerPreference: 'high-performance',
         }}
-        dpr={
-          qualityTier === 'low'
-            ? 1
-            : qualityTier === 'medium'
-              ? [1, 1.5]
-              : [1, 2]
-        }
+        dpr={dprConfig}
         camera={{
           fov: 50,
           near: 0.1,
@@ -39,7 +45,7 @@ export function Experience() {
           top: 0,
           left: 0,
           width: '100vw',
-          height: '100vh',
+          height: '100dvh',
           zIndex: 0,
           pointerEvents: 'none',
         }}

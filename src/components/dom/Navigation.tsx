@@ -28,7 +28,7 @@ export function Navigation() {
 
   return (
     <nav
-      className="fixed right-6 sm:right-10 top-1/2 -translate-y-1/2 z-40 flex flex-col items-end space-y-4 pointer-events-auto"
+      className="hidden md:flex fixed right-6 sm:right-10 top-1/2 -translate-y-1/2 z-40 flex-col items-end space-y-4 pointer-events-auto"
       aria-label="Section Navigation"
     >
       {SECTIONS.map((sec) => {

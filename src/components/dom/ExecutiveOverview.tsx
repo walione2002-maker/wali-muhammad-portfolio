@@ -34,16 +34,16 @@ export function ExecutiveOverview() {
   return (
     <section
       id="executive-overview"
-      className="relative w-full h-screen flex flex-col justify-center px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto overflow-y-auto sm:overflow-visible py-8"
+      className="relative w-full h-[100dvh] flex flex-col justify-center px-4 sm:px-12 lg:px-20 max-w-7xl mx-auto overflow-y-auto py-4 sm:py-8 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))]"
       aria-label="Executive Overview & Value Proposition"
     >
       <div className="max-w-3xl">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-mono uppercase tracking-[0.2em] mb-4 shadow-[0_0_15px_rgba(255,184,0,0.15)]">
-          <Sparkles className="w-3.5 h-3.5 text-accent-gold" />
+        <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-0.5 sm:py-1 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em] mb-2 sm:mb-4 shadow-[0_0_15px_rgba(255,184,0,0.15)]">
+          <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-accent-gold" />
           <span>01 // Strategic Architecture</span>
         </div>
 
-        <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight text-white leading-tight drop-shadow-lg">
+        <h2 className="text-xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight text-white leading-tight drop-shadow-lg">
           Engineering high-stakes web systems at the intersection of{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-500">
             financial rigor
@@ -51,37 +51,37 @@ export function ExecutiveOverview() {
           and creative computing.
         </h2>
 
-        <p className="mt-4 text-xs sm:text-base text-slate-300 font-light leading-relaxed max-w-2xl">
+        <p className="mt-2 sm:mt-4 text-[11px] sm:text-base text-slate-300 font-light leading-relaxed max-w-2xl">
           I partner with executive founders, quantitative trading desks, and high-growth brands to transform complex mathematical models and ambitious brand narratives into resilient, lightning-fast digital products.
         </p>
       </div>
 
       {/* 4 Pillars Grid with Chromatic Edge Highlights */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-8 sm:mt-10 max-w-5xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-6 mt-4 sm:mt-8 max-w-5xl">
         {pillars.map((p, idx) => {
           const Icon = p.icon;
           return (
             <div
               key={idx}
-              className="p-5 sm:p-6 rounded-2xl bg-[#0E1322]/80 border border-white/[0.08] backdrop-blur-2xl hover:bg-[#12192C]/90 transition-all duration-300 group"
+              className="p-3.5 sm:p-6 rounded-xl sm:rounded-2xl bg-[#0E1322]/85 border border-white/[0.08] backdrop-blur-2xl hover:bg-[#12192C]/90 transition-all duration-300 group"
               style={{
                 boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
               }}
             >
               <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center border mb-3.5 group-hover:scale-110 transition-transform"
+                className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl flex items-center justify-center border mb-2 sm:mb-3.5 group-hover:scale-110 transition-transform"
                 style={{
                   borderColor: `${p.accent}50`,
                   backgroundColor: `${p.accent}15`,
                   color: p.accent,
                 }}
               >
-                <Icon className="w-4 h-4" />
+                <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
-              <h3 className="text-base sm:text-lg font-bold font-display text-white mb-1.5">
+              <h3 className="text-sm sm:text-lg font-bold font-display text-white mb-1">
                 {p.title}
               </h3>
-              <p className="text-xs text-slate-300 font-light leading-relaxed">
+              <p className="text-[11px] sm:text-xs text-slate-300 font-light leading-relaxed">
                 {p.desc}
               </p>
             </div>

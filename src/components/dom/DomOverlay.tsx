@@ -140,7 +140,7 @@ export function DomOverlay() {
 
   return (
     <div
-      className="fixed inset-0 pointer-events-none z-10 overflow-hidden"
+      className="fixed inset-0 pointer-events-none z-10 overflow-hidden h-[100dvh] w-screen"
       style={{
         perspective: '1400px',
         transformStyle: 'preserve-3d',

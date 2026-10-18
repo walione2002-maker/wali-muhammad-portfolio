@@ -27,16 +27,20 @@ export function CameraRig() {
     spline.getPointAt(t, _targetPos);
 
     // Responsive aspect-ratio compensation:
-    // When aspect < 1.0 (mobile portrait), slightly pull back camera so 3D centerpiece
-    // is never cropped horizontally and sits framed behind the mobile cards.
+    // When aspect < 1.0 (mobile portrait), pull back camera and shift vertical focus
+    // so the 3D centerpiece floats prominently in the upper viewport above mobile cards.
     const aspect = state.viewport.aspect;
     if (aspect < 1.0) {
-      const mobileDistanceMultiplier = Math.min(1.45, 1.0 / Math.max(aspect, 0.6));
+      const mobileDistanceMultiplier = Math.min(1.35, 1.0 / Math.max(aspect, 0.65));
       _targetPos.multiplyScalar(mobileDistanceMultiplier);
+      _targetPos.y += (1.0 - aspect) * 0.45;
     }
 
     // Interpolate lookAt and target FOV
     const { lookAt, fov } = interpolateWaypointData(t, _targetLookAt);
+    if (aspect < 1.0) {
+      lookAt.y -= (1.0 - aspect) * 1.1;
+    }
 
     // Pre-enter macro drift
     if (!hasEntered && !isTransitioning) {
