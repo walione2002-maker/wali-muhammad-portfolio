@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy:cf": "next build && wrangler pages deploy out --project-name=devwalimuhammad"
   },
   "dependencies": {
     "@react-three/drei": "9.114.3",
