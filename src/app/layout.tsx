@@ -22,7 +22,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://walimuhammad.com'),
+  metadataBase: new URL('https://devwalimuhammad.pages.dev'),
   title: {
     default: 'Wali Muhammad | Full-Stack Engineer, FinTech Systems Architect & Creative Developer',
     template: '%s | Wali Muhammad',
@@ -47,13 +47,13 @@ export const metadata: Metadata = {
     'Zero-Downtime Web Architecture',
     'Three.js WebGL Performance Specialist',
   ],
-  authors: [{ name: 'Wali Muhammad', url: 'https://walimuhammad.com' }],
+  authors: [{ name: 'Wali Muhammad', url: 'https://devwalimuhammad.pages.dev' }],
   creator: 'Wali Muhammad',
   publisher: 'Wali Muhammad',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://walimuhammad.com',
+    url: 'https://devwalimuhammad.pages.dev',
     siteName: 'Wali Muhammad — 3D Portfolio & Systems Architecture',
     title: 'Wali Muhammad | Full-Stack Engineer, FinTech Systems Architect & Creative Developer',
     description:
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://walimuhammad.com',
+    canonical: 'https://devwalimuhammad.pages.dev',
   },
 };
 

@@ -16,7 +16,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Platform',
     liveUrl: 'https://zynnco-rkgn4e6vy-wali-muhammad-s-projects.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/zynnco',
-    accentColor: '#FFB800', // Molten Gold
+    accentColor: '#F59E0B', // Molten Gold / Amber
     orbitalAngle: toAngle(0),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -32,7 +32,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Platform',
     liveUrl: 'https://corpassion-events.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/corpassion-events',
-    accentColor: '#7C3AED', // Ultraviolet
+    accentColor: '#A855F7', // Electric Violet
     orbitalAngle: toAngle(1),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -64,7 +64,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Platform',
     liveUrl: 'https://nexus-bay.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/nexusbay-digital',
-    accentColor: '#3B82F6', // Cobalt Laser
+    accentColor: '#3B82F6', // Cyber Blue
     orbitalAngle: toAngle(3),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -80,7 +80,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'E-Commerce',
     liveUrl: 'https://amirs-kalonji-oil.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/amirs-kalonji-oil-website',
-    accentColor: '#10B981', // Neon Emerald
+    accentColor: '#10B981', // Matrix Emerald
     orbitalAngle: toAngle(4),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -112,7 +112,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'E-Commerce',
     liveUrl: 'https://federal-sanitary.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/federal-sanitary',
-    accentColor: '#F59E0B', // Amber Flame
+    accentColor: '#84CC16', // Laser Lime
     orbitalAngle: toAngle(6),
     orbitalRadius: ORBITAL_RADIUS,
   },
@@ -128,7 +128,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'FinTech',
     liveUrl: 'https://market-structure.vercel.app',
     githubUrl: 'https://github.com/walione2002-maker/fintech-risk-engine',
-    accentColor: '#EF4444', // Crimson Pulse
+    accentColor: '#F43F5E', // Neon Crimson / Rose
     orbitalAngle: toAngle(7),
     orbitalRadius: ORBITAL_RADIUS,
   },

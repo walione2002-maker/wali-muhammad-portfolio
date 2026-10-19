@@ -33,6 +33,8 @@ export interface PortfolioState {
   // ── Performance ─────────────────────────────────────────
   /** GPU capability tier detected at mount (drives LOD, post-processing) */
   qualityTier: QualityTier;
+  /** Whether the client device is a mobile or touch device */
+  isMobile: boolean;
 
   // ── WebGL resilience ────────────────────────────────────
   /** Incremented on WebGL context-loss to force Canvas remount */
@@ -46,6 +48,7 @@ export interface PortfolioState {
   setActiveProjectId: (id: string | null) => void;
   setActiveProjectIndex: (index: number) => void;
   setQualityTier: (tier: QualityTier) => void;
+  setIsMobile: (val: boolean) => void;
   incrementContextLoss: () => void;
 }
 
@@ -58,6 +61,7 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
   activeProjectId: null,
   activeProjectIndex: 0,
   qualityTier: 'high',
+  isMobile: false,
   contextLossCount: 0,
 
   setHasEntered: (val) => set({ hasEntered: val }),
@@ -68,6 +72,8 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
   setActiveProjectId: (id) => set({ activeProjectId: id }),
   setActiveProjectIndex: (index) => set({ activeProjectIndex: index }),
   setQualityTier: (tier) => set({ qualityTier: tier }),
+  setIsMobile: (val) => set({ isMobile: val }),
   incrementContextLoss: () =>
     set((s) => ({ contextLossCount: s.contextLossCount + 1 })),
 }));
+

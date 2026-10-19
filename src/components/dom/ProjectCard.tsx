@@ -32,24 +32,24 @@ export function ProjectCard({
       onMouseLeave={() => setActiveProjectId(null)}
       onFocus={() => setActiveProjectId(project.id)}
       onBlur={() => setActiveProjectId(null)}
-      className={`group relative rounded-2xl p-4 sm:p-7 backdrop-blur-2xl transition-all duration-500 border ${
+      className={`group relative rounded-2xl p-4 sm:p-7 transition-all duration-300 border bg-[linear-gradient(145deg,rgba(14,19,42,0.96),rgba(6,9,22,0.98))] sm:backdrop-blur-2xl ${
         isActive
-          ? 'bg-[#0E1322]/95 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)]'
-          : 'bg-[#12121A]/75 hover:bg-[#151524]/90'
+          ? 'shadow-[0_20px_60px_-15px_rgba(0,0,0,0.85)]'
+          : 'hover:border-white/20'
       } ${className}`}
       style={{
-        borderColor: isActive ? `${project.accentColor}` : 'rgba(255, 255, 255, 0.08)',
+        borderColor: isActive ? `${project.accentColor}` : 'rgba(255, 255, 255, 0.1)',
         boxShadow: isActive
-          ? `0 0 45px -8px ${project.accentColor}50, inset 0 1px 1px rgba(255, 255, 255, 0.15)`
+          ? `0 0 45px -8px ${project.accentColor}60, inset 0 1px 1px rgba(255, 255, 255, 0.2)`
           : undefined,
         ...style,
       }}
       aria-label={`Case Study: ${project.title}`}
     >
-      {/* Chromatic Top Glow Edge */}
+      {/* Luminous Chromatic Top Glow Edge */}
       {isActive && (
         <div
-          className="absolute -top-[1px] left-6 sm:left-8 right-6 sm:right-8 h-[2px] rounded-full blur-[1px]"
+          className="absolute -top-[1px] left-6 sm:left-8 right-6 sm:right-8 h-[2.5px] rounded-full blur-[1px]"
           style={{
             background: `linear-gradient(90deg, transparent, ${project.accentColor}, transparent)`,
           }}
@@ -60,23 +60,23 @@ export function ProjectCard({
       <div className="flex items-center justify-between mb-2 sm:mb-4">
         <div className="flex items-center gap-2">
           <span
-            className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border font-semibold"
+            className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border font-semibold shadow-sm"
             style={{
-              borderColor: `${project.accentColor}60`,
+              borderColor: `${project.accentColor}70`,
               color: project.accentColor,
-              backgroundColor: `${project.accentColor}18`,
+              backgroundColor: `${project.accentColor}20`,
             }}
           >
             {project.category}
           </span>
           {isActive && (
-            <span className="flex items-center gap-1 text-[9px] sm:text-[10px] font-mono uppercase text-accent-gold">
-              <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-accent-gold animate-spin-slow" />
+            <span className="flex items-center gap-1 text-[9px] sm:text-[10px] font-mono uppercase text-amber-300 font-semibold drop-shadow-[0_0_8px_rgba(255,184,0,0.6)]">
+              <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-300 animate-spin-slow" />
               <span>In Focus</span>
             </span>
           )}
         </div>
-        <span className="text-[11px] sm:text-xs font-mono text-slate-500">
+        <span className="text-[11px] sm:text-xs font-mono text-slate-400 font-medium">
           #0{project.index + 1}
         </span>
       </div>
@@ -86,20 +86,20 @@ export function ProjectCard({
         {project.title}
       </h3>
       <p
-        className="text-[11px] sm:text-xs font-medium font-mono mb-2 sm:mb-3 tracking-wide truncate sm:whitespace-normal"
+        className="text-[11px] sm:text-xs font-medium font-mono mb-2 sm:mb-3 tracking-wide truncate sm:whitespace-normal font-semibold drop-shadow-[0_0_8px_rgba(0,0,0,0.5)]"
         style={{ color: project.accentColor }}
       >
         {project.tagline}
       </p>
 
       {/* Client Impact Outcome Badge */}
-      <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[10px] sm:text-[11px] font-mono mb-2.5 sm:mb-4 w-full">
+      <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 text-[10px] sm:text-[11px] font-mono mb-2.5 sm:mb-4 w-full shadow-[0_0_15px_rgba(16,185,129,0.18)] font-medium">
         <TrendingUp className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
         <span className="truncate">{project.impactMetric}</span>
       </div>
 
       {/* Description */}
-      <p className="text-[11px] sm:text-sm text-slate-300 font-light leading-relaxed mb-3 sm:mb-6 line-clamp-3 sm:line-clamp-none">
+      <p className="text-[11px] sm:text-sm text-slate-200 font-light leading-relaxed mb-3 sm:mb-6 line-clamp-3 sm:line-clamp-none">
         {project.description}
       </p>
 
@@ -108,7 +108,7 @@ export function ProjectCard({
         {project.stack.map((tech) => (
           <span
             key={tech}
-            className="text-[9px] sm:text-[11px] font-mono px-2 sm:px-2.5 py-0.5 rounded-md bg-white/[0.05] text-slate-300 border border-white/[0.08]"
+            className="text-[9px] sm:text-[11px] font-mono px-2 sm:px-2.5 py-0.5 rounded-md bg-white/[0.06] text-slate-200 border border-white/[0.1]"
           >
             {tech}
           </span>
@@ -116,27 +116,27 @@ export function ProjectCard({
       </div>
 
       {/* Action Links (Live + GitHub) */}
-      <div className="flex items-center justify-between pt-2.5 sm:pt-4 border-t border-white/[0.08]">
+      <div className="flex items-center justify-between pt-2.5 sm:pt-4 border-t border-white/[0.1]">
         <a
           href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 sm:gap-2 text-xs font-semibold text-slate-200 hover:text-white transition-colors group/link focus:outline-none focus:ring-1 focus:ring-accent-gold py-1 sm:py-0 touch-manipulation"
+          className="inline-flex items-center gap-1.5 sm:gap-2 text-xs font-semibold text-slate-100 hover:text-white transition-colors group/link focus:outline-none focus:ring-1 focus:ring-cyan-400 py-1 sm:py-0 touch-manipulation"
           aria-label={`View live production deployment for ${project.title}`}
         >
           <span
             className="w-2 h-2 rounded-full animate-ping"
             style={{ backgroundColor: project.accentColor }}
           />
-          <span>Live Deployment</span>
-          <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover/link:text-accent-gold group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+          <span className="drop-shadow-sm">Live Deployment</span>
+          <ExternalLink className="w-3.5 h-3.5 text-slate-300 group-hover/link:text-cyan-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
         </a>
 
         <a
           href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-100 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-white/[0.08] focus:outline-none focus:ring-1 focus:ring-slate-400 touch-manipulation"
+          className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-white transition-colors px-2.5 py-1.5 rounded-lg hover:bg-white/[0.1] focus:outline-none focus:ring-1 focus:ring-slate-300 touch-manipulation"
           aria-label={`View source code on GitHub for ${project.title}`}
         >
           <Github className="w-4 h-4" />

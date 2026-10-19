@@ -4,11 +4,11 @@ import React from 'react';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 
 const SECTIONS = [
-  { id: 0, label: 'Entry Gate', targetProgress: 0.0 },
-  { id: 1, label: 'Overview', targetProgress: 0.08 },
-  { id: 2, label: 'Showroom', targetProgress: 0.45 },
-  { id: 3, label: 'Architecture', targetProgress: 0.76 },
-  { id: 4, label: 'Contact', targetProgress: 0.95 },
+  { id: 0, label: 'Entry Gate', targetProgress: 0.0, accent: '#FFB800' },
+  { id: 1, label: 'Overview', targetProgress: 0.08, accent: '#8B5CF6' },
+  { id: 2, label: 'Showroom', targetProgress: 0.45, accent: '#00F0FF' },
+  { id: 3, label: 'Architecture', targetProgress: 0.76, accent: '#00FF9D' },
+  { id: 4, label: 'Contact', targetProgress: 0.95, accent: '#FFB800' },
 ];
 
 export function Navigation() {
@@ -37,27 +37,35 @@ export function Navigation() {
           <button
             key={sec.id}
             onClick={() => scrollToProgress(sec.targetProgress)}
-            className="group flex items-center gap-3 p-1 focus:outline-none"
+            className="group flex items-center gap-3 p-1 focus:outline-none cursor-pointer"
             aria-label={`Scroll to ${sec.label}`}
           >
             {/* Hover Label */}
             <span
               className={`text-[10px] font-mono tracking-widest uppercase transition-all duration-300 ${
                 isActive
-                  ? 'opacity-100 text-accent-gold pr-1'
+                  ? 'opacity-100 pr-1 font-semibold'
                   : 'opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 text-slate-400'
               }`}
+              style={{
+                color: isActive ? sec.accent : undefined,
+                textShadow: isActive ? `0 0 10px ${sec.accent}80` : undefined,
+              }}
             >
               {sec.label}
             </span>
 
-            {/* Dot Indicator */}
+            {/* Dot / Pill Indicator */}
             <div
               className={`rounded-full transition-all duration-300 ${
                 isActive
-                  ? 'w-2.5 h-8 bg-accent-gold shadow-[0_0_12px_rgba(201,169,110,0.8)]'
+                  ? 'w-2.5 h-8'
                   : 'w-2 h-2 bg-white/20 group-hover:bg-white/60'
               }`}
+              style={{
+                backgroundColor: isActive ? sec.accent : undefined,
+                boxShadow: isActive ? `0 0 14px ${sec.accent}` : undefined,
+              }}
             />
           </button>
         );

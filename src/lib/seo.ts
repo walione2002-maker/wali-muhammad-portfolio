@@ -6,37 +6,37 @@ export function getJsonLdSchema() {
     '@graph': [
       {
         '@type': 'WebSite',
-        '@id': 'https://walimuhammad.com/#website',
-        url: 'https://walimuhammad.com',
+        '@id': 'https://devwalimuhammad.pages.dev/#website',
+        url: 'https://devwalimuhammad.pages.dev',
         name: 'Wali Muhammad | Flagship 3D Portfolio & Systems Architecture',
         description:
           'Personal portfolio and engineering showcase of Wali Muhammad — Full-Stack Engineer, FinTech Systems Architect & Creative Developer.',
         publisher: {
-          '@id': 'https://walimuhammad.com/#person',
+          '@id': 'https://devwalimuhammad.pages.dev/#person',
         },
       },
       {
         '@type': 'ProfilePage',
-        '@id': 'https://walimuhammad.com/#webpage',
-        url: 'https://walimuhammad.com',
+        '@id': 'https://devwalimuhammad.pages.dev/#webpage',
+        url: 'https://devwalimuhammad.pages.dev',
         name: 'Wali Muhammad | Full-Stack Engineer, FinTech Systems Architect & Creative Developer',
         isPartOf: {
-          '@id': 'https://walimuhammad.com/#website',
+          '@id': 'https://devwalimuhammad.pages.dev/#website',
         },
         about: {
-          '@id': 'https://walimuhammad.com/#person',
+          '@id': 'https://devwalimuhammad.pages.dev/#person',
         },
-        primaryImageOfPage: 'https://walimuhammad.com/og-image.png',
+        primaryImageOfPage: 'https://devwalimuhammad.pages.dev/og-image.png',
         description:
           'Luxury 3D WebGL portfolio presenting 8 live production platforms across FinTech, luxury commerce, and creative technology.',
       },
       {
         '@type': 'Person',
-        '@id': 'https://walimuhammad.com/#person',
+        '@id': 'https://devwalimuhammad.pages.dev/#person',
         name: 'Wali Muhammad',
         jobTitle:
           'Full-Stack Engineer, FinTech Systems Architect & Creative Developer',
-        url: 'https://walimuhammad.com',
+        url: 'https://devwalimuhammad.pages.dev',
         sameAs: [
           'https://github.com/walione2002-maker',
           'https://linkedin.com/in/walimuhammad',
@@ -62,7 +62,7 @@ export function getJsonLdSchema() {
         '@type': 'Service',
         name: 'FinTech Systems Architecture & Quantitative Risk Engineering',
         serviceType: 'Financial Engineering',
-        provider: { '@id': 'https://walimuhammad.com/#person' },
+        provider: { '@id': 'https://devwalimuhammad.pages.dev/#person' },
         description:
           'Institutional quantitative market structure analysis, mathematical position sizing algorithms, and real-time portfolio risk dashboards with sub-millisecond calculation speed.',
       },
@@ -70,7 +70,7 @@ export function getJsonLdSchema() {
         '@type': 'Service',
         name: 'Spatial 3D & Creative WebGL Development',
         serviceType: 'Creative Technology',
-        provider: { '@id': 'https://walimuhammad.com/#person' },
+        provider: { '@id': 'https://devwalimuhammad.pages.dev/#person' },
         description:
           'Award-winning 3D web applications, procedural shaders, and CatmullRom spline camera choreography in React Three Fiber with zero external asset bottlenecks.',
       },
@@ -78,7 +78,7 @@ export function getJsonLdSchema() {
         '@type': 'Service',
         name: 'High-Conversion Enterprise Full-Stack Web Development',
         serviceType: 'Full-Stack Software Engineering',
-        provider: { '@id': 'https://walimuhammad.com/#person' },
+        provider: { '@id': 'https://devwalimuhammad.pages.dev/#person' },
         description:
           'Next.js 14 App Router platforms, conversion-optimized DTC storefronts, strict TypeScript systems, and zero-downtime Cloudflare Edge CI/CD distribution.',
       },

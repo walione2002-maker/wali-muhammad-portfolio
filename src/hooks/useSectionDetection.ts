@@ -1,38 +1,35 @@
 'use client';
 
-import { useEffect } from 'react';
 import { usePortfolioStore, type SectionName } from '@/store/usePortfolioStore';
 
+/**
+ * Pure helper to resolve section name & index from normalized scroll progress.
+ * Used internally in the scroll handler without triggering React 60Hz re-renders.
+ */
+export function resolveSectionFromProgress(progress: number): {
+  section: SectionName;
+  index: number;
+} {
+  if (progress >= 0.85) {
+    return { section: 'contact-portal', index: 4 };
+  } else if (progress >= 0.66) {
+    return { section: 'tech-stack', index: 3 };
+  } else if (progress >= 0.22) {
+    return { section: 'project-showroom', index: 2 };
+  } else if (progress >= 0.04) {
+    return { section: 'executive-overview', index: 1 };
+  }
+  return { section: 'entry-gate', index: 0 };
+}
+
+/**
+ * Section detection hook: returns discrete active section values without subscribing to continuous scrollProgress.
+ */
 export function useSectionDetection() {
-  const scrollProgress = usePortfolioStore((s) => s.scrollProgress);
+  const activeSection = usePortfolioStore((s) => s.activeSection);
   const activeSectionIndex = usePortfolioStore((s) => s.activeSectionIndex);
-  const setActiveSection = usePortfolioStore((s) => s.setActiveSection);
 
-  useEffect(() => {
-    let newIndex = 0;
-    let newSection: SectionName = 'entry-gate';
-
-    if (scrollProgress >= 0.85) {
-      newIndex = 4;
-      newSection = 'contact-portal';
-    } else if (scrollProgress >= 0.66) {
-      newIndex = 3;
-      newSection = 'tech-stack';
-    } else if (scrollProgress >= 0.22) {
-      newIndex = 2;
-      newSection = 'project-showroom';
-    } else if (scrollProgress >= 0.04) {
-      newIndex = 1;
-      newSection = 'executive-overview';
-    } else {
-      newIndex = 0;
-      newSection = 'entry-gate';
-    }
-
-    if (newIndex !== activeSectionIndex) {
-      setActiveSection(newSection, newIndex);
-    }
-  }, [scrollProgress, activeSectionIndex, setActiveSection]);
+  return { activeSection, activeSectionIndex };
 }
 
 export default useSectionDetection;

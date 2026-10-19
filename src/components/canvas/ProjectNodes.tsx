@@ -24,6 +24,7 @@ function SingleNode({ id, angle, radius, accentColor }: SingleNodeProps) {
 
   const activeProjectId = usePortfolioStore((s) => s.activeProjectId);
   const activeSectionIndex = usePortfolioStore((s) => s.activeSectionIndex);
+  const isMobile = usePortfolioStore((s) => s.isMobile);
   const isWireframe = activeSectionIndex === 3;
 
   const isActive = activeProjectId === id;
@@ -73,7 +74,7 @@ function SingleNode({ id, angle, radius, accentColor }: SingleNodeProps) {
     <group position={[initialX, 0, initialZ]} name={`node-group-${id}`}>
       {/* Central Satellite Sphere */}
       <mesh ref={meshRef} name={`node-${id}`}>
-        <sphereGeometry args={[0.18, 24, 24]} />
+        <sphereGeometry args={[0.18, isMobile ? 12 : 24, isMobile ? 12 : 24]} />
         <meshStandardMaterial
           ref={matRef}
           color={accentColor}
@@ -87,7 +88,7 @@ function SingleNode({ id, angle, radius, accentColor }: SingleNodeProps) {
 
       {/* Hover Glow Halo */}
       <mesh ref={haloRef} rotation={[-Math.PI / 2, 0, 0]} scale={[0.01, 0.01, 0.01]}>
-        <ringGeometry args={[0.22, 0.36, 32]} />
+        <ringGeometry args={[0.22, 0.36, isMobile ? 16 : 32]} />
         <meshBasicMaterial
           ref={haloMatRef}
           color={accentColor}
@@ -103,6 +104,7 @@ function SingleNode({ id, angle, radius, accentColor }: SingleNodeProps) {
 export function ProjectNodes() {
   const groupRef = useRef<THREE.Group>(null);
   const activeSectionIndex = usePortfolioStore((s) => s.activeSectionIndex);
+  const isMobile = usePortfolioStore((s) => s.isMobile);
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
@@ -117,7 +119,7 @@ export function ProjectNodes() {
     <group ref={groupRef} name="project-nodes-orbital-ring">
       {/* Subtle Orbital Plane Guide Track */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[4.5, 0.008, 12, 140]} />
+        <torusGeometry args={[4.5, 0.008, 8, isMobile ? 60 : 140]} />
         <meshBasicMaterial color="#38BDF8" transparent opacity={0.12} />
       </mesh>
 

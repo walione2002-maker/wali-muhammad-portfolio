@@ -5,8 +5,15 @@ import { usePortfolioStore, type QualityTier } from '@/store/usePortfolioStore';
 
 export function useGpuTier() {
   const setQualityTier = usePortfolioStore((s) => s.setQualityTier);
+  const setIsMobile = usePortfolioStore((s) => s.setIsMobile);
 
   useEffect(() => {
+    // Detect mobile / touch devices
+    const isMobileDevice =
+      typeof window !== 'undefined' &&
+      (window.innerWidth < 768 || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches));
+    setIsMobile(Boolean(isMobileDevice));
+
     try {
       const canvas = document.createElement('canvas');
       const gl =
@@ -26,12 +33,14 @@ export function useGpuTier() {
 
       // Check for mobile or low-end integrated chips
       const isLowTier =
+        isMobileDevice ||
         /mali|adreno\s*(3|4|5)|intel\s*hd|intel\s*uhd\s*6|powervr/i.test(renderer) ||
         window.navigator.hardwareConcurrency <= 4;
 
       const isHighTier =
-        /nvidia|geforce|rtx|gtx|radeon|apple\s*m[1-4]|apple\s*gpu/i.test(renderer) ||
-        window.navigator.hardwareConcurrency >= 8;
+        !isMobileDevice &&
+        (/nvidia|geforce|rtx|gtx|radeon|apple\s*m[1-4]|apple\s*gpu/i.test(renderer) ||
+          window.navigator.hardwareConcurrency >= 8);
 
       let detectedTier: QualityTier = 'high';
       if (isLowTier && !isHighTier) {
@@ -44,7 +53,7 @@ export function useGpuTier() {
     } catch {
       setQualityTier('medium');
     }
-  }, [setQualityTier]);
+  }, [setQualityTier, setIsMobile]);
 }
 
 export default useGpuTier;

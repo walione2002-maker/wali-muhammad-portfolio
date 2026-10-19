@@ -16,4 +16,4 @@ Allow: /
 User-agent: GPTBot
 Allow: /
 
-Sitemap: https://walimuhammad.com/sitemap.xml
+Sitemap: https://devwalimuhammad.pages.dev/sitemap.xml

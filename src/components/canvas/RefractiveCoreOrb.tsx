@@ -13,20 +13,32 @@ const _targetCoreColor = new THREE.Color('#00F0FF');
 export function RefractiveCoreOrb() {
   const outerMeshRef = useRef<THREE.Mesh>(null);
   const innerMeshRef = useRef<THREE.Mesh>(null);
+  const fresnelMeshRef = useRef<THREE.Mesh>(null);
   const matRef = useRef<THREE.MeshPhysicalMaterial>(null);
+  const stdMatRef = useRef<THREE.MeshStandardMaterial>(null);
+  const fresnelMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const innerMatRef = useRef<THREE.MeshStandardMaterial>(null);
 
   const activeSectionIndex = usePortfolioStore((s) => s.activeSectionIndex);
   const activeProjectId = usePortfolioStore((s) => s.activeProjectId);
+  const qualityTier = usePortfolioStore((s) => s.qualityTier);
+  const isMobile = usePortfolioStore((s) => s.isMobile);
+
   const isWireframe = activeSectionIndex === 3;
+  const isSinglePass = isMobile || qualityTier !== 'high';
 
   useFrame((_, delta) => {
     const dt = Math.min(delta, 0.1);
 
-    // Counter-rotation of outer glass shell
+    // Counter-rotation of outer glass / metallic shell
     if (outerMeshRef.current) {
       outerMeshRef.current.rotation.y -= 0.18 * dt;
       outerMeshRef.current.rotation.x += 0.09 * dt;
+    }
+
+    if (fresnelMeshRef.current) {
+      fresnelMeshRef.current.rotation.y -= 0.18 * dt;
+      fresnelMeshRef.current.rotation.x += 0.09 * dt;
     }
 
     // Dynamic tumble of internal faceted quantum nucleus
@@ -44,20 +56,42 @@ export function RefractiveCoreOrb() {
     } else if (activeSectionIndex === 2) {
       _targetCoreColor.set('#00F0FF'); // Electric Cyan
     } else if (activeSectionIndex === 3) {
-      _targetCoreColor.set('#7C3AED'); // Ultraviolet
+      _targetCoreColor.set('#00FF9D'); // Matrix Neon Emerald
     } else if (activeSectionIndex === 4) {
-      _targetCoreColor.set('#FF2E93'); // Hyper Magenta
+      _targetCoreColor.set('#FFB800'); // Supernova Gold
     } else {
       _targetCoreColor.set('#00F0FF');
     }
 
-    // Smoothly interpolate emissive intensity & color based on section
+    // High-performance single-pass metallic core on mobile
+    if (stdMatRef.current) {
+      stdMatRef.current.emissive.lerp(_targetCoreColor, dt * 5);
+      let targetEmissive = 1.4;
+      if (activeSectionIndex === 1) targetEmissive = 1.6;
+      else if (activeSectionIndex === 2) targetEmissive = 1.8;
+      else if (activeSectionIndex === 3) targetEmissive = 2.0;
+      else if (activeSectionIndex === 4) targetEmissive = 2.8;
+
+      stdMatRef.current.emissiveIntensity = THREE.MathUtils.lerp(
+        stdMatRef.current.emissiveIntensity,
+        targetEmissive,
+        dt * 4
+      );
+    }
+
+    // Additive backface Fresnel glow shell on mobile
+    if (fresnelMatRef.current) {
+      fresnelMatRef.current.color.lerp(_targetCoreColor, dt * 5);
+    }
+
+    // Multi-pass Physical Transmission Material (Desktop high tier only)
     if (matRef.current) {
       matRef.current.emissive.lerp(_targetCoreColor, dt * 4);
       let targetEmissive = 0.4;
       if (activeSectionIndex === 1) targetEmissive = 0.75;
-      else if (activeSectionIndex === 3) targetEmissive = 1.4;
-      else if (activeSectionIndex === 4) targetEmissive = 2.6; // Radiant zenith core glow
+      else if (activeSectionIndex === 2) targetEmissive = 1.0;
+      else if (activeSectionIndex === 3) targetEmissive = 1.5;
+      else if (activeSectionIndex === 4) targetEmissive = 2.6;
 
       matRef.current.emissiveIntensity = THREE.MathUtils.lerp(
         matRef.current.emissiveIntensity,
@@ -79,24 +113,52 @@ export function RefractiveCoreOrb() {
 
   return (
     <group name="refractive-core-composite">
-      {/* Outer Ultra-Refractive Diamond-Grade Glass Shell */}
+      {/* Outer Core Shell: Single-pass Metallic on mobile / Physical glass on high-tier desktop */}
       <mesh ref={outerMeshRef} name="refractive-core-orb">
-        <icosahedronGeometry args={[0.92, 4]} />
-        <meshPhysicalMaterial
-          ref={matRef}
-          color="#ffffff"
-          transmission={0.97}
-          roughness={0.02}
-          thickness={2.5}
-          ior={1.54}
-          envMapIntensity={1.5}
-          emissive="#00F0FF"
-          emissiveIntensity={0.4}
-          wireframe={isWireframe}
-          transparent
-          opacity={0.94}
-        />
+        <icosahedronGeometry args={[0.92, isMobile ? 2 : 4]} />
+        {isSinglePass ? (
+          <meshStandardMaterial
+            ref={stdMatRef}
+            color="#080C18"
+            metalness={0.92}
+            roughness={0.14}
+            emissive="#00F0FF"
+            emissiveIntensity={1.4}
+            wireframe={isWireframe}
+          />
+        ) : (
+          <meshPhysicalMaterial
+            ref={matRef}
+            color="#ffffff"
+            transmission={0.97}
+            roughness={0.02}
+            thickness={2.5}
+            ior={1.54}
+            envMapIntensity={1.5}
+            emissive="#00F0FF"
+            emissiveIntensity={0.4}
+            wireframe={isWireframe}
+            transparent
+            opacity={0.94}
+          />
+        )}
       </mesh>
+
+      {/* Additive Backface Fresnel Glow Shell for vibrant mobile luminescence */}
+      {isSinglePass && (
+        <mesh ref={fresnelMeshRef} scale={[1.08, 1.08, 1.08]} name="fresnel-glow-shell">
+          <icosahedronGeometry args={[0.92, 1]} />
+          <meshBasicMaterial
+            ref={fresnelMatRef}
+            color="#00F0FF"
+            transparent
+            opacity={0.35}
+            side={THREE.BackSide}
+            blending={THREE.AdditiveBlending}
+            depthWrite={false}
+          />
+        </mesh>
+      )}
 
       {/* Internal Glowing Quantum Nucleus */}
       <mesh ref={innerMeshRef} name="inner-quantum-nucleus">
