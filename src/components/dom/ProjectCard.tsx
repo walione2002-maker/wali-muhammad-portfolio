@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ExternalLink, Github, Lock, ArrowUpRight, Globe } from 'lucide-react';
+import { Github, Lock, ArrowUpRight, Globe } from 'lucide-react';
 import { type ProjectData } from '@/types';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 
@@ -31,13 +31,13 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
       }}
       aria-label={`Website: ${project.title}`}
     >
-      {/* Top Half: Visual macOS / Browser Window Preview */}
+      {/* Top Half: Visual macOS / Browser Window Preview with Live Front Screenshot */}
       <div>
         <a
           href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="block relative rounded-xl overflow-hidden border border-white/15 bg-slate-950/80 group/preview transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-cyan-400 cursor-pointer shadow-lg"
+          className="block relative rounded-xl overflow-hidden border border-white/15 bg-slate-950 group/preview transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-cyan-400 cursor-pointer shadow-lg"
           aria-label={`Open live website for ${project.title}`}
         >
           {/* macOS Browser Header */}
@@ -62,48 +62,50 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
             </div>
           </div>
 
-          {/* Visual Mockup Preview Banner */}
-          <div
-            className="relative h-44 sm:h-52 w-full flex flex-col items-center justify-center p-6 text-center overflow-hidden transition-all duration-500"
-            style={{
-              background: `linear-gradient(135deg, #090D1A 0%, #0F172A 50%, ${project.accentColor}25 100%)`,
-            }}
-          >
-            {/* Subtle decorative background glow */}
-            <div
-              className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-2xl opacity-30 pointer-events-none"
-              style={{ backgroundColor: project.accentColor }}
-            />
-
-            {/* Center mockup card representation */}
-            <div className="relative z-10 flex flex-col items-center">
+          {/* Visual Mockup Preview Banner with Actual Front Screenshot */}
+          <div className="relative h-48 sm:h-60 w-full overflow-hidden bg-slate-950 flex items-center justify-center">
+            {project.image ? (
+              <img
+                src={project.image}
+                alt={`${project.title} live website screenshot preview`}
+                className="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover/preview:scale-[1.04]"
+                loading="lazy"
+              />
+            ) : (
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-3 shadow-lg border border-white/20 transition-transform duration-300 group-hover/preview:scale-110"
+                className="relative h-full w-full flex flex-col items-center justify-center p-6 text-center"
                 style={{
-                  backgroundColor: `${project.accentColor}25`,
-                  color: project.accentColor,
+                  background: `linear-gradient(135deg, #090D1A 0%, #0F172A 50%, ${project.accentColor}25 100%)`,
                 }}
               >
-                <Globe className="w-6 h-6" />
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-3 shadow-lg border border-white/20"
+                  style={{
+                    backgroundColor: `${project.accentColor}25`,
+                    color: project.accentColor,
+                  }}
+                >
+                  <Globe className="w-6 h-6" />
+                </div>
+                <h4 className="text-white font-bold font-display text-lg sm:text-xl tracking-tight">
+                  {project.title}
+                </h4>
               </div>
-              <h4 className="text-white font-bold font-display text-lg sm:text-xl tracking-tight drop-shadow-md">
-                {project.title}
-              </h4>
-              <p className="text-xs text-slate-300 mt-1 font-mono tracking-wide max-w-[240px] truncate">
-                {project.tagline}
-              </p>
-            </div>
+            )}
+
+            {/* Subtle Gradient Shadow at bottom edge */}
+            <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-slate-950/70 to-transparent pointer-events-none" />
 
             {/* Prominent Hover Overlay */}
-            <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-sm opacity-0 group-hover/preview:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2 p-4">
+            <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-[2px] opacity-0 group-hover/preview:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2 p-4">
               <div
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm text-slate-950 shadow-xl transition-transform duration-300 group-hover/preview:scale-105"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm text-slate-950 shadow-2xl transition-transform duration-300 group-hover/preview:scale-105"
                 style={{ backgroundColor: project.accentColor }}
               >
                 <span>Click to Open Live Website</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
               </div>
-              <span className="text-[11px] text-slate-300 font-mono">
+              <span className="text-[11px] text-slate-200 font-mono drop-shadow">
                 Opens in a new browser tab
               </span>
             </div>
@@ -113,7 +115,8 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
         {/* Bottom Half: Minimal, Clean, Scannable Info */}
         <div className="mt-4 sm:mt-5">
           {/* Category Tag */}
-          <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide border mb-2.5"
+          <div
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide border mb-2.5"
             style={{
               borderColor: `${project.accentColor}60`,
               color: project.accentColor,

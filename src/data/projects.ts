@@ -16,6 +16,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Luxury Chauffeur & Fleet Booking',
     liveUrl: 'https://zynnco-rkgn4e6vy-wali-muhammad-s-projects.vercel.app',
     displayUrl: 'zynnco.vercel.app',
+    image: '/projects/zynnco-chauffeurs.png',
     githubUrl: 'https://github.com/walione2002-maker/zynnco',
     accentColor: '#38BDF8', // Sky Blue
     orbitalAngle: toAngle(0),
@@ -33,6 +34,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Event Management & Experiences',
     liveUrl: 'https://corpassion-events.vercel.app',
     displayUrl: 'corpassion-events.vercel.app',
+    image: '/projects/corpassion-events.png',
     githubUrl: 'https://github.com/walione2002-maker/corpassion-events',
     accentColor: '#F59E0B', // Warm Amber Gold
     orbitalAngle: toAngle(1),
@@ -50,6 +52,7 @@ export const PROJECTS: ProjectData[] = [
     category: '3D Web Application',
     liveUrl: 'https://3d-resume-builder-self.vercel.app',
     displayUrl: '3d-resume-builder-self.vercel.app',
+    image: '/projects/3d-resume-builder.png',
     githubUrl: 'https://github.com/walione2002-maker/resume-australia',
     accentColor: '#8B5CF6', // Vibrant Violet
     orbitalAngle: toAngle(2),
@@ -67,6 +70,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Digital Agency & Commercial Platform',
     liveUrl: 'https://nexus-bay.vercel.app',
     displayUrl: 'nexus-bay.vercel.app',
+    image: '/projects/nexus-bay.png',
     githubUrl: 'https://github.com/walione2002-maker/nexusbay-digital',
     accentColor: '#06B6D4', // Electric Cyan
     orbitalAngle: toAngle(3),
@@ -84,6 +88,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Direct-to-Consumer E-Commerce',
     liveUrl: 'https://amirs-kalonji-oil.vercel.app',
     displayUrl: 'amirs-kalonji-oil.vercel.app',
+    image: '/projects/amirs-kalonji-oil.png',
     githubUrl: 'https://github.com/walione2002-maker/amirs-kalonji-oil-website',
     accentColor: '#10B981', // Emerald Green
     orbitalAngle: toAngle(4),
@@ -101,6 +106,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Interactive Event Invitation',
     liveUrl: 'https://fatima-ali-wedding.vercel.app',
     displayUrl: 'fatima-ali-wedding.vercel.app',
+    image: '/projects/digital-wedding-suite.png',
     githubUrl: 'https://github.com/walione2002-maker/fatima-ali-wedding',
     accentColor: '#EC4899', // Rose Pink
     orbitalAngle: toAngle(5),
@@ -118,6 +124,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Commercial Product Catalog',
     liveUrl: 'https://federal-sanitary.vercel.app',
     displayUrl: 'federal-sanitary.vercel.app',
+    image: '/projects/commercial-sanitary-hub.png',
     githubUrl: 'https://github.com/walione2002-maker/federal-sanitary',
     accentColor: '#3B82F6', // Royal Blue
     orbitalAngle: toAngle(6),
@@ -135,6 +142,7 @@ export const PROJECTS: ProjectData[] = [
     category: 'Financial Technology App',
     liveUrl: 'https://market-structure.vercel.app',
     displayUrl: 'market-structure.vercel.app',
+    image: '/projects/fintech-risk-engine.png',
     githubUrl: 'https://github.com/walione2002-maker/fintech-risk-engine',
     accentColor: '#6366F1', // Indigo
     orbitalAngle: toAngle(7),

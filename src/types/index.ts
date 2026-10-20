@@ -21,6 +21,8 @@ export interface ProjectData {
   liveUrl: string;
   /** Clean live display domain for browser bar mockup */
   displayUrl?: string;
+  /** Screenshot / front picture image path in /public */
+  image?: string;
   /** GitHub repository URL (source code) */
   githubUrl: string;
   /** Accent color hex */
