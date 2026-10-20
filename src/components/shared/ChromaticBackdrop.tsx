@@ -21,7 +21,7 @@ export function ChromaticBackdrop() {
 
   return (
     <div
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden h-[100dvh] w-screen"
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden w-full h-full"
       aria-hidden="true"
     >
       {/* Primary Soft Radial Aurora */}

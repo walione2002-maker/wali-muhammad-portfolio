@@ -11,16 +11,12 @@ import { WebsitesSection } from '@/components/dom/WebsitesSection';
 import { ServicesSection } from '@/components/dom/ServicesSection';
 import { ContactSection } from '@/components/dom/ContactSection';
 import { ScrollProgress } from '@/components/dom/ScrollProgress';
-import { useSectionDetection } from '@/hooks/useSectionDetection';
 
 const Experience = dynamic(() => import('@/components/canvas/Experience'), {
   ssr: false,
 });
 
 export default function HomePage() {
-  // Sync scrollProgress to discrete activeSection & activeSectionIndex
-  useSectionDetection();
-
   return (
     <>
       <QualityGate />

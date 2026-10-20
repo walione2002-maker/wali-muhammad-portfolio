@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { GyroscopicRings } from './GyroscopicRings';
@@ -13,52 +13,59 @@ const _targetPos = new THREE.Vector3();
 export function Centerpiece() {
   const groupRef = useRef<THREE.Group>(null);
 
+  // Smooth C1 Catmull-Rom splines for zero-jerk, fluid 3D motion during scrolling
+  const desktopSpline = useMemo(
+    () =>
+      new THREE.CatmullRomCurve3(
+        [
+          new THREE.Vector3(2.8, 0.2, 0.2),   // t = 0.0: Hero (Right)
+          new THREE.Vector3(1.4, -0.1, -1.8),  // t = 0.25: Websites top (Gliding center-back)
+          new THREE.Vector3(-0.4, -0.3, -2.6), // t = 0.50: Websites middle (Deep background)
+          new THREE.Vector3(-2.6, 0.1, -0.8),  // t = 0.75: Services (Left)
+          new THREE.Vector3(2.2, 0.2, 0.0),    // t = 1.0: Contact (Right)
+        ],
+        false,
+        'catmullrom',
+        0.5
+      ),
+    []
+  );
+
+  const mobileSpline = useMemo(
+    () =>
+      new THREE.CatmullRomCurve3(
+        [
+          new THREE.Vector3(0.0, 1.2, -1.8),   // t = 0.0: Hero (Elevated center)
+          new THREE.Vector3(0.2, 0.0, -3.2),   // t = 0.25: Websites top (Deep background)
+          new THREE.Vector3(-0.2, -0.2, -3.4), // t = 0.50: Websites middle (Deep background)
+          new THREE.Vector3(-0.1, 0.3, -2.4),  // t = 0.75: Services (Background)
+          new THREE.Vector3(0.0, 0.6, -1.8),   // t = 1.0: Contact
+        ],
+        false,
+        'catmullrom',
+        0.5
+      ),
+    []
+  );
+
   useFrame((_, delta) => {
     if (!groupRef.current) return;
     const { scrollProgress, isMobile } = usePortfolioStore.getState();
     const dt = Math.min(delta, 0.1);
-    const t = scrollProgress;
+    const t = Math.max(0, Math.min(1, scrollProgress));
 
-    // As user scrolls down the page, smoothly animate the 3D sculpture's X/Y/Z position:
-    // - Hero (t < 0.15): Gliding on the right side of the Hero (desktop) or upper right (mobile)
-    // - Websites Grid (0.15 <= t < 0.65): Sweeping across center behind the 2-column cards
-    // - Services (0.65 <= t < 0.82): Orbiting to the left/center
-    // - Contact (t >= 0.82): Orbiting close on the right/center
-    let targetX = 0;
-    let targetY = 0;
-    let targetZ = 0;
+    // Sample the continuous spline curve
+    const activeCurve = isMobile ? mobileSpline : desktopSpline;
+    activeCurve.getPoint(t, _targetPos);
 
-    if (t < 0.15) {
-      // Hero: Gliding on the right side of the screen
-      targetX = isMobile ? 0 : 3.0;
-      targetY = isMobile ? 1.4 : 0.2;
-      targetZ = isMobile ? -1.5 : 0.2;
-    } else if (t < 0.65) {
-      // Websites Grid: Sweeps across the center in the background
-      const gridProgress = (t - 0.15) / 0.50;
-      targetX = Math.sin(gridProgress * Math.PI) * (isMobile ? 0.6 : 1.8) - (isMobile ? 0 : 0.3);
-      targetY = -0.3;
-      targetZ = isMobile ? -2.8 : -2.2;
-    } else if (t < 0.82) {
-      // Services: Orbiting on the left side
-      targetX = isMobile ? 0 : -2.8;
-      targetY = isMobile ? 0.6 : 0.2;
-      targetZ = isMobile ? -1.6 : -0.4;
-    } else {
-      // Contact: Orbiting on the right side
-      targetX = isMobile ? 0 : 2.4;
-      targetY = isMobile ? 0.8 : 0.3;
-      targetZ = isMobile ? -1.2 : 0.5;
-    }
-
-    _targetPos.set(targetX, targetY, targetZ);
-    groupRef.current.position.lerp(_targetPos, dt * 3.5);
+    // Smoothly interpolate position with frame-independent lerp
+    groupRef.current.position.lerp(_targetPos, dt * 4.0);
 
     // Continuous dynamic rotation on all axes
-    groupRef.current.rotation.y += 0.38 * dt;
+    groupRef.current.rotation.y += 0.35 * dt;
     groupRef.current.rotation.x = THREE.MathUtils.lerp(
       groupRef.current.rotation.x,
-      Math.sin(t * Math.PI * 2) * 0.22,
+      Math.sin(t * Math.PI * 2) * 0.2,
       dt * 2.5
     );
     groupRef.current.rotation.z = THREE.MathUtils.lerp(
@@ -69,7 +76,7 @@ export function Centerpiece() {
   });
 
   return (
-    <group ref={groupRef} position={[3.0, 0, 0]} name="sculpture-centerpiece">
+    <group ref={groupRef} position={[2.8, 0.2, 0.2]} name="sculpture-centerpiece">
       <GyroscopicRings />
       <RefractiveCoreOrb />
       <ProjectNodes />

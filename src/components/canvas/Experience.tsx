@@ -20,7 +20,7 @@ export function Experience() {
         (window.matchMedia && window.matchMedia('(pointer: coarse)').matches)));
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 h-[100dvh] w-screen">
+    <div className="fixed inset-0 pointer-events-none z-0 w-full h-full overflow-hidden">
       <Canvas
         key={`canvas-${contextLossCount}-${isMobile ? 'mobile' : 'desktop'}`}
         gl={
@@ -51,8 +51,8 @@ export function Experience() {
           position: 'fixed',
           top: 0,
           left: 0,
-          width: '100vw',
-          height: '100dvh',
+          width: '100%',
+          height: '100%',
           zIndex: 0,
           pointerEvents: 'none',
         }}
