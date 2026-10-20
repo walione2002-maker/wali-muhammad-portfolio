@@ -1,146 +1,166 @@
 'use client';
 
 import React from 'react';
-import { ExternalLink, Github, TrendingUp, Sparkles } from 'lucide-react';
+import { ExternalLink, Github, Lock, ArrowUpRight, Globe } from 'lucide-react';
 import { type ProjectData } from '@/types';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 
 interface ProjectCardProps {
   project: ProjectData;
   className?: string;
-  style?: React.CSSProperties;
-  onClick?: () => void;
-  isSpatialFront?: boolean;
 }
 
-export function ProjectCard({
-  project,
-  className = '',
-  style,
-  onClick,
-  isSpatialFront = false,
-}: ProjectCardProps) {
+export function ProjectCard({ project, className = '' }: ProjectCardProps) {
   const activeProjectId = usePortfolioStore((s) => s.activeProjectId);
   const setActiveProjectId = usePortfolioStore((s) => s.setActiveProjectId);
 
-  const isActive = activeProjectId === project.id || isSpatialFront;
+  const isActive = activeProjectId === project.id;
+  const displayHost = project.displayUrl || 'vercel.app';
 
   return (
     <article
-      onClick={onClick}
       onMouseEnter={() => setActiveProjectId(project.id)}
       onMouseLeave={() => setActiveProjectId(null)}
-      onFocus={() => setActiveProjectId(project.id)}
-      onBlur={() => setActiveProjectId(null)}
-      className={`group relative rounded-2xl p-4 sm:p-7 transition-all duration-300 border bg-[linear-gradient(145deg,rgba(14,19,42,0.96),rgba(6,9,22,0.98))] sm:backdrop-blur-2xl ${
-        isActive
-          ? 'shadow-[0_20px_60px_-15px_rgba(0,0,0,0.85)]'
-          : 'hover:border-white/20'
+      className={`group relative rounded-2xl p-4 sm:p-6 transition-all duration-300 border bg-[#0F172A]/90 backdrop-blur-xl shadow-2xl flex flex-col justify-between ${
+        isActive ? 'border-white/30' : 'border-white/[0.14] hover:border-white/25'
       } ${className}`}
       style={{
-        borderColor: isActive ? `${project.accentColor}` : 'rgba(255, 255, 255, 0.1)',
         boxShadow: isActive
-          ? `0 0 45px -8px ${project.accentColor}60, inset 0 1px 1px rgba(255, 255, 255, 0.2)`
-          : undefined,
-        ...style,
+          ? `0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 35px -6px ${project.accentColor}50`
+          : '0 20px 40px -15px rgba(0, 0, 0, 0.6)',
       }}
-      aria-label={`Case Study: ${project.title}`}
+      aria-label={`Website: ${project.title}`}
     >
-      {/* Luminous Chromatic Top Glow Edge */}
-      {isActive && (
-        <div
-          className="absolute -top-[1px] left-6 sm:left-8 right-6 sm:right-8 h-[2.5px] rounded-full blur-[1px]"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${project.accentColor}, transparent)`,
-          }}
-        />
-      )}
-
-      {/* Top Meta Header */}
-      <div className="flex items-center justify-between mb-2 sm:mb-4">
-        <div className="flex items-center gap-2">
-          <span
-            className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border font-semibold shadow-sm"
-            style={{
-              borderColor: `${project.accentColor}70`,
-              color: project.accentColor,
-              backgroundColor: `${project.accentColor}20`,
-            }}
-          >
-            {project.category}
-          </span>
-          {isActive && (
-            <span className="flex items-center gap-1 text-[9px] sm:text-[10px] font-mono uppercase text-amber-300 font-semibold drop-shadow-[0_0_8px_rgba(255,184,0,0.6)]">
-              <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-300 animate-spin-slow" />
-              <span>In Focus</span>
-            </span>
-          )}
-        </div>
-        <span className="text-[11px] sm:text-xs font-mono text-slate-400 font-medium">
-          #0{project.index + 1}
-        </span>
-      </div>
-
-      {/* Title & Tagline */}
-      <h3 className="text-lg sm:text-2xl font-bold font-display text-white group-hover:text-slate-100 tracking-tight mb-1 sm:mb-1.5 leading-tight">
-        {project.title}
-      </h3>
-      <p
-        className="text-[11px] sm:text-xs font-medium font-mono mb-2 sm:mb-3 tracking-wide truncate sm:whitespace-normal font-semibold drop-shadow-[0_0_8px_rgba(0,0,0,0.5)]"
-        style={{ color: project.accentColor }}
-      >
-        {project.tagline}
-      </p>
-
-      {/* Client Impact Outcome Badge */}
-      <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 text-[10px] sm:text-[11px] font-mono mb-2.5 sm:mb-4 w-full shadow-[0_0_15px_rgba(16,185,129,0.18)] font-medium">
-        <TrendingUp className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
-        <span className="truncate">{project.impactMetric}</span>
-      </div>
-
-      {/* Description */}
-      <p className="text-[11px] sm:text-sm text-slate-200 font-light leading-relaxed mb-3 sm:mb-6 line-clamp-3 sm:line-clamp-none">
-        {project.description}
-      </p>
-
-      {/* Tech Stack Badges */}
-      <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-6">
-        {project.stack.map((tech) => (
-          <span
-            key={tech}
-            className="text-[9px] sm:text-[11px] font-mono px-2 sm:px-2.5 py-0.5 rounded-md bg-white/[0.06] text-slate-200 border border-white/[0.1]"
-          >
-            {tech}
-          </span>
-        ))}
-      </div>
-
-      {/* Action Links (Live + GitHub) */}
-      <div className="flex items-center justify-between pt-2.5 sm:pt-4 border-t border-white/[0.1]">
+      {/* Top Half: Visual macOS / Browser Window Preview */}
+      <div>
         <a
           href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 sm:gap-2 text-xs font-semibold text-slate-100 hover:text-white transition-colors group/link focus:outline-none focus:ring-1 focus:ring-cyan-400 py-1 sm:py-0 touch-manipulation"
-          aria-label={`View live production deployment for ${project.title}`}
+          className="block relative rounded-xl overflow-hidden border border-white/15 bg-slate-950/80 group/preview transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-cyan-400 cursor-pointer shadow-lg"
+          aria-label={`Open live website for ${project.title}`}
         >
-          <span
-            className="w-2 h-2 rounded-full animate-ping"
-            style={{ backgroundColor: project.accentColor }}
-          />
-          <span className="drop-shadow-sm">Live Deployment</span>
-          <ExternalLink className="w-3.5 h-3.5 text-slate-300 group-hover/link:text-cyan-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+          {/* macOS Browser Header */}
+          <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-900/95 border-b border-white/10">
+            {/* Window control dots */}
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F56] inline-block shadow-sm" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E] inline-block shadow-sm" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#27C93F] inline-block shadow-sm" />
+            </div>
+
+            {/* Address Bar */}
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-slate-950/70 border border-white/10 text-[11px] font-mono text-slate-300 max-w-[220px] sm:max-w-[260px] truncate shadow-inner">
+              <Lock className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
+              <span className="truncate">{displayHost}</span>
+            </div>
+
+            {/* Live Indicator */}
+            <div className="flex items-center gap-1 text-[10px] font-mono text-emerald-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="hidden sm:inline">LIVE</span>
+            </div>
+          </div>
+
+          {/* Visual Mockup Preview Banner */}
+          <div
+            className="relative h-44 sm:h-52 w-full flex flex-col items-center justify-center p-6 text-center overflow-hidden transition-all duration-500"
+            style={{
+              background: `linear-gradient(135deg, #090D1A 0%, #0F172A 50%, ${project.accentColor}25 100%)`,
+            }}
+          >
+            {/* Subtle decorative background glow */}
+            <div
+              className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-2xl opacity-30 pointer-events-none"
+              style={{ backgroundColor: project.accentColor }}
+            />
+
+            {/* Center mockup card representation */}
+            <div className="relative z-10 flex flex-col items-center">
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-3 shadow-lg border border-white/20 transition-transform duration-300 group-hover/preview:scale-110"
+                style={{
+                  backgroundColor: `${project.accentColor}25`,
+                  color: project.accentColor,
+                }}
+              >
+                <Globe className="w-6 h-6" />
+              </div>
+              <h4 className="text-white font-bold font-display text-lg sm:text-xl tracking-tight drop-shadow-md">
+                {project.title}
+              </h4>
+              <p className="text-xs text-slate-300 mt-1 font-mono tracking-wide max-w-[240px] truncate">
+                {project.tagline}
+              </p>
+            </div>
+
+            {/* Prominent Hover Overlay */}
+            <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-sm opacity-0 group-hover/preview:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2 p-4">
+              <div
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm text-slate-950 shadow-xl transition-transform duration-300 group-hover/preview:scale-105"
+                style={{ backgroundColor: project.accentColor }}
+              >
+                <span>Click to Open Live Website</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </div>
+              <span className="text-[11px] text-slate-300 font-mono">
+                Opens in a new browser tab
+              </span>
+            </div>
+          </div>
+        </a>
+
+        {/* Bottom Half: Minimal, Clean, Scannable Info */}
+        <div className="mt-4 sm:mt-5">
+          {/* Category Tag */}
+          <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide border mb-2.5"
+            style={{
+              borderColor: `${project.accentColor}60`,
+              color: project.accentColor,
+              backgroundColor: `${project.accentColor}15`,
+            }}
+          >
+            {project.category}
+          </div>
+
+          {/* Large Website Title (24px - 28px) */}
+          <h3 className="text-2xl sm:text-[26px] font-bold font-display text-white tracking-tight leading-snug">
+            {project.title}
+          </h3>
+
+          {/* Short, Normal Description in Plain English (max 25 words) */}
+          <p className="mt-2 text-sm sm:text-[15px] text-slate-300 font-light leading-relaxed">
+            {project.description}
+          </p>
+        </div>
+      </div>
+
+      {/* Action Buttons: Massive Primary Button + GitHub Link */}
+      <div className="mt-5 sm:mt-6 pt-4 border-t border-white/10 flex items-center gap-3">
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm text-slate-950 transition-all duration-200 shadow-md hover:brightness-110 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 cursor-pointer"
+          style={{
+            backgroundColor: project.accentColor,
+            boxShadow: `0 4px 20px -2px ${project.accentColor}60`,
+          }}
+          aria-label={`Visit live website for ${project.title}`}
+        >
+          <span>Visit Live Website</span>
+          <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
         </a>
 
         <a
           href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-white transition-colors px-2.5 py-1.5 rounded-lg hover:bg-white/[0.1] focus:outline-none focus:ring-1 focus:ring-slate-300 touch-manipulation"
-          aria-label={`View source code on GitHub for ${project.title}`}
+          className="inline-flex items-center justify-center gap-1.5 px-3.5 py-3.5 rounded-xl text-xs sm:text-sm font-mono font-medium text-slate-300 hover:text-white bg-white/[0.05] hover:bg-white/[0.12] border border-white/10 transition-colors focus:outline-none focus:ring-1 focus:ring-slate-400 cursor-pointer shrink-0"
+          aria-label={`View GitHub source code for ${project.title}`}
         >
           <Github className="w-4 h-4" />
-          <span className="text-[11px] font-mono">Source</span>
+          <span className="hidden sm:inline">GitHub Code</span>
         </a>
       </div>
     </article>

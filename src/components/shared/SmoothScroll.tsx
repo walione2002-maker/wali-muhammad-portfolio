@@ -8,7 +8,6 @@ import { PROJECTS } from '@/data/projects';
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
-  const hasEntered = usePortfolioStore((s) => s.hasEntered);
 
   useEffect(() => {
     const isMobile =
@@ -16,7 +15,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       (window.innerWidth < 768 || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0));
 
     const lenis = new Lenis({
-      duration: isMobile ? 0.85 : 1.2,
+      duration: isMobile ? 0.85 : 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       syncTouch: true,
@@ -24,11 +23,6 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       touchMultiplier: 1.0,
     });
     lenisRef.current = lenis;
-
-    // If user hasn't entered, block scrolling
-    if (!hasEntered) {
-      lenis.stop();
-    }
 
     lenis.on('scroll', (e: { progress?: number; scroll: number; limit: number }) => {
       const progress =
@@ -38,7 +32,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
             ? Math.max(0, Math.min(1, e.scroll / e.limit))
             : 0;
 
-      // 1. Update non-reactive store scrollProgress for CameraRig useFrame
+      // 1. Update non-reactive store scrollProgress for 3D Camera/Centerpiece useFrame
       usePortfolioStore.setState({ scrollProgress: progress });
 
       // 2. Direct DOM update of top progress bar without React re-render
@@ -55,12 +49,12 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
         state.setActiveSection(section, index);
       }
 
-      // 4. Discrete project detection in Section 02: Only trigger React update when integer index changes
-      if (progress >= 0.22 && progress <= 0.70) {
-        const showroomProgress = Math.max(0, Math.min(1, (progress - 0.26) / 0.38));
+      // 4. Discrete project detection in Section 1 (Websites showcase range: 0.10 - 0.65)
+      if (progress >= 0.10 && progress <= 0.65) {
+        const websitesProgress = Math.max(0, Math.min(1, (progress - 0.10) / 0.55));
         const targetProjectIndex = Math.min(
           PROJECTS.length - 1,
-          Math.max(0, Math.round(showroomProgress * (PROJECTS.length - 1)))
+          Math.max(0, Math.floor(websitesProgress * PROJECTS.length))
         );
 
         if (targetProjectIndex !== state.activeProjectIndex) {
@@ -88,18 +82,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       lenis.destroy();
       lenisRef.current = null;
     };
-  }, [hasEntered]);
-
-  // Handle enter / lock state changes
-  useEffect(() => {
-    if (!lenisRef.current) return;
-    if (hasEntered) {
-      lenisRef.current.start();
-    } else {
-      lenisRef.current.stop();
-      lenisRef.current.scrollTo(0, { immediate: true });
-    }
-  }, [hasEntered]);
+  }, []);
 
   return <>{children}</>;
 }

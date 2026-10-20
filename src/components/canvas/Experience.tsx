@@ -40,12 +40,12 @@ export function Experience() {
                 depth: true,
               }
         }
-        dpr={isMobile ? [0.75, 1.1] : [1, 1.75]}
+        dpr={isMobile ? [0.8, 1.15] : [1, 1.75]}
         camera={{
-          fov: 50,
+          fov: 48,
           near: 0.1,
           far: 100,
-          position: [0, 0, 12],
+          position: [0, 0, 11],
         }}
         style={{
           position: 'fixed',
@@ -57,7 +57,7 @@ export function Experience() {
           pointerEvents: 'none',
         }}
       >
-        {isMobile && <color attach="background" args={['#040714']} />}
+        {isMobile && <color attach="background" args={['#070B19']} />}
         <CameraRig />
         <Lighting />
         <Centerpiece />

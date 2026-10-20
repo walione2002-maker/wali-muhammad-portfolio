@@ -3,23 +3,21 @@
 import { usePortfolioStore, type SectionName } from '@/store/usePortfolioStore';
 
 /**
- * Pure helper to resolve section name & index from normalized scroll progress.
+ * Pure helper to resolve human section name & index from normalized scroll progress.
  * Used internally in the scroll handler without triggering React 60Hz re-renders.
  */
 export function resolveSectionFromProgress(progress: number): {
   section: SectionName;
   index: number;
 } {
-  if (progress >= 0.85) {
-    return { section: 'contact-portal', index: 4 };
-  } else if (progress >= 0.66) {
-    return { section: 'tech-stack', index: 3 };
-  } else if (progress >= 0.22) {
-    return { section: 'project-showroom', index: 2 };
-  } else if (progress >= 0.04) {
-    return { section: 'executive-overview', index: 1 };
+  if (progress >= 0.80) {
+    return { section: 'contact', index: 3 };
+  } else if (progress >= 0.62) {
+    return { section: 'services', index: 2 };
+  } else if (progress >= 0.12) {
+    return { section: 'websites', index: 1 };
   }
-  return { section: 'entry-gate', index: 0 };
+  return { section: 'hero', index: 0 };
 }
 
 /**

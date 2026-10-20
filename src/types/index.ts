@@ -1,9 +1,4 @@
-export type ProjectCategory =
-  | 'Platform'
-  | 'E-Commerce'
-  | 'Creative Tech'
-  | 'FinTech'
-  | 'Web App';
+export type ProjectCategory = string;
 
 export interface ProjectData {
   /** Unique slug identifier (kebab-case) */
@@ -12,9 +7,9 @@ export interface ProjectData {
   index: number;
   /** Project title as shown in the showroom */
   title: string;
-  /** Short editorial tagline (≤ 12 words) */
+  /** Short editorial tagline */
   tagline: string;
-  /** Full description paragraph for expanded state */
+  /** Full description paragraph */
   description: string;
   /** Key client outcome / impact metric */
   impactMetric: string;
@@ -24,17 +19,15 @@ export interface ProjectData {
   category: ProjectCategory;
   /** Live production URL (Vercel deployment) */
   liveUrl: string;
+  /** Clean live display domain for browser bar mockup */
+  displayUrl?: string;
   /** GitHub repository URL (source code) */
   githubUrl: string;
-  /** Accent color hex for the orbital node emissive glow */
+  /** Accent color hex */
   accentColor: string;
-  /**
-   * Angular position (radians) of this project's orbital node
-   * around the 3D centerpiece on the XZ plane.
-   * Evenly distributed: index × (2π / 8)
-   */
+  /** Angular position (radians) */
   orbitalAngle: number;
-  /** Orbital ring radius from centerpiece origin */
+  /** Orbital ring radius */
   orbitalRadius: number;
 }
 

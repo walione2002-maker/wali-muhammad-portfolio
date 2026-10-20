@@ -16,7 +16,7 @@ const interTight = Inter_Tight({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#0A0A0F',
+  themeColor: '#070B19',
   width: 'device-width',
   initialScale: 1,
 };
@@ -24,56 +24,65 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://devwalimuhammad.pages.dev'),
   title: {
-    default: 'Wali Muhammad | Full-Stack Engineer, FinTech Systems Architect & Creative Developer',
+    default: 'Wali Muhammad | Web Developer & Software Engineer in Karachi, Pakistan — Official Portfolio',
     template: '%s | Wali Muhammad',
   },
   description:
-    'Wali Muhammad is a Full-Stack Engineer, FinTech Systems Architect & Creative Developer specializing in Next.js, TypeScript, React Three Fiber, WebGL 3D experiences, and quantitative risk engines. Explore 8 live production platforms running on zero-downtime edge architecture.',
+    'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore 8 live websites built by Wali Muhammad.',
   keywords: [
-    // Brand Keywords
+    // Primary Name & Local Keywords
     'Wali Muhammad',
-    'Wali Muhammad Full-Stack Engineer',
-    'Wali Muhammad FinTech Systems Architect',
-    'Wali Muhammad 3D WebGL Developer',
+    'Wali Muhammad Karachi',
+    'Wali Muhammad Pakistan',
+    'Wali Muhammad Web Developer',
+    'Wali Muhammad Software Engineer',
+    'Wali Muhammad FAST-NUCES',
     'Wali Muhammad Portfolio',
-    // High-Intent Client Search Keywords
-    'Freelance Next.js & TypeScript Developer',
-    'React Three Fiber & Three.js 3D Interactive Website Developer',
-    'FinTech Quantitative & Risk Dashboard Engineer',
-    'Luxury High-Conversion Web Architecture',
-    'Cloudflare Edge & Vercel Full-Stack Engineer',
-    'Creative Technologist Awwwards Standard',
-    'Quantitative Position Sizing Algorithms',
-    'Zero-Downtime Web Architecture',
-    'Three.js WebGL Performance Specialist',
+    'Web Developer Karachi',
+    'Web Developer Pakistan',
+    'Full-Stack Developer Karachi',
+    // Services & Client Queries
+    'Freelance Web Developer Karachi',
+    'Next.js Developer Pakistan',
+    'React Developer Karachi',
+    'E-Commerce Website Developer Karachi',
+    'Custom Web Application Development',
+    'Interactive 3D Web Developer',
+    'FinTech Web Developer',
   ],
   authors: [{ name: 'Wali Muhammad', url: 'https://devwalimuhammad.pages.dev' }],
   creator: 'Wali Muhammad',
   publisher: 'Wali Muhammad',
+  other: {
+    'geo.region': 'PK-SD',
+    'geo.placename': 'Karachi, Sindh, Pakistan',
+    'geo.position': '24.8607;67.0011',
+    'ICBM': '24.8607, 67.0011',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://devwalimuhammad.pages.dev',
-    siteName: 'Wali Muhammad — 3D Portfolio & Systems Architecture',
-    title: 'Wali Muhammad | Full-Stack Engineer, FinTech Systems Architect & Creative Developer',
+    siteName: 'Wali Muhammad — Web Developer Portfolio',
+    title: 'Wali Muhammad | Web Developer & Software Engineer in Karachi, Pakistan — Official Portfolio',
     description:
-      'Explore 8 live production platforms across FinTech, luxury commerce, and spatial 3D WebGL technology in an interactive spline-choreographed experience.',
+      'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore 8 live websites built by Wali Muhammad.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Wali Muhammad — Flagship 3D Portfolio & Systems Architecture',
+        alt: 'Wali Muhammad — Web Developer & Software Engineer Portfolio',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Wali Muhammad | Full-Stack Engineer, FinTech Systems Architect & Creative Developer',
+    title: 'Wali Muhammad | Web Developer & Software Engineer in Karachi, Pakistan',
     description:
-      'Explore 8 live production platforms across FinTech, luxury commerce, and spatial 3D WebGL technology in an interactive spline-choreographed experience.',
+      'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore 8 live websites built by Wali Muhammad.',
     images: ['/og-image.png'],
-    creator: '@walimuhammad',
+    creator: '@walione2002',
   },
   robots: {
     index: true,
@@ -99,14 +108,14 @@ export default function RootLayout({
   const jsonLd = getJsonLdSchema();
 
   return (
-    <html lang="en" className={`${inter.variable} ${interTight.variable} dark`}>
+    <html lang="en" className={`${inter.variable} ${interTight.variable} dark scroll-smooth`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-surface-primary text-slate-100 antialiased selection:bg-accent-gold/20 selection:text-accent-gold overflow-x-hidden">
+      <body className="bg-[#070B19] text-slate-100 antialiased selection:bg-cyan-500/20 selection:text-cyan-300 overflow-x-hidden">
         {children}
       </body>
     </html>

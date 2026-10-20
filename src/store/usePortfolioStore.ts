@@ -2,45 +2,30 @@ import { create } from 'zustand';
 
 export type QualityTier = 'high' | 'medium' | 'low';
 
-export type SectionName =
-  | 'entry-gate'
-  | 'executive-overview'
-  | 'project-showroom'
-  | 'tech-stack'
-  | 'contact-portal';
+export type SectionName = 'hero' | 'websites' | 'services' | 'contact';
 
 export interface PortfolioState {
-  // ── Gate state ──────────────────────────────────────────
-  /** Whether the user has clicked "ENTER EXPERIENCE" */
+  // Gate state (unlocked immediately on load)
   hasEntered: boolean;
-  /** Whether the entry GSAP transition is currently playing */
   isTransitioning: boolean;
 
-  // ── Scroll state ────────────────────────────────────────
-  /** Normalized 0–1 Lenis scroll progress across full page height */
+  // Scroll state
   scrollProgress: number;
-  /** Currently active section derived from scrollProgress thresholds */
   activeSection: SectionName;
-  /** Index 0–4 of active section (mirrors activeSection for numeric use) */
   activeSectionIndex: number;
 
-  // ── Project interaction ─────────────────────────────────
-  /** ID of the project card currently hovered/focused (null = none) */
+  // Project interaction
   activeProjectId: string | null;
-  /** Index 0–7 of the active project in the 3D orbital showroom */
   activeProjectIndex: number;
 
-  // ── Performance ─────────────────────────────────────────
-  /** GPU capability tier detected at mount (drives LOD, post-processing) */
+  // Performance
   qualityTier: QualityTier;
-  /** Whether the client device is a mobile or touch device */
   isMobile: boolean;
 
-  // ── WebGL resilience ────────────────────────────────────
-  /** Incremented on WebGL context-loss to force Canvas remount */
+  // WebGL resilience
   contextLossCount: number;
 
-  // ── Actions ─────────────────────────────────────────────
+  // Actions
   setHasEntered: (val: boolean) => void;
   setIsTransitioning: (val: boolean) => void;
   setScrollProgress: (val: number) => void;
@@ -53,10 +38,10 @@ export interface PortfolioState {
 }
 
 export const usePortfolioStore = create<PortfolioState>((set) => ({
-  hasEntered: false,
+  hasEntered: true, // Immediate scroll from millisecond zero
   isTransitioning: false,
   scrollProgress: 0,
-  activeSection: 'entry-gate',
+  activeSection: 'hero',
   activeSectionIndex: 0,
   activeProjectId: null,
   activeProjectIndex: 0,
@@ -76,4 +61,3 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
   incrementContextLoss: () =>
     set((s) => ({ contextLossCount: s.contextLossCount + 1 })),
 }));
-

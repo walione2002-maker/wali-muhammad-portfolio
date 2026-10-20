@@ -7,8 +7,7 @@ import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { PROJECTS } from '@/data/projects';
 
 // Module-scoped Color object to avoid GC allocations in useFrame
-const _coreColor = new THREE.Color();
-const _targetCoreColor = new THREE.Color('#00F0FF');
+const _targetCoreColor = new THREE.Color('#38BDF8');
 
 export function RefractiveCoreOrb() {
   const outerMeshRef = useRef<THREE.Mesh>(null);
@@ -19,12 +18,10 @@ export function RefractiveCoreOrb() {
   const fresnelMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const innerMatRef = useRef<THREE.MeshStandardMaterial>(null);
 
-  const activeSectionIndex = usePortfolioStore((s) => s.activeSectionIndex);
   const activeProjectId = usePortfolioStore((s) => s.activeProjectId);
   const qualityTier = usePortfolioStore((s) => s.qualityTier);
   const isMobile = usePortfolioStore((s) => s.isMobile);
 
-  const isWireframe = activeSectionIndex === 3;
   const isSinglePass = isMobile || qualityTier !== 'high';
 
   useFrame((_, delta) => {
@@ -41,37 +38,24 @@ export function RefractiveCoreOrb() {
       fresnelMeshRef.current.rotation.x += 0.09 * dt;
     }
 
-    // Dynamic tumble of internal faceted quantum nucleus
+    // Dynamic tumble of internal nucleus
     if (innerMeshRef.current) {
       innerMeshRef.current.rotation.y += 0.45 * dt;
       innerMeshRef.current.rotation.z -= 0.3 * dt;
     }
 
-    // Resolve target color from active project or section
+    // Resolve target color from active project or default modern palette
     if (activeProjectId) {
       const p = PROJECTS.find((proj) => proj.id === activeProjectId);
       if (p) _targetCoreColor.set(p.accentColor);
-    } else if (activeSectionIndex === 1) {
-      _targetCoreColor.set('#FFB800'); // Molten Gold
-    } else if (activeSectionIndex === 2) {
-      _targetCoreColor.set('#00F0FF'); // Electric Cyan
-    } else if (activeSectionIndex === 3) {
-      _targetCoreColor.set('#00FF9D'); // Matrix Neon Emerald
-    } else if (activeSectionIndex === 4) {
-      _targetCoreColor.set('#FFB800'); // Supernova Gold
     } else {
-      _targetCoreColor.set('#00F0FF');
+      _targetCoreColor.set('#38BDF8');
     }
 
-    // High-performance single-pass metallic core on mobile
+    // Single-pass metallic core on mobile
     if (stdMatRef.current) {
       stdMatRef.current.emissive.lerp(_targetCoreColor, dt * 5);
-      let targetEmissive = 1.4;
-      if (activeSectionIndex === 1) targetEmissive = 1.6;
-      else if (activeSectionIndex === 2) targetEmissive = 1.8;
-      else if (activeSectionIndex === 3) targetEmissive = 2.0;
-      else if (activeSectionIndex === 4) targetEmissive = 2.8;
-
+      const targetEmissive = activeProjectId ? 1.8 : 1.4;
       stdMatRef.current.emissiveIntensity = THREE.MathUtils.lerp(
         stdMatRef.current.emissiveIntensity,
         targetEmissive,
@@ -87,12 +71,7 @@ export function RefractiveCoreOrb() {
     // Multi-pass Physical Transmission Material (Desktop high tier only)
     if (matRef.current) {
       matRef.current.emissive.lerp(_targetCoreColor, dt * 4);
-      let targetEmissive = 0.4;
-      if (activeSectionIndex === 1) targetEmissive = 0.75;
-      else if (activeSectionIndex === 2) targetEmissive = 1.0;
-      else if (activeSectionIndex === 3) targetEmissive = 1.5;
-      else if (activeSectionIndex === 4) targetEmissive = 2.6;
-
+      const targetEmissive = activeProjectId ? 1.0 : 0.6;
       matRef.current.emissiveIntensity = THREE.MathUtils.lerp(
         matRef.current.emissiveIntensity,
         targetEmissive,
@@ -102,29 +81,27 @@ export function RefractiveCoreOrb() {
 
     if (innerMatRef.current) {
       innerMatRef.current.emissive.lerp(_targetCoreColor, dt * 5);
-      const innerTarget = activeSectionIndex === 4 ? 3.5 : 1.6;
       innerMatRef.current.emissiveIntensity = THREE.MathUtils.lerp(
         innerMatRef.current.emissiveIntensity,
-        innerTarget,
+        2.0,
         dt * 4
       );
     }
   });
 
   return (
-    <group name="refractive-core-composite">
-      {/* Outer Core Shell: Single-pass Metallic on mobile / Physical glass on high-tier desktop */}
-      <mesh ref={outerMeshRef} name="refractive-core-orb">
+    <group name="core-orb-composite">
+      {/* Outer Core Shell: Single-pass Metallic on mobile / Physical glass on desktop */}
+      <mesh ref={outerMeshRef} name="core-orb">
         <icosahedronGeometry args={[0.92, isMobile ? 2 : 4]} />
         {isSinglePass ? (
           <meshStandardMaterial
             ref={stdMatRef}
-            color="#080C18"
+            color="#080E1E"
             metalness={0.92}
             roughness={0.14}
-            emissive="#00F0FF"
+            emissive="#38BDF8"
             emissiveIntensity={1.4}
-            wireframe={isWireframe}
           />
         ) : (
           <meshPhysicalMaterial
@@ -135,22 +112,21 @@ export function RefractiveCoreOrb() {
             thickness={2.5}
             ior={1.54}
             envMapIntensity={1.5}
-            emissive="#00F0FF"
-            emissiveIntensity={0.4}
-            wireframe={isWireframe}
+            emissive="#38BDF8"
+            emissiveIntensity={0.6}
             transparent
             opacity={0.94}
           />
         )}
       </mesh>
 
-      {/* Additive Backface Fresnel Glow Shell for vibrant mobile luminescence */}
+      {/* Additive Backface Fresnel Glow Shell for vibrant luminescence */}
       {isSinglePass && (
         <mesh ref={fresnelMeshRef} scale={[1.08, 1.08, 1.08]} name="fresnel-glow-shell">
           <icosahedronGeometry args={[0.92, 1]} />
           <meshBasicMaterial
             ref={fresnelMatRef}
-            color="#00F0FF"
+            color="#38BDF8"
             transparent
             opacity={0.35}
             side={THREE.BackSide}
@@ -161,16 +137,15 @@ export function RefractiveCoreOrb() {
       )}
 
       {/* Internal Glowing Quantum Nucleus */}
-      <mesh ref={innerMeshRef} name="inner-quantum-nucleus">
+      <mesh ref={innerMeshRef} name="inner-nucleus">
         <octahedronGeometry args={[0.42, 0]} />
         <meshStandardMaterial
           ref={innerMatRef}
           color="#ffffff"
-          emissive="#FFB800"
-          emissiveIntensity={1.6}
+          emissive="#F59E0B"
+          emissiveIntensity={1.8}
           metalness={0.9}
           roughness={0.15}
-          wireframe={isWireframe}
         />
       </mesh>
     </group>

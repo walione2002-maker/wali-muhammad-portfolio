@@ -23,9 +23,7 @@ function SingleNode({ id, angle, radius, accentColor }: SingleNodeProps) {
   const haloMatRef = useRef<THREE.MeshBasicMaterial>(null);
 
   const activeProjectId = usePortfolioStore((s) => s.activeProjectId);
-  const activeSectionIndex = usePortfolioStore((s) => s.activeSectionIndex);
   const isMobile = usePortfolioStore((s) => s.isMobile);
-  const isWireframe = activeSectionIndex === 3;
 
   const isActive = activeProjectId === id;
   const initialX = Math.cos(angle) * radius;
@@ -41,14 +39,7 @@ function SingleNode({ id, angle, radius, accentColor }: SingleNodeProps) {
     meshRef.current.scale.lerp(_tempScale, dt * 10);
 
     // Target emissive intensity
-    let targetEmissive = 0.3;
-    if (isActive) {
-      targetEmissive = 2.4;
-    } else if (activeSectionIndex === 2) {
-      targetEmissive = 0.85; // Bright constellation during project showroom
-    } else if (activeSectionIndex === 4) {
-      targetEmissive = 0.15; // Gentle fade during contact zenith
-    }
+    const targetEmissive = isActive ? 2.4 : 0.45;
 
     matRef.current.emissiveIntensity = THREE.MathUtils.lerp(
       matRef.current.emissiveIntensity,
@@ -82,7 +73,6 @@ function SingleNode({ id, angle, radius, accentColor }: SingleNodeProps) {
           emissiveIntensity={0.3}
           metalness={0.8}
           roughness={0.2}
-          wireframe={isWireframe}
         />
       </mesh>
 
@@ -103,16 +93,12 @@ function SingleNode({ id, angle, radius, accentColor }: SingleNodeProps) {
 
 export function ProjectNodes() {
   const groupRef = useRef<THREE.Group>(null);
-  const activeSectionIndex = usePortfolioStore((s) => s.activeSectionIndex);
   const isMobile = usePortfolioStore((s) => s.isMobile);
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
     const dt = Math.min(delta, 0.1);
-
-    // Orbital precession rotation
-    const rotSpeed = activeSectionIndex === 2 ? 0.04 : 0.07;
-    groupRef.current.rotation.y += rotSpeed * dt;
+    groupRef.current.rotation.y += 0.05 * dt;
   });
 
   return (
