@@ -39,7 +39,7 @@ export function HeroSection() {
             href="#websites"
             className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-bold text-base shadow-[0_0_25px_rgba(56,189,248,0.4)] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
-            <span>Explore My 8 Live Websites</span>
+            <span>Explore My Live Websites</span>
             <ArrowDown className="w-5 h-5 stroke-[2.5]" />
           </a>
 
@@ -57,7 +57,7 @@ export function HeroSection() {
         <div className="mt-14 pt-8 border-t border-white/10 flex flex-wrap items-center gap-6 sm:gap-10 text-xs sm:text-sm text-slate-400">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34D399]" />
-            <span className="text-slate-200 font-medium">8 Live Deployed Projects</span>
+            <span className="text-slate-200 font-medium">6 Live Deployed Projects</span>
           </div>
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-cyan-400" />

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: '%s | Wali Muhammad',
   },
   description:
-    'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore 8 live websites built by Wali Muhammad.',
+    'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore live client websites and web applications built by Wali Muhammad.',
   keywords: [
     // Primary Name & Local Keywords
     'Wali Muhammad',
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     siteName: 'Wali Muhammad — Web Developer Portfolio',
     title: 'Wali Muhammad | Web Developer & Software Engineer in Karachi, Pakistan — Official Portfolio',
     description:
-      'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore 8 live websites built by Wali Muhammad.',
+      'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore live client websites and web applications built by Wali Muhammad.',
     images: [
       {
         url: '/og-image.png',
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Wali Muhammad | Web Developer & Software Engineer in Karachi, Pakistan',
     description:
-      'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore 8 live websites built by Wali Muhammad.',
+      'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore live client websites and web applications built by Wali Muhammad.',
     images: ['/og-image.png'],
     creator: '@walione2002',
   },

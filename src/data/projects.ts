@@ -1,30 +1,12 @@
 import { type ProjectData } from '@/types';
 
 const ORBITAL_RADIUS = 4.5;
-const toAngle = (i: number) => i * ((2 * Math.PI) / 8);
+const toAngle = (i: number) => i * ((2 * Math.PI) / 6);
 
 export const PROJECTS: ProjectData[] = [
   {
-    id: 'zynnco-chauffeurs',
-    index: 0,
-    title: 'Zynnco Chauffeurs',
-    tagline: 'Luxury Chauffeur & Executive Fleet Booking Platform',
-    impactMetric: 'Instant Route Distance & Dynamic Fleet Selection',
-    description:
-      'A luxury chauffeur and executive car booking website with instant route pricing and vehicle selection.',
-    stack: ['Next.js', 'Tailwind CSS', 'Stripe', 'Vercel'],
-    category: 'Luxury Chauffeur & Fleet Booking',
-    liveUrl: 'https://zynnco-rkgn4e6vy-wali-muhammad-s-projects.vercel.app',
-    displayUrl: 'zynnco.vercel.app',
-    image: '/projects/zynnco-chauffeurs.png',
-    githubUrl: 'https://github.com/walione2002-maker/zynnco',
-    accentColor: '#38BDF8', // Sky Blue
-    orbitalAngle: toAngle(0),
-    orbitalRadius: ORBITAL_RADIUS,
-  },
-  {
     id: 'corpassion-events',
-    index: 1,
+    index: 0,
     title: 'Corpassion Events',
     tagline: 'High-End Event Architecture & Experiences',
     impactMetric: 'Interactive Event Portfolio & Client Inquiry Funnel',
@@ -37,12 +19,12 @@ export const PROJECTS: ProjectData[] = [
     image: '/projects/corpassion-events.png',
     githubUrl: 'https://github.com/walione2002-maker/corpassion-events',
     accentColor: '#F59E0B', // Warm Amber Gold
-    orbitalAngle: toAngle(1),
+    orbitalAngle: toAngle(0),
     orbitalRadius: ORBITAL_RADIUS,
   },
   {
     id: '3d-resume-builder',
-    index: 2,
+    index: 1,
     title: '3D Interactive Resume Builder',
     tagline: 'Spatial 3D & WebGL Resume Generation App',
     impactMetric: 'Live 3D Document Customization & Vector PDF Export',
@@ -55,12 +37,12 @@ export const PROJECTS: ProjectData[] = [
     image: '/projects/3d-resume-builder.png',
     githubUrl: 'https://github.com/walione2002-maker/resume-australia',
     accentColor: '#8B5CF6', // Vibrant Violet
-    orbitalAngle: toAngle(2),
+    orbitalAngle: toAngle(1),
     orbitalRadius: ORBITAL_RADIUS,
   },
   {
     id: 'nexus-bay',
-    index: 3,
+    index: 2,
     title: 'Nexus Bay',
     tagline: 'Digital Agency & Commercial Web Platform',
     impactMetric: 'Interactive Service Showcase & Fast Edge Delivery',
@@ -73,12 +55,12 @@ export const PROJECTS: ProjectData[] = [
     image: '/projects/nexus-bay.png',
     githubUrl: 'https://github.com/walione2002-maker/nexusbay-digital',
     accentColor: '#06B6D4', // Electric Cyan
-    orbitalAngle: toAngle(3),
+    orbitalAngle: toAngle(2),
     orbitalRadius: ORBITAL_RADIUS,
   },
   {
     id: 'amirs-kalonji-oil',
-    index: 4,
+    index: 3,
     title: 'Amirs Kalonji Oil',
     tagline: 'Direct-to-Consumer E-Commerce Storefront',
     impactMetric: 'High-Converting Customer Checkout & Product Storytelling',
@@ -91,12 +73,12 @@ export const PROJECTS: ProjectData[] = [
     image: '/projects/amirs-kalonji-oil.png',
     githubUrl: 'https://github.com/walione2002-maker/amirs-kalonji-oil-website',
     accentColor: '#10B981', // Emerald Green
-    orbitalAngle: toAngle(4),
+    orbitalAngle: toAngle(3),
     orbitalRadius: ORBITAL_RADIUS,
   },
   {
     id: 'digital-wedding-suite',
-    index: 5,
+    index: 4,
     title: 'Fatima & Ali Digital Wedding Suite',
     tagline: 'Interactive Event Invitation & Guest RSVP App',
     impactMetric: 'Fluid Mobile Scroll & Online Attendance Confirmation',
@@ -109,12 +91,12 @@ export const PROJECTS: ProjectData[] = [
     image: '/projects/digital-wedding-suite.png',
     githubUrl: 'https://github.com/walione2002-maker/fatima-ali-wedding',
     accentColor: '#EC4899', // Rose Pink
-    orbitalAngle: toAngle(5),
+    orbitalAngle: toAngle(4),
     orbitalRadius: ORBITAL_RADIUS,
   },
   {
     id: 'commercial-sanitary-hub',
-    index: 6,
+    index: 5,
     title: 'Federal Sanitary & Hardware Hub',
     tagline: 'Commercial Product Catalog & Retail Platform',
     impactMetric: 'Faceted Category Search & Instant Quote Inquiries',
@@ -127,25 +109,7 @@ export const PROJECTS: ProjectData[] = [
     image: '/projects/commercial-sanitary-hub.png',
     githubUrl: 'https://github.com/walione2002-maker/federal-sanitary',
     accentColor: '#3B82F6', // Royal Blue
-    orbitalAngle: toAngle(6),
-    orbitalRadius: ORBITAL_RADIUS,
-  },
-  {
-    id: 'fintech-risk-engine',
-    index: 7,
-    title: 'FinTech Market & Risk Dashboard',
-    tagline: 'Financial Trading & Risk Calculator Application',
-    impactMetric: 'Real-Time Position Sizing & Market Structure Analysis',
-    description:
-      'A financial trading and risk calculator app for analyzing market trends and managing portfolio position sizes.',
-    stack: ['Python', 'TypeScript', 'Financial Algorithms', 'Vercel'],
-    category: 'Financial Technology App',
-    liveUrl: 'https://market-structure.vercel.app',
-    displayUrl: 'market-structure.vercel.app',
-    image: '/projects/fintech-risk-engine.png',
-    githubUrl: 'https://github.com/walione2002-maker/fintech-risk-engine',
-    accentColor: '#6366F1', // Indigo
-    orbitalAngle: toAngle(7),
+    orbitalAngle: toAngle(5),
     orbitalRadius: ORBITAL_RADIUS,
   },
 ];

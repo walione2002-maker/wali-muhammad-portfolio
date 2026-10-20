@@ -10,7 +10,7 @@ export function getJsonLdSchema() {
         url: 'https://devwalimuhammad.pages.dev',
         name: 'Wali Muhammad | Web Developer & Software Engineer in Karachi, Pakistan',
         description:
-          'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore 8 live websites built by Wali Muhammad.',
+          'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore live client websites and web applications built by Wali Muhammad.',
         publisher: {
           '@id': 'https://devwalimuhammad.pages.dev/#person',
         },
@@ -28,7 +28,7 @@ export function getJsonLdSchema() {
         },
         primaryImageOfPage: 'https://devwalimuhammad.pages.dev/og-image.png',
         description:
-          'Official portfolio of Wali Muhammad showcasing 8 live websites, e-commerce stores, and custom web applications.',
+          'Official portfolio of Wali Muhammad showcasing live client websites, e-commerce stores, and custom web applications.',
       },
       {
         '@type': 'Person',
@@ -93,11 +93,11 @@ export function getJsonLdSchema() {
         serviceType: 'Software Engineering',
         provider: { '@id': 'https://devwalimuhammad.pages.dev/#person' },
         description:
-          'Bespoke web applications, financial dashboards, and interactive 3D experiences tailored to unique business ideas.',
+          'Bespoke web applications, client portals, and interactive 3D experiences tailored to unique business ideas.',
       },
       {
         '@type': 'ItemList',
-        name: '8 Live Websites by Wali Muhammad',
+        name: 'Featured Live Websites by Wali Muhammad',
         numberOfItems: PROJECTS.length,
         itemListElement: PROJECTS.map((project) => ({
           '@type': 'ListItem',
