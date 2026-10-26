@@ -23,29 +23,19 @@ export function Experience() {
     <div className="fixed inset-0 pointer-events-none z-0 w-full h-full overflow-hidden">
       <Canvas
         key={`canvas-${contextLossCount}-${isMobile ? 'mobile' : 'desktop'}`}
-        gl={
-          isMobile
-            ? {
-                antialias: false,
-                powerPreference: 'high-performance',
-                alpha: false,
-                stencil: false,
-                depth: true,
-              }
-            : {
-                antialias: true,
-                powerPreference: 'high-performance',
-                alpha: true,
-                stencil: false,
-                depth: true,
-              }
-        }
-        dpr={isMobile ? [0.8, 1.15] : [1, 1.75]}
+        gl={{
+          antialias: !isMobile,
+          powerPreference: 'high-performance',
+          alpha: true,
+          stencil: false,
+          depth: true,
+        }}
+        dpr={isMobile ? [0.85, 1.15] : [1, 1.75]}
         camera={{
-          fov: 48,
+          fov: 46,
           near: 0.1,
           far: 100,
-          position: [0, 0, 11],
+          position: [0, 0.2, 13],
         }}
         style={{
           position: 'fixed',
@@ -57,7 +47,6 @@ export function Experience() {
           pointerEvents: 'none',
         }}
       >
-        {isMobile && <color attach="background" args={['#070B19']} />}
         <CameraRig />
         <Lighting />
         <Centerpiece />

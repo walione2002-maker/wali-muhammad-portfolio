@@ -2,26 +2,32 @@
 
 import React, { useState } from 'react';
 import { Menu, X, ArrowUpRight, Mail } from 'lucide-react';
+import { usePortfolioStore } from '@/store/usePortfolioStore';
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const activeSection = usePortfolioStore((s) => s.activeSection);
+  const hasEntered = usePortfolioStore((s) => s.hasEntered);
 
   const navLinks = [
-    { label: 'My Websites', href: '#websites' },
-    { label: 'Services', href: '#services' },
-    { label: 'About', href: '#about' },
+    { label: 'Work', href: '#websites', id: 'websites' },
+    { label: 'Services', href: '#services', id: 'services' },
+    { label: 'About', href: '#about', id: 'about' },
+    { label: 'Contact', href: '#contact', id: 'contact' },
   ];
 
+  if (!hasEntered) return null;
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-40 bg-[#070B19]/85 backdrop-blur-xl border-b border-white/[0.08] transition-all">
+    <nav className="fixed top-0 left-0 right-0 z-40 bg-[#050816]/80 backdrop-blur-xl border-b border-white/[0.08] transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
         {/* Brand / Logo */}
         <a
           href="#hero"
-          className="flex items-center gap-2 group cursor-pointer"
+          className="flex items-center gap-2.5 group cursor-pointer"
           aria-label="Wali Muhammad Home"
         >
-          <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_#38BDF8]" />
+          <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_#38BDF8] animate-pulse" />
           <span className="font-display font-extrabold text-lg sm:text-xl text-white tracking-tight group-hover:text-cyan-300 transition-colors">
             Wali Muhammad
           </span>
@@ -29,22 +35,36 @@ export function Navbar() {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-sm font-medium text-slate-300 hover:text-white transition-colors cursor-pointer"
-            >
-              {link.label}
-            </a>
-          ))}
+          <div className="flex items-center gap-6 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06]">
+            {navLinks.map((link) => {
+              const isActive =
+                activeSection === link.id || (link.id === 'about' && activeSection === 'contact');
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className={`text-sm font-medium transition-colors cursor-pointer ${
+                    isActive ? 'text-cyan-300 font-semibold' : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
+          </div>
 
-          {/* High-Contrast Contact Button */}
+          {/* Availability Pill */}
+          <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/40 border border-emerald-500/20 text-emerald-300 text-xs font-mono">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Available for Q4/2026</span>
+          </div>
+
+          {/* High-Contrast Contact CTA */}
           <a
             href="#contact"
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 font-bold text-xs sm:text-sm tracking-wide shadow-[0_0_20px_rgba(56,189,248,0.35)] transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-display font-bold text-xs sm:text-sm tracking-wide shadow-glow transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
-            <span>Contact Me</span>
+            <span>Get in Touch</span>
             <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
           </a>
         </div>
@@ -61,7 +81,7 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#070B19]/95 border-b border-white/10 px-6 py-6 flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 duration-200">
+        <div className="md:hidden bg-[#050816]/95 border-b border-white/10 px-6 py-6 flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 duration-200">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -78,7 +98,7 @@ export function Navbar() {
             className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-cyan-400 text-slate-950 font-bold text-sm shadow-md mt-2"
           >
             <Mail className="w-4 h-4" />
-            <span>Contact Me</span>
+            <span>Get in Touch</span>
           </a>
         </div>
       )}

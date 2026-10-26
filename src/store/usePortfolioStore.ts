@@ -1,33 +1,34 @@
 import { create } from 'zustand';
 
 export type QualityTier = 'high' | 'medium' | 'low';
-
 export type SectionName = 'hero' | 'websites' | 'services' | 'contact';
 
 export interface PortfolioState {
-  // Gate state (unlocked immediately on load)
+  // Gate & Entry Animation State
   hasEntered: boolean;
   isTransitioning: boolean;
+  entryProgress: number; // 0 = at gate, 1 = entered fully
 
-  // Scroll state
+  // Scroll State
   scrollProgress: number;
   activeSection: SectionName;
   activeSectionIndex: number;
 
-  // Project interaction
+  // Project Interaction State
   activeProjectId: string | null;
   activeProjectIndex: number;
 
-  // Performance
+  // Performance & Device State
   qualityTier: QualityTier;
   isMobile: boolean;
 
-  // WebGL resilience
+  // WebGL Resilience
   contextLossCount: number;
 
   // Actions
   setHasEntered: (val: boolean) => void;
   setIsTransitioning: (val: boolean) => void;
+  setEntryProgress: (progress: number) => void;
   setScrollProgress: (val: number) => void;
   setActiveSection: (section: SectionName, index: number) => void;
   setActiveProjectId: (id: string | null) => void;
@@ -38,19 +39,24 @@ export interface PortfolioState {
 }
 
 export const usePortfolioStore = create<PortfolioState>((set) => ({
-  hasEntered: true, // Immediate scroll from millisecond zero
+  hasEntered: false,
   isTransitioning: false,
+  entryProgress: 0,
+
   scrollProgress: 0,
   activeSection: 'hero',
   activeSectionIndex: 0,
+
   activeProjectId: null,
   activeProjectIndex: 0,
+
   qualityTier: 'high',
   isMobile: false,
   contextLossCount: 0,
 
   setHasEntered: (val) => set({ hasEntered: val }),
   setIsTransitioning: (val) => set({ isTransitioning: val }),
+  setEntryProgress: (progress) => set({ entryProgress: progress }),
   setScrollProgress: (val) => set({ scrollProgress: val }),
   setActiveSection: (section, index) =>
     set({ activeSection: section, activeSectionIndex: index }),

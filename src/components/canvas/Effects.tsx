@@ -8,15 +8,19 @@ export function Effects() {
     typeof window !== 'undefined' &&
     (window.innerWidth < 768 || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0));
 
+  if (isMobile) {
+    return null; // Skip postprocessing overhead on mobile
+  }
+
   return (
     <EffectComposer multisampling={0}>
       <Bloom
-        luminanceThreshold={0.4}
-        luminanceSmoothing={0.8}
-        intensity={isMobile ? 0.45 : 0.7}
-        mipmapBlur={!isMobile}
+        luminanceThreshold={0.5}
+        luminanceSmoothing={0.7}
+        intensity={0.65}
+        mipmapBlur
       />
-      <Vignette eskil={false} offset={0.15} darkness={0.75} />
+      <Vignette eskil={false} offset={0.2} darkness={0.7} />
     </EffectComposer>
   );
 }

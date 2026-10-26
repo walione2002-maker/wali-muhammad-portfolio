@@ -16,7 +16,7 @@ const interTight = Inter_Tight({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#070B19',
+  themeColor: '#050816',
   width: 'device-width',
   initialScale: 1,
 };
@@ -115,7 +115,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#070B19] text-slate-100 antialiased selection:bg-cyan-500/20 selection:text-cyan-300 overflow-x-hidden">
+      <body className="bg-[#050816] text-slate-100 antialiased selection:bg-cyan-500/20 selection:text-cyan-300 overflow-x-hidden">
         {children}
       </body>
     </html>

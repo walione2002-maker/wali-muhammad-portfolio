@@ -7,7 +7,7 @@ import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { PROJECTS } from '@/data/projects';
 
 // Module-scoped reusable Color objects to prevent GC allocations in useFrame
-const _targetRim1 = new THREE.Color('#38BDF8'); // Sapphire Blue
+const _targetRim1 = new THREE.Color('#38BDF8'); // Cyan
 const _targetRim2 = new THREE.Color('#6366F1'); // Indigo
 const _targetRim3 = new THREE.Color('#F59E0B'); // Warm Gold
 const _targetCore = new THREE.Color('#38BDF8');
@@ -16,14 +16,13 @@ export function Lighting() {
   const rimLight1Ref = useRef<THREE.SpotLight>(null);
   const rimLight2Ref = useRef<THREE.SpotLight>(null);
   const rimLight3Ref = useRef<THREE.PointLight>(null);
-  const dynamicLightRef = useRef<THREE.PointLight>(null);
   const coreLightRef = useRef<THREE.PointLight>(null);
 
   useFrame((_, delta) => {
-    const { activeProjectId } = usePortfolioStore.getState();
+    const { activeProjectId, activeSectionIndex } = usePortfolioStore.getState();
     const dt = Math.min(delta, 0.1);
 
-    // Warm modern studio lighting rig with dynamic accent matching
+    // Color coordination based on active project or active section
     if (activeProjectId) {
       const p = PROJECTS.find((proj) => proj.id === activeProjectId);
       if (p) {
@@ -32,15 +31,26 @@ export function Lighting() {
         _targetRim3.set('#F59E0B');
         _targetCore.set(p.accentColor);
       }
+    } else if (activeSectionIndex === 3) {
+      // Warm gold ambiance in contact section
+      _targetRim1.set('#F59E0B');
+      _targetRim2.set('#F59E0B');
+      _targetRim3.set('#38BDF8');
+      _targetCore.set('#F59E0B');
+    } else if (activeSectionIndex === 2) {
+      // Tech-indigo in services section
+      _targetRim1.set('#6366F1');
+      _targetRim2.set('#38BDF8');
+      _targetRim3.set('#F59E0B');
+      _targetCore.set('#6366F1');
     } else {
-      // Default modern palette: Sapphire Blue + Indigo + Warm Gold
+      // Default palette
       _targetRim1.set('#38BDF8');
       _targetRim2.set('#6366F1');
       _targetRim3.set('#F59E0B');
       _targetCore.set('#38BDF8');
     }
 
-    // Smoothly interpolate studio rim lights
     if (rimLight1Ref.current) {
       rimLight1Ref.current.color.lerp(_targetRim1, dt * 4);
     }
@@ -51,15 +61,12 @@ export function Lighting() {
       rimLight3Ref.current.color.lerp(_targetRim3, dt * 4);
     }
 
-    if (dynamicLightRef.current) {
-      dynamicLightRef.current.color.lerp(_targetRim1, dt * 4);
-    }
-
     if (coreLightRef.current) {
       coreLightRef.current.color.lerp(_targetCore, dt * 5);
+      const targetCoreIntensity = activeSectionIndex === 3 ? 3.0 : 2.2;
       coreLightRef.current.intensity = THREE.MathUtils.lerp(
         coreLightRef.current.intensity,
-        2.2,
+        targetCoreIntensity,
         dt * 4
       );
     }
@@ -68,7 +75,7 @@ export function Lighting() {
   return (
     <>
       {/* Studio ambient base illumination */}
-      <ambientLight intensity={0.65} color="#0E162B" />
+      <ambientLight intensity={0.65} color="#0B1120" />
 
       {/* Primary key light: Crisp white specular sheen */}
       <directionalLight
@@ -85,11 +92,11 @@ export function Lighting() {
         color="#38BDF8"
       />
 
-      {/* Studio Rim Light 1: Sapphire Blue specular beam */}
+      {/* Studio Rim Light 1: Cyan specular beam */}
       <spotLight
         ref={rimLight1Ref}
         position={[-8, 12, 6]}
-        intensity={3.4}
+        intensity={3.2}
         angle={0.65}
         penumbra={0.8}
         color="#38BDF8"
@@ -100,7 +107,7 @@ export function Lighting() {
       <spotLight
         ref={rimLight2Ref}
         position={[10, -8, -6]}
-        intensity={3.0}
+        intensity={2.8}
         angle={0.7}
         penumbra={0.9}
         color="#6366F1"
@@ -111,18 +118,8 @@ export function Lighting() {
       <pointLight
         ref={rimLight3Ref}
         position={[8, 8, -8]}
-        intensity={2.8}
-        color="#F59E0B"
-        distance={28}
-        decay={2}
-      />
-
-      {/* Dynamic Reactive Chromatic Light */}
-      <pointLight
-        ref={dynamicLightRef}
-        position={[-6, -6, 8]}
         intensity={2.6}
-        color="#38BDF8"
+        color="#F59E0B"
         distance={28}
         decay={2}
       />

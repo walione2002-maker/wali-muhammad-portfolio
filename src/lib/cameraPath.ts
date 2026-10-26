@@ -4,67 +4,63 @@ export interface CameraWaypoint {
   position: THREE.Vector3;
   lookAt: THREE.Vector3;
   fov: number;
-  sectionId: number; // 0–4
+  sectionId: number;
   sectionName: string;
 }
 
 export const WAYPOINTS: CameraWaypoint[] = [
   {
-    position: new THREE.Vector3(0, 0, 12),
+    // Section 0: Hero
+    position: new THREE.Vector3(0, 0.2, 11.2),
     lookAt: new THREE.Vector3(0, 0, 0),
-    fov: 50,
+    fov: 46,
     sectionId: 0,
-    sectionName: 'entry-gate',
+    sectionName: 'hero',
   },
   {
-    position: new THREE.Vector3(6, 4, 8),
-    lookAt: new THREE.Vector3(0, 0.5, 0),
-    fov: 45,
-    sectionId: 1,
-    sectionName: 'executive-overview',
-  },
-  {
-    position: new THREE.Vector3(8, 1, 0),
-    lookAt: new THREE.Vector3(0, 0, 0),
-    fov: 40,
-    sectionId: 2,
-    sectionName: 'project-showroom',
-  },
-  {
-    position: new THREE.Vector3(4, 6, -5),
+    // Section 1: Websites Showcase (Orbital side perspective)
+    position: new THREE.Vector3(5.8, 1.2, 7.2),
     lookAt: new THREE.Vector3(0, 0, 0),
     fov: 42,
-    sectionId: 3,
-    sectionName: 'tech-stack',
+    sectionId: 1,
+    sectionName: 'websites',
   },
   {
-    position: new THREE.Vector3(0, 3, 4),
+    // Section 2: Services (Elevated architectural 3/4)
+    position: new THREE.Vector3(-4.6, 3.6, 5.0),
+    lookAt: new THREE.Vector3(0, 0, 0),
+    fov: 38,
+    sectionId: 2,
+    sectionName: 'services',
+  },
+  {
+    // Section 3: Contact & About (Intimate overhead approach)
+    position: new THREE.Vector3(0, 2.8, 5.8),
     lookAt: new THREE.Vector3(0, 0, 0),
     fov: 35,
-    sectionId: 4,
-    sectionName: 'contact-portal',
+    sectionId: 3,
+    sectionName: 'contact',
   },
 ];
 
 /**
- * Builds a CatmullRomCurve3 through all 5 position waypoints.
- * Tension is 0.35 for smooth, non-overshooting arcs.
+ * Builds a CatmullRomCurve3 through all 4 section waypoints.
+ * Tension is 0.35 for smooth, natural curvature without overshoot.
  */
 export function createCameraSpline(): THREE.CatmullRomCurve3 {
   const points = WAYPOINTS.map((w) => w.position.clone());
   return new THREE.CatmullRomCurve3(points, false, 'catmullrom', 0.35);
 }
 
-// Reusable module vector to satisfy zero-allocation in useFrame
+// Reusable module vector to satisfy strictly zero GC allocations in useFrame
 const _tempLookAt = new THREE.Vector3();
 
 /**
  * Interpolates lookAt target and FOV for a given normalized scroll t in [0, 1].
- * An optional target vector can be supplied to prevent GC allocations.
  */
 export function interpolateWaypointData(t: number, targetLookAt?: THREE.Vector3) {
   const clampedT = Math.max(0, Math.min(1, t));
-  const segmentCount = WAYPOINTS.length - 1; // 4 segments
+  const segmentCount = WAYPOINTS.length - 1; // 3 segments
   const rawIndex = clampedT * segmentCount;
   const i = Math.min(Math.floor(rawIndex), segmentCount - 1);
   const alpha = rawIndex - i;

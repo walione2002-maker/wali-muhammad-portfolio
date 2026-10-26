@@ -6,7 +6,7 @@ import * as THREE from 'three';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { PROJECTS } from '@/data/projects';
 
-// Module-scoped color objects to guarantee 0 allocations in useFrame
+// Module-scoped Color object to prevent GC allocations
 const _ringTargetAccent = new THREE.Color('#38BDF8');
 
 export function GyroscopicRings() {
@@ -18,12 +18,11 @@ export function GyroscopicRings() {
   const mat1Ref = useRef<THREE.MeshStandardMaterial>(null);
   const mat2Ref = useRef<THREE.MeshStandardMaterial>(null);
 
-  const activeProjectId = usePortfolioStore((s) => s.activeProjectId);
-  const isMobile = usePortfolioStore((s) => s.isMobile);
-
   useFrame((_, delta) => {
+    const { activeProjectId, activeSectionIndex, isMobile } = usePortfolioStore.getState();
     const dt = Math.min(delta, 0.1);
 
+    // Staggered gyroscopic rotation
     if (ring0Ref.current) {
       ring0Ref.current.rotation.x += 0.32 * dt;
       ring0Ref.current.rotation.y += 0.08 * dt;
@@ -37,6 +36,14 @@ export function GyroscopicRings() {
       ring2Ref.current.rotation.x += 0.07 * dt;
     }
 
+    // Toggle wireframe mode in section 2 (Services / Architecture)
+    const isWireframe = activeSectionIndex === 2 && !isMobile;
+    if (mat0Ref.current && mat0Ref.current.wireframe !== isWireframe) {
+      mat0Ref.current.wireframe = isWireframe;
+      if (mat1Ref.current) mat1Ref.current.wireframe = isWireframe;
+      if (mat2Ref.current) mat2Ref.current.wireframe = isWireframe;
+    }
+
     // Chromatic sync to focused project or clean modern palette
     if (activeProjectId) {
       const p = PROJECTS.find((proj) => proj.id === activeProjectId);
@@ -45,7 +52,7 @@ export function GyroscopicRings() {
       _ringTargetAccent.set('#38BDF8');
     }
 
-    const targetEmissiveIntensity = activeProjectId ? 0.45 : 0.12;
+    const targetEmissiveIntensity = activeProjectId ? 0.5 : 0.15;
 
     if (mat0Ref.current) {
       mat0Ref.current.emissive.lerp(_ringTargetAccent, dt * 4);
@@ -77,40 +84,40 @@ export function GyroscopicRings() {
     <group name="gyroscopic-rings">
       {/* Outer Ring — Polished Titanium */}
       <mesh ref={ring0Ref}>
-        <torusGeometry args={[3.0, 0.045, isMobile ? 12 : 24, isMobile ? 70 : 160]} />
+        <torusGeometry args={[3.0, 0.045, 20, 140]} />
         <meshStandardMaterial
           ref={mat0Ref}
           color="#E2E8F0"
           metalness={0.95}
           roughness={0.14}
           emissive="#38BDF8"
-          emissiveIntensity={0.1}
+          emissiveIntensity={0.15}
         />
       </mesh>
 
-      {/* Middle Ring — Cobalt Titanium */}
+      {/* Middle Ring — Cobalt Sapphire */}
       <mesh ref={ring1Ref}>
-        <torusGeometry args={[2.4, 0.045, isMobile ? 12 : 24, isMobile ? 60 : 140]} />
+        <torusGeometry args={[2.4, 0.045, 20, 120]} />
         <meshStandardMaterial
           ref={mat1Ref}
           color="#CBD5E1"
           metalness={0.93}
           roughness={0.16}
           emissive="#6366F1"
-          emissiveIntensity={0.1}
+          emissiveIntensity={0.15}
         />
       </mesh>
 
       {/* Inner Ring — Warm Gold Accent */}
       <mesh ref={ring2Ref}>
-        <torusGeometry args={[1.8, 0.045, isMobile ? 12 : 24, isMobile ? 50 : 120]} />
+        <torusGeometry args={[1.8, 0.045, 20, 100]} />
         <meshStandardMaterial
           ref={mat2Ref}
           color="#F59E0B"
           metalness={0.98}
           roughness={0.12}
           emissive="#F59E0B"
-          emissiveIntensity={0.18}
+          emissiveIntensity={0.2}
         />
       </mesh>
     </group>

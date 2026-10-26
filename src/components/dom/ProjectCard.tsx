@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Github, Lock, ArrowUpRight, Globe } from 'lucide-react';
 import { type ProjectData } from '@/types';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
@@ -21,17 +22,17 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
     <article
       onMouseEnter={() => setActiveProjectId(project.id)}
       onMouseLeave={() => setActiveProjectId(null)}
-      className={`group relative rounded-2xl p-4 sm:p-6 transition-all duration-300 border bg-[#0F172A]/90 backdrop-blur-xl shadow-2xl flex flex-col justify-between ${
-        isActive ? 'border-white/30' : 'border-white/[0.14] hover:border-white/25'
+      className={`group relative rounded-2xl p-4 sm:p-6 transition-all duration-300 border bg-[#0B1120]/85 backdrop-blur-xl flex flex-col justify-between ${
+        isActive ? 'border-white/35 scale-[1.01]' : 'border-white/[0.12] hover:border-white/25'
       } ${className}`}
       style={{
         boxShadow: isActive
-          ? `0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 35px -6px ${project.accentColor}50`
+          ? `0 20px 45px -10px rgba(0, 0, 0, 0.8), 0 0 35px -6px ${project.accentColor}60`
           : '0 20px 40px -15px rgba(0, 0, 0, 0.6)',
       }}
-      aria-label={`Website: ${project.title}`}
+      aria-label={`Project: ${project.title}`}
     >
-      {/* Top Half: Visual macOS / Browser Window Preview with Live Front Screenshot */}
+      {/* Visual macOS Browser Window Preview */}
       <div>
         <a
           href={project.liveUrl}
@@ -62,20 +63,22 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
             </div>
           </div>
 
-          {/* Visual Mockup Preview Banner with Actual Front Screenshot */}
-          <div className="relative h-48 sm:h-60 w-full overflow-hidden bg-slate-950 flex items-center justify-center">
+          {/* Visual Mockup Preview Banner */}
+          <div className="relative h-48 sm:h-64 w-full overflow-hidden bg-slate-950 flex items-center justify-center">
             {project.image ? (
-              <img
+              <Image
                 src={project.image}
-                alt={`${project.title} live website screenshot preview`}
-                className="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover/preview:scale-[1.04]"
-                loading="lazy"
+                alt={`${project.title} live screenshot`}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover object-top transition-transform duration-500 ease-out group-hover/preview:scale-[1.04]"
+                unoptimized
               />
             ) : (
               <div
                 className="relative h-full w-full flex flex-col items-center justify-center p-6 text-center"
                 style={{
-                  background: `linear-gradient(135deg, #090D1A 0%, #0F172A 50%, ${project.accentColor}25 100%)`,
+                  background: `linear-gradient(135deg, #050816 0%, #0F172A 50%, ${project.accentColor}25 100%)`,
                 }}
               >
                 <div
@@ -93,8 +96,8 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
               </div>
             )}
 
-            {/* Subtle Gradient Shadow at bottom edge */}
-            <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-slate-950/70 to-transparent pointer-events-none" />
+            {/* Bottom gradient shadow */}
+            <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-slate-950/80 to-transparent pointer-events-none" />
 
             {/* Prominent Hover Overlay */}
             <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-[2px] opacity-0 group-hover/preview:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2 p-4">
@@ -112,39 +115,57 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
           </div>
         </a>
 
-        {/* Bottom Half: Minimal, Clean, Scannable Info */}
-        <div className="mt-4 sm:mt-5">
-          {/* Category Tag */}
-          <div
-            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide border mb-2.5"
-            style={{
-              borderColor: `${project.accentColor}60`,
-              color: project.accentColor,
-              backgroundColor: `${project.accentColor}15`,
-            }}
-          >
-            {project.category}
+        {/* Content Info */}
+        <div className="mt-5">
+          {/* Category Tag & Stack Badges */}
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            <span
+              className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide border font-mono"
+              style={{
+                borderColor: `${project.accentColor}50`,
+                color: project.accentColor,
+                backgroundColor: `${project.accentColor}15`,
+              }}
+            >
+              {project.category}
+            </span>
+
+            {project.stack?.slice(0, 3).map((tech) => (
+              <span
+                key={tech}
+                className="inline-flex items-center px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-[11px] text-slate-300 font-mono"
+              >
+                {tech}
+              </span>
+            ))}
           </div>
 
-          {/* Large Website Title (24px - 28px) */}
+          {/* Title */}
           <h3 className="text-2xl sm:text-[26px] font-bold font-display text-white tracking-tight leading-snug">
             {project.title}
           </h3>
 
-          {/* Short, Normal Description in Plain English (max 25 words) */}
+          {/* Tagline / Impact Metric */}
+          {project.impactMetric && (
+            <p className="mt-1 text-xs sm:text-sm font-medium text-cyan-400 font-mono">
+              ✦ {project.impactMetric}
+            </p>
+          )}
+
+          {/* Description */}
           <p className="mt-2 text-sm sm:text-[15px] text-slate-300 font-light leading-relaxed">
             {project.description}
           </p>
         </div>
       </div>
 
-      {/* Action Buttons: Massive Primary Button + GitHub Link */}
-      <div className="mt-5 sm:mt-6 pt-4 border-t border-white/10 flex items-center gap-3">
+      {/* Action Buttons */}
+      <div className="mt-6 pt-4 border-t border-white/10 flex items-center gap-3">
         <a
           href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm text-slate-950 transition-all duration-200 shadow-md hover:brightness-110 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 cursor-pointer"
+          className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-display font-bold text-sm text-slate-950 transition-all duration-200 shadow-md hover:brightness-110 active:scale-[0.98] cursor-pointer"
           style={{
             backgroundColor: project.accentColor,
             boxShadow: `0 4px 20px -2px ${project.accentColor}60`,
@@ -159,11 +180,11 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
           href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-1.5 px-3.5 py-3.5 rounded-xl text-xs sm:text-sm font-mono font-medium text-slate-300 hover:text-white bg-white/[0.05] hover:bg-white/[0.12] border border-white/10 transition-colors focus:outline-none focus:ring-1 focus:ring-slate-400 cursor-pointer shrink-0"
+          className="inline-flex items-center justify-center gap-1.5 px-3.5 py-3.5 rounded-xl text-xs sm:text-sm font-mono font-medium text-slate-300 hover:text-white bg-white/[0.05] hover:bg-white/[0.12] border border-white/10 transition-colors cursor-pointer shrink-0"
           aria-label={`View GitHub source code for ${project.title}`}
         >
           <Github className="w-4 h-4" />
-          <span className="hidden sm:inline">GitHub Code</span>
+          <span className="hidden sm:inline">GitHub</span>
         </a>
       </div>
     </article>
