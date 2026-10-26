@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { Sparkles, ArrowRight } from 'lucide-react';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { useEntryTransition } from '@/hooks/useEntryTransition';
@@ -16,14 +16,14 @@ export function EntryGate() {
 
   const { startEntry } = useEntryTransition();
 
-  const handleEnter = () => {
+  const handleEnter = useCallback(() => {
     startEntry(
       titleRef.current,
       subtitleRef.current,
       ctaRef.current,
       containerRef.current
     );
-  };
+  }, [startEntry]);
 
   // Keyboard shortcut: Pressing Enter or Space triggers entry
   useEffect(() => {
@@ -37,7 +37,7 @@ export function EntryGate() {
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [hasEntered, isTransitioning]);
+  }, [hasEntered, isTransitioning, handleEnter]);
 
   if (hasEntered && !isTransitioning) {
     return null;
