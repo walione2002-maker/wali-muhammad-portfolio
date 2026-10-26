@@ -75,23 +75,26 @@ function SingleNode({ id, angle, radius, accentColor }: SingleNodeProps) {
         />
       </mesh>
 
-      {/* Hover Pulse Glow Halo */}
-      <mesh ref={haloRef} rotation={[-Math.PI / 2, 0, 0]} scale={[0.01, 0.01, 0.01]}>
-        <ringGeometry args={[0.24, 0.38, 32]} />
-        <meshBasicMaterial
-          ref={haloMatRef}
-          color={accentColor}
-          transparent
-          opacity={0}
-          side={THREE.DoubleSide}
-        />
-      </mesh>
+      {/* Hover Pulse Glow Halo (Desktop only) */}
+      {!isMobile && (
+        <mesh ref={haloRef} rotation={[-Math.PI / 2, 0, 0]} scale={[0.01, 0.01, 0.01]}>
+          <ringGeometry args={[0.24, 0.38, 32]} />
+          <meshBasicMaterial
+            ref={haloMatRef}
+            color={accentColor}
+            transparent
+            opacity={0}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      )}
     </group>
   );
 }
 
 export function ProjectNodes() {
   const groupRef = useRef<THREE.Group>(null);
+  const isMobile = usePortfolioStore((s) => s.isMobile);
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
@@ -107,7 +110,7 @@ export function ProjectNodes() {
     <group ref={groupRef} name="project-nodes-orbital-ring">
       {/* Subtle Orbital Guide Track */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[4.5, 0.008, 8, 120]} />
+        <torusGeometry args={[4.5, 0.008, 8, isMobile ? 48 : 120]} />
         <meshBasicMaterial color="#38BDF8" transparent opacity={0.15} />
       </mesh>
 

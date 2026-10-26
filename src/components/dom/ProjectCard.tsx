@@ -20,9 +20,10 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
 
   return (
     <article
+      onClick={() => setActiveProjectId(isActive ? null : project.id)}
       onMouseEnter={() => setActiveProjectId(project.id)}
       onMouseLeave={() => setActiveProjectId(null)}
-      className={`group relative rounded-2xl p-4 sm:p-6 transition-all duration-300 border bg-[#0B1120]/85 backdrop-blur-xl flex flex-col justify-between ${
+      className={`group relative rounded-2xl p-4 sm:p-6 transition-all duration-300 border bg-[#0B1120]/85 backdrop-blur-xl flex flex-col justify-between cursor-pointer sm:cursor-default ${
         isActive ? 'border-white/35 scale-[1.01]' : 'border-white/[0.12] hover:border-white/25'
       } ${className}`}
       style={{
@@ -99,8 +100,8 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
             {/* Bottom gradient shadow */}
             <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-slate-950/80 to-transparent pointer-events-none" />
 
-            {/* Prominent Hover Overlay */}
-            <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-[2px] opacity-0 group-hover/preview:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2 p-4">
+            {/* Prominent Hover Overlay (Desktop only) */}
+            <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-[2px] opacity-0 group-hover/preview:opacity-100 transition-opacity duration-300 hidden sm:flex flex-col items-center justify-center gap-2 p-4">
               <div
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm text-slate-950 shadow-2xl transition-transform duration-300 group-hover/preview:scale-105"
                 style={{ backgroundColor: project.accentColor }}
@@ -165,7 +166,7 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
           href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-display font-bold text-sm text-slate-950 transition-all duration-200 shadow-md hover:brightness-110 active:scale-[0.98] cursor-pointer"
+          className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 min-h-[48px] rounded-xl font-display font-bold text-sm text-slate-950 transition-all duration-200 shadow-md hover:brightness-110 active:scale-[0.97] cursor-pointer touch-manipulation"
           style={{
             backgroundColor: project.accentColor,
             boxShadow: `0 4px 20px -2px ${project.accentColor}60`,
@@ -180,7 +181,7 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
           href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-1.5 px-3.5 py-3.5 rounded-xl text-xs sm:text-sm font-mono font-medium text-slate-300 hover:text-white bg-white/[0.05] hover:bg-white/[0.12] border border-white/10 transition-colors cursor-pointer shrink-0"
+          className="inline-flex items-center justify-center gap-1.5 px-4 py-3.5 min-h-[48px] min-w-[48px] rounded-xl text-xs sm:text-sm font-mono font-medium text-slate-300 hover:text-white bg-white/[0.05] hover:bg-white/[0.12] active:bg-white/[0.2] border border-white/10 transition-colors cursor-pointer shrink-0 active:scale-[0.97] touch-manipulation"
           aria-label={`View GitHub source code for ${project.title}`}
         >
           <Github className="w-4 h-4" />

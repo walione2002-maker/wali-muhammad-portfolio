@@ -72,7 +72,7 @@ export function Navbar() {
         {/* Mobile Hamburger Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg bg-white/[0.05] text-slate-300 hover:text-white border border-white/10"
+          className="md:hidden p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-white/[0.05] text-slate-300 hover:text-white border border-white/10 active:scale-95 transition-transform touch-manipulation"
           aria-label="Toggle navigation menu"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -81,13 +81,13 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#050816]/95 border-b border-white/10 px-6 py-6 flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 duration-200">
+        <div className="md:hidden bg-[#050816]/98 border-b border-white/10 px-6 py-6 pb-8 flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 duration-200 safe-bottom">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="text-base font-medium text-slate-200 hover:text-cyan-300 transition-colors py-1"
+              className="text-base font-medium text-slate-200 hover:text-cyan-300 transition-colors py-2 min-h-[44px] flex items-center"
             >
               {link.label}
             </a>
@@ -95,7 +95,7 @@ export function Navbar() {
           <a
             href="#contact"
             onClick={() => setMobileMenuOpen(false)}
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-cyan-400 text-slate-950 font-bold text-sm shadow-md mt-2"
+            className="inline-flex items-center justify-center gap-2 px-5 py-3.5 min-h-[48px] rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 text-slate-950 font-display font-bold text-sm shadow-md mt-2 active:scale-95 transition-transform touch-manipulation"
           >
             <Mail className="w-4 h-4" />
             <span>Get in Touch</span>

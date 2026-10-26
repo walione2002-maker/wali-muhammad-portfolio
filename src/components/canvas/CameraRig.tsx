@@ -4,7 +4,11 @@ import { useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
-import { createCameraSpline, interpolateWaypointData } from '@/lib/cameraPath';
+import {
+  createCameraSpline,
+  createMobileCameraSpline,
+  interpolateWaypointData,
+} from '@/lib/cameraPath';
 
 // Module-scoped reusable math objects to ensure strictly ZERO allocations in useFrame
 const _camTarget = new THREE.Vector3();
@@ -13,7 +17,8 @@ const _tempSplinePos = new THREE.Vector3();
 
 export function CameraRig() {
   const { camera } = useThree();
-  const spline = useMemo(() => createCameraSpline(), []);
+  const desktopSpline = useMemo(() => createCameraSpline(), []);
+  const mobileSpline = useMemo(() => createMobileCameraSpline(), []);
   const initialMountRef = useRef(true);
 
   useFrame((state, delta) => {
@@ -25,17 +30,20 @@ export function CameraRig() {
     // 1. Entry Gate State: Camera holds close or warps during transition
     if (!hasEntered) {
       if (isTransitioning) {
-        // FOV Warp stretch 46 -> 60 -> 46
-        const warpFov = 46 + Math.sin(entryProgress * Math.PI) * 14;
+        // Dynamic FOV warp stretch
+        const baseFov = isMobile ? 52 : 46;
+        const warpAmount = isMobile ? 10 : 14;
+        const warpFov = baseFov + Math.sin(entryProgress * Math.PI) * warpAmount;
         (camera as THREE.PerspectiveCamera).fov = warpFov;
         camera.updateProjectionMatrix();
 
         // Slight push back as entry proceeds
-        _camTarget.set(0, 0.2, 11.2 + (1 - entryProgress) * 2.0);
+        const baseZ = isMobile ? 12.8 : 11.2;
+        _camTarget.set(0, isMobile ? 0.8 : 0.2, baseZ + (1 - entryProgress) * 2.0);
       } else {
         // Holding at initial gate position
-        _camTarget.set(0, 0.2, 13.0);
-        (camera as THREE.PerspectiveCamera).fov = 48;
+        _camTarget.set(0, isMobile ? 0.8 : 0.2, isMobile ? 13.8 : 13.0);
+        (camera as THREE.PerspectiveCamera).fov = isMobile ? 54 : 48;
         camera.updateProjectionMatrix();
       }
       _lookTarget.set(0, 0, 0);
@@ -47,23 +55,24 @@ export function CameraRig() {
 
     // 2. Normal Entered State: Camera moves along Catmull-Rom spline with scroll
     const t = Math.max(0, Math.min(1, scrollProgress));
-    spline.getPointAt(t, _tempSplinePos);
+    const activeSpline = isMobile ? mobileSpline : desktopSpline;
+    activeSpline.getPointAt(t, _tempSplinePos);
     _camTarget.copy(_tempSplinePos);
 
     // Mobile aspect ratio compensation (prevent clipping in vertical viewports)
     if (aspect < 1.0) {
-      _camTarget.z *= Math.min(1.4, 1.0 / Math.max(aspect, 0.65));
-      _camTarget.y += (1.0 - aspect) * 0.5;
+      _camTarget.z *= Math.min(1.35, 1.0 / Math.max(aspect, 0.65));
+      _camTarget.y += (1.0 - aspect) * 0.4;
     }
 
-    // Subtle pointer parallax on desktop
+    // Subtle pointer parallax on desktop only
     if (!isMobile) {
       _camTarget.x += state.pointer.x * 0.45;
       _camTarget.y += state.pointer.y * 0.3;
     }
 
     // Interpolate lookAt & FOV from waypoints
-    const waypointData = interpolateWaypointData(t, _lookTarget);
+    const waypointData = interpolateWaypointData(t, _lookTarget, isMobile);
     const targetFov = waypointData.fov;
 
     const persCam = camera as THREE.PerspectiveCamera;

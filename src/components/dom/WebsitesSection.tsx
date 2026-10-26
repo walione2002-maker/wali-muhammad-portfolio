@@ -34,18 +34,18 @@ export function WebsitesSection() {
       </div>
 
       {/* Conversion Banner */}
-      <div className="mt-16 sm:mt-20 p-8 sm:p-10 rounded-3xl bg-[#0B1120]/80 border border-white/10 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl">
+      <div className="mt-14 sm:mt-20 p-6 sm:p-10 rounded-2xl sm:rounded-3xl bg-[#0B1120]/80 border border-white/10 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl">
         <div>
-          <h3 className="text-white font-display font-bold text-xl sm:text-2xl">
+          <h3 className="text-white font-display font-bold text-xl sm:text-2xl text-center sm:text-left">
             Have a custom website or web app project in mind?
           </h3>
-          <p className="text-slate-400 text-sm sm:text-base mt-1.5 max-w-xl">
+          <p className="text-slate-400 text-sm sm:text-base mt-1.5 max-w-xl text-center sm:text-left">
             From modern business websites to high-converting online stores and custom web platforms, I deliver end-to-end results.
           </p>
         </div>
         <a
           href="#contact"
-          className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-display font-bold text-base shadow-glow shrink-0 cursor-pointer transition-all hover:scale-105 active:scale-95"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 min-h-[48px] rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-display font-bold text-base shadow-glow shrink-0 cursor-pointer transition-all hover:scale-105 active:scale-95 touch-manipulation"
         >
           <span>Start a Project</span>
           <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />

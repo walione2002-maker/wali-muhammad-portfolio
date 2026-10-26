@@ -73,14 +73,14 @@ export function ServicesSection() {
         </p>
       </div>
 
-      {/* 3 Service Columns */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* 3 Service Columns: 1-col on mobile, 2-col on tablet, 3-col on desktop */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {SERVICES.map((service) => {
           const Icon = service.icon;
           return (
             <div
               key={service.title}
-              className="group relative rounded-2xl p-8 bg-[#0B1120]/85 backdrop-blur-xl border border-white/[0.12] hover:border-white/30 transition-all duration-300 flex flex-col justify-between shadow-2xl hover:-translate-y-1.5"
+              className="group relative rounded-2xl p-6 sm:p-8 bg-[#0B1120]/85 backdrop-blur-xl border border-white/[0.12] hover:border-white/30 transition-all duration-300 flex flex-col justify-between shadow-2xl hover:-translate-y-1.5"
             >
               <div>
                 {/* Glowing Icon Container */}

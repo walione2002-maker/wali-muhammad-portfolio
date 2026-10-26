@@ -46,6 +46,20 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* iOS Safe Area Utilities */
+.safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+}
+
+.safe-top {
+  padding-top: max(1rem, env(safe-area-inset-top, 0px));
+}
+
+.margin-safe-bottom {
+  margin-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
 }
 
 /* Custom Minimalist Scrollbar */
@@ -78,6 +92,18 @@ body {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.16);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* Mobile GPU Performance: soften heavy blur filters to prevent iOS Safari repaint lag */
+@media (max-width: 768px) {
+  .glass-panel {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .glass-panel-elevated {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }
 
 /* Subtle Grid Background Pattern */

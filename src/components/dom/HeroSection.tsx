@@ -37,7 +37,7 @@ export function HeroSection() {
           {/* Primary Solid Action Button */}
           <a
             href="#websites"
-            className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-display font-bold text-base shadow-glow transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            className="inline-flex items-center justify-center gap-2.5 px-8 py-4 min-h-[50px] rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-display font-bold text-base shadow-glow transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer touch-manipulation"
           >
             <span>Explore Live Websites</span>
             <ArrowDown className="w-5 h-5 stroke-[2.5]" />
@@ -46,7 +46,7 @@ export function HeroSection() {
           {/* Secondary Action Button */}
           <a
             href="#contact"
-            className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-white font-semibold text-base border border-white/15 hover:border-white/30 backdrop-blur-md shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            className="inline-flex items-center justify-center gap-2.5 px-8 py-4 min-h-[50px] rounded-xl bg-slate-900/80 hover:bg-slate-800 text-white font-semibold text-base border border-white/15 hover:border-white/30 backdrop-blur-md shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer touch-manipulation"
           >
             <Mail className="w-5 h-5 text-cyan-400" />
             <span>Get in Touch</span>

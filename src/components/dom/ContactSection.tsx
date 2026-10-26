@@ -97,7 +97,7 @@ export function ContactSection() {
 
             <button
               onClick={handleCopyEmail}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold text-white transition-all cursor-pointer border border-white/10 shrink-0"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 min-h-[44px] rounded-xl bg-white/10 hover:bg-white/15 active:bg-white/20 text-xs font-semibold text-white transition-all cursor-pointer border border-white/10 shrink-0 touch-manipulation"
               aria-label="Copy email address"
             >
               {copied ? (
@@ -119,7 +119,7 @@ export function ContactSection() {
             {/* Primary Mailto Button */}
             <a
               href={`mailto:${emailAddress}?subject=Website%20Inquiry%20for%20Wali%20Muhammad`}
-              className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-display font-bold text-base shadow-glow transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 min-h-[52px] rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-display font-bold text-base shadow-glow transition-all duration-200 hover:scale-[1.01] active:scale-[0.98] cursor-pointer touch-manipulation"
             >
               <Send className="w-5 h-5" />
               <span>Email Me Directly</span>
@@ -131,7 +131,7 @@ export function ContactSection() {
                 href="https://github.com/walione2002-maker"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white font-medium text-xs sm:text-sm border border-white/10 hover:border-white/20 transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 min-h-[48px] rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white font-medium text-xs sm:text-sm border border-white/10 hover:border-white/20 transition-all cursor-pointer active:scale-[0.98] touch-manipulation"
               >
                 <Github className="w-4 h-4 text-slate-300" />
                 <span>GitHub</span>
@@ -142,7 +142,7 @@ export function ContactSection() {
                 href="https://www.linkedin.com/in/wali-muhammad-2002/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white font-medium text-xs sm:text-sm border border-white/10 hover:border-white/20 transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 min-h-[48px] rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white font-medium text-xs sm:text-sm border border-white/10 hover:border-white/20 transition-all cursor-pointer active:scale-[0.98] touch-manipulation"
               >
                 <Linkedin className="w-4 h-4 text-[#0A66C2]" />
                 <span>LinkedIn</span>
@@ -154,7 +154,7 @@ export function ContactSection() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-24 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+      <footer className="mt-24 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 safe-bottom">
         <p>© {new Date().getFullYear()} Wali Muhammad. All rights reserved.</p>
         <p className="flex items-center gap-1.5 font-mono">
           <span>Built with Next.js 14, Tailwind CSS &amp; Three.js</span>

@@ -18,6 +18,8 @@ export function GyroscopicRings() {
   const mat1Ref = useRef<THREE.MeshStandardMaterial>(null);
   const mat2Ref = useRef<THREE.MeshStandardMaterial>(null);
 
+  const isMobile = usePortfolioStore((s) => s.isMobile);
+
   useFrame((_, delta) => {
     const { activeProjectId, activeSectionIndex, isMobile } = usePortfolioStore.getState();
     const dt = Math.min(delta, 0.1);
@@ -84,7 +86,7 @@ export function GyroscopicRings() {
     <group name="gyroscopic-rings">
       {/* Outer Ring — Polished Titanium */}
       <mesh ref={ring0Ref}>
-        <torusGeometry args={[3.0, 0.045, 20, 140]} />
+        <torusGeometry args={[3.0, 0.045, isMobile ? 10 : 20, isMobile ? 64 : 140]} />
         <meshStandardMaterial
           ref={mat0Ref}
           color="#E2E8F0"
@@ -97,7 +99,7 @@ export function GyroscopicRings() {
 
       {/* Middle Ring — Cobalt Sapphire */}
       <mesh ref={ring1Ref}>
-        <torusGeometry args={[2.4, 0.045, 20, 120]} />
+        <torusGeometry args={[2.4, 0.045, isMobile ? 10 : 20, isMobile ? 56 : 120]} />
         <meshStandardMaterial
           ref={mat1Ref}
           color="#CBD5E1"
@@ -110,7 +112,7 @@ export function GyroscopicRings() {
 
       {/* Inner Ring — Warm Gold Accent */}
       <mesh ref={ring2Ref}>
-        <torusGeometry args={[1.8, 0.045, 20, 100]} />
+        <torusGeometry args={[1.8, 0.045, isMobile ? 10 : 20, isMobile ? 48 : 100]} />
         <meshStandardMaterial
           ref={mat2Ref}
           color="#F59E0B"
