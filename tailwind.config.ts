@@ -7,17 +7,19 @@ const config: Config = {
     extend: {
       colors: {
         background: {
-          DEFAULT: '#050816',
-          secondary: '#0B1120',
-          tertiary: '#0F172A',
+          DEFAULT: '#080808',
+          secondary: '#111111',
+          tertiary: '#181818',
         },
         surface: {
-          primary: '#0B1120',
-          secondary: '#0F172A',
-          card: 'rgba(15, 23, 42, 0.75)',
-          elevated: 'rgba(30, 41, 59, 0.65)',
+          primary: '#111111',
+          secondary: '#181818',
+          card: '#121212',
+          elevated: '#1a1a1a',
         },
         accent: {
+          DEFAULT: '#FF4D00',
+          orange: '#FF4D00',
           teal: '#64FFDA',
           cyan: '#38BDF8',
           blue: '#3B82F6',
@@ -27,40 +29,29 @@ const config: Config = {
           rose: '#F43F5E',
         },
         text: {
-          primary: '#F8FAFC',
-          secondary: '#94A3B8',
-          muted: '#64748B',
-          accent: '#64FFDA',
+          primary: '#E8E4DE',
+          secondary: '#9CA3AF',
+          muted: '#6B7280',
+          accent: '#FF4D00',
+        },
+        border: {
+          DEFAULT: '#1A1A1A',
+          subtle: '#222222',
         },
       },
       fontFamily: {
-        display: ['var(--font-inter-tight)', '"Inter Tight"', 'sans-serif'],
+        display: ['var(--font-syne)', '"Syne"', 'sans-serif'],
         sans: ['var(--font-inter)', '"Inter"', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-      },
-      boxShadow: {
-        glow: '0 0 25px -5px rgba(56, 189, 248, 0.35)',
-        'glow-teal': '0 0 25px -5px rgba(100, 255, 218, 0.35)',
-        'glow-gold': '0 0 25px -5px rgba(245, 158, 11, 0.35)',
-        glass: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
-      },
-      backdropBlur: {
-        glass: '16px',
-        heavy: '24px',
       },
       animation: {
         'spin-slow': 'spin 24s linear infinite',
         'pulse-subtle': 'pulse-subtle 4s ease-in-out infinite',
-        float: 'float 6s ease-in-out infinite',
       },
       keyframes: {
         'pulse-subtle': {
           '0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
-          '50%': { opacity: '1', transform: 'scale(1.03)' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
+          '50%': { opacity: '1', transform: 'scale(1.02)' },
         },
       },
     },

@@ -1,55 +1,50 @@
 'use client';
 
 import React from 'react';
-import { Layout, ShoppingBag, Box, CheckCircle2 } from 'lucide-react';
 
 interface ServiceItem {
-  icon: React.ElementType;
+  number: string;
   title: string;
   description: string;
-  highlights: string[];
-  accentColor: string;
+  deliverables: string[];
 }
 
 const SERVICES: ServiceItem[] = [
   {
-    icon: Layout,
-    title: 'Business & Brand Websites',
+    number: '01',
+    title: 'Websites & E-Commerce',
     description:
-      'Fast, mobile-first websites designed to elevate your brand authority and turn visitors into high-value clients.',
-    highlights: [
+      'Fast, mobile-first brand websites, digital catalogs, and e-commerce stores built to turn visitors into customers.',
+    deliverables: [
       'Next.js 14 & React Architecture',
-      'Mobile-First Responsive Layouts',
-      'Technical SEO & 95+ Core Web Vitals',
-      'CMS & Content Architecture',
+      'Mobile-First Responsive Design',
+      'Technical SEO & Core Web Vitals',
+      'E-Commerce & Order Management',
     ],
-    accentColor: '#38BDF8', // Cyan
   },
   {
-    icon: ShoppingBag,
-    title: 'E-Commerce & Booking Engines',
+    number: '02',
+    title: 'Custom Web Applications',
     description:
-      'High-converting online storefronts, catalog systems, and reservation flows engineered for frictionless customer checkout.',
-    highlights: [
-      'Secure Multi-Currency Checkout',
-      'Product Filtering & Search',
-      'WhatsApp Order & Inquiry Funnels',
-      'Automated Invoicing & Alerts',
+      'Tailored web applications, internal tools, and client dashboards engineered with full-stack TypeScript.',
+    deliverables: [
+      'Interactive State & Data Flows',
+      'REST & GraphQL Integrations',
+      'FinTech & Analytical Interfaces',
+      'Edge-Deployed Scalable Backends',
     ],
-    accentColor: '#10B981', // Emerald
   },
   {
-    icon: Box,
-    title: 'Custom Web Apps & Interactive 3D',
+    number: '03',
+    title: 'Interactive 3D & Creative Web',
     description:
-      'Bespoke web applications, real-time dashboards, and interactive 3D WebGL experiences that captivate users.',
-    highlights: [
-      'Three.js & React Three Fiber (R3F)',
-      'FinTech & Analytical Dashboards',
-      'Full-Stack TypeScript & Cloudflare',
-      'Zero-Jank 60–120 FPS Motion Design',
+      'Immersive WebGL experiences and real-time spatial interfaces built to make brands stand out from the noise.',
+    deliverables: [
+      'Three.js & React Three Fiber',
+      '60–120 FPS Real-Time Shaders',
+      'Dynamic Camera & Scroll Rigs',
+      'Hardware-Accelerated Motion',
     ],
-    accentColor: '#8B5CF6', // Purple
   },
 ];
 
@@ -58,66 +53,64 @@ export function ServicesSection() {
     <section
       id="services"
       className="relative max-w-7xl mx-auto px-4 sm:px-8 py-24 sm:py-36 z-10"
-      aria-label="Services: How I Help Businesses"
+      aria-label="Capabilities"
     >
       {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs font-mono font-semibold mb-4">
-          <span>Engineered for Growth</span>
+      <div className="mb-16 sm:mb-24">
+        <div className="text-xs font-mono tracking-[0.25em] uppercase text-[#737373] mb-4">
+          02 / Capabilities
         </div>
-        <h2 className="font-display font-extrabold text-4xl sm:text-6xl text-white tracking-tight leading-[1.08]">
-          How I Help Businesses Grow
+        <h2 className="font-display font-extrabold text-5xl sm:text-7xl lg:text-8xl text-[#E8E4DE] tracking-tight leading-[0.95] uppercase">
+          What<br />I Do
         </h2>
-        <p className="text-slate-400 text-base sm:text-xl mt-4 leading-relaxed">
-          Direct, reliable engineering with no confusing jargon. Every digital product is built with speed, security, and real business results in mind.
+        <p className="text-[#888888] text-base sm:text-lg mt-6 max-w-xl font-light">
+          Engineering digital products from scratch to deployment with a focus on speed, clarity, and dependable execution.
         </p>
       </div>
 
-      {/* 3 Service Columns: 1-col on mobile, 2-col on tablet, 3-col on desktop */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-        {SERVICES.map((service) => {
-          const Icon = service.icon;
-          return (
-            <div
-              key={service.title}
-              className="group relative rounded-2xl p-6 sm:p-8 bg-[#0B1120]/85 backdrop-blur-xl border border-white/[0.12] hover:border-white/30 transition-all duration-300 flex flex-col justify-between shadow-2xl hover:-translate-y-1.5"
-            >
-              <div>
-                {/* Glowing Icon Container */}
-                <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 border border-white/15 shadow-inner transition-transform duration-300 group-hover:scale-110"
-                  style={{
-                    backgroundColor: `${service.accentColor}20`,
-                    color: service.accentColor,
-                  }}
-                >
-                  <Icon className="w-7 h-7" />
-                </div>
+      {/* Numbered Editorial List */}
+      <div className="border-t border-[#1A1A1A]">
+        {SERVICES.map((service) => (
+          <div
+            key={service.number}
+            className="py-12 sm:py-16 border-b border-[#1A1A1A] grid grid-cols-1 lg:grid-cols-12 gap-8 items-start group"
+          >
+            {/* Number */}
+            <div className="lg:col-span-2">
+              <span className="font-display font-extrabold text-4xl sm:text-5xl text-[#333333] group-hover:text-[#FF4D00] transition-colors">
+                {service.number}
+              </span>
+            </div>
 
-                <h3 className="font-display font-bold text-2xl text-white mb-3">
-                  {service.title}
-                </h3>
+            {/* Title & Core Description */}
+            <div className="lg:col-span-5 pr-0 lg:pr-8">
+              <h3 className="font-display font-bold text-2xl sm:text-3xl text-[#E8E4DE] tracking-tight mb-4 group-hover:text-white transition-colors">
+                {service.title}
+              </h3>
+              <p className="text-[#A3A3A3] text-base sm:text-lg font-light leading-relaxed">
+                {service.description}
+              </p>
+            </div>
 
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-8 font-sans">
-                  {service.description}
-                </p>
+            {/* Deliverables / Details */}
+            <div className="lg:col-span-5 pt-2 lg:pt-0">
+              <div className="text-xs font-mono tracking-widest uppercase text-[#555555] mb-4">
+                Capabilities
               </div>
-
-              {/* Feature Checklist */}
-              <ul className="pt-6 border-t border-white/10 space-y-3">
-                {service.highlights.map((item) => (
-                  <li key={item} className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-300">
-                    <CheckCircle2
-                      className="w-4 h-4 shrink-0"
-                      style={{ color: service.accentColor }}
-                    />
+              <ul className="space-y-2.5">
+                {service.deliverables.map((item) => (
+                  <li
+                    key={item}
+                    className="text-sm font-mono text-[#888888] flex items-center gap-3"
+                  >
+                    <span className="text-[#333333]">—</span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </section>
   );

@@ -59,7 +59,7 @@ export function ChromaticBackdrop() {
       )}
 
       {/* Vignette Overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,8,22,0.85)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(8,8,8,0.92)_100%)]" />
     </div>
   );
 }

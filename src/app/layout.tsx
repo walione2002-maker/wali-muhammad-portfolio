@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Inter_Tight } from 'next/font/google';
+import { Inter, Syne } from 'next/font/google';
 import './globals.css';
 import { getJsonLdSchema } from '@/lib/seo';
 
@@ -9,10 +9,10 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-const interTight = Inter_Tight({
+const syne = Syne({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter-tight',
+  variable: '--font-syne',
 });
 
 export const viewport: Viewport = {
@@ -109,14 +109,14 @@ export default function RootLayout({
   const jsonLd = getJsonLdSchema();
 
   return (
-    <html lang="en" className={`${inter.variable} ${interTight.variable} dark scroll-smooth`}>
+    <html lang="en" className={`${inter.variable} ${syne.variable} dark scroll-smooth`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#050816] text-slate-100 antialiased selection:bg-cyan-500/20 selection:text-cyan-300 overflow-x-hidden">
+      <body className="bg-[#080808] text-[#E8E4DE] antialiased selection:bg-[#FF4D00] selection:text-[#080808] overflow-x-hidden">
         {children}
       </body>
     </html>

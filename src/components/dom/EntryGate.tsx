@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useCallback } from 'react';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { useEntryTransition } from '@/hooks/useEntryTransition';
 
@@ -47,52 +47,48 @@ export function EntryGate() {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050816]/95 backdrop-blur-xl px-4 sm:px-6 text-center select-none transition-opacity duration-300 safe-top safe-bottom"
-      aria-label="Welcome Gate - Wali Muhammad Portfolio"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#080808]/92 backdrop-blur-md px-6 text-center select-none transition-opacity duration-300 safe-top safe-bottom"
+      aria-label="Welcome Gate - Wali Muhammad"
     >
-      {/* Background radial glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.12)_0%,rgba(5,8,22,0.95)_75%)] pointer-events-none" />
-
-      {/* Decorative Top Accent Tag */}
-      <div className="relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs tracking-wider uppercase font-mono mb-6 sm:mb-8 shadow-glow">
-        <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-        <span>Spatial 3D Portfolio · 2026</span>
+      {/* Category / Location Tag in minimal mono */}
+      <div className="relative z-10 text-xs font-mono tracking-[0.3em] uppercase text-[#888888] mb-6 sm:mb-8">
+        Karachi, PK · Portfolio 2026
       </div>
 
-      {/* Monumental Headline */}
+      {/* Monumental Editorial Headline */}
       <h1
         ref={titleRef}
-        className="relative z-10 font-display font-extrabold text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-white tracking-tight leading-[1.08] mb-3 sm:mb-4 max-w-5xl will-change-transform"
+        className="relative z-10 font-display font-extrabold text-5xl xs:text-6xl sm:text-8xl md:text-9xl text-[#E8E4DE] tracking-tight leading-[0.95] mb-5 sm:mb-6 max-w-6xl will-change-transform"
       >
         WALI MUHAMMAD
       </h1>
 
-      {/* Subtitle */}
+      {/* Minimal Subtitle */}
       <p
         ref={subtitleRef}
-        className="relative z-10 font-display text-base sm:text-2xl md:text-3xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-300 max-w-2xl mb-8 sm:mb-12 will-change-transform px-2"
+        className="relative z-10 font-sans text-sm sm:text-lg md:text-xl font-normal text-[#9CA3AF] max-w-xl mb-10 sm:mb-14 will-change-transform px-2 tracking-wide"
       >
-        Web Developer &amp; Digital Product Creator
+        Web Developer &amp; Digital Product Engineer
       </p>
 
-      {/* Primary CTA Button */}
-      <div className="relative z-10 flex flex-col items-center gap-3 sm:gap-4 w-full max-w-xs sm:max-w-none">
+      {/* Primary Outlined Brutalist CTA */}
+      <div className="relative z-10 flex flex-col items-center gap-4 w-full max-w-xs sm:max-w-none">
         <button
           ref={ctaRef}
           onClick={handleEnter}
           disabled={isTransitioning}
-          className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 min-h-[52px] rounded-2xl bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-500 text-slate-950 font-display font-bold text-base sm:text-lg tracking-wide shadow-[0_0_35px_rgba(56,189,248,0.45)] hover:shadow-[0_0_45px_rgba(56,189,248,0.65)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer disabled:opacity-50 touch-manipulation"
+          className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 min-h-[52px] border border-[#E8E4DE] bg-transparent hover:bg-[#E8E4DE] text-[#E8E4DE] hover:text-[#080808] font-mono text-xs sm:text-sm tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer disabled:opacity-50 touch-manipulation"
         >
-          <span>ENTER EXPERIENCE</span>
-          <ArrowRight className="w-5 h-5 stroke-[2.5] group-hover:translate-x-1 transition-transform" />
+          <span>ENTER</span>
+          <ArrowRight className="w-4 h-4 stroke-[2] group-hover:translate-x-1 transition-transform" />
         </button>
 
-        <span className="text-xs text-slate-500 font-mono tracking-wider uppercase">
+        <span className="text-[11px] text-[#555555] font-mono tracking-wider uppercase">
           {isMobile ? (
-            'Tap button to begin'
+            'Tap enter to begin'
           ) : (
             <>
-              Press <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-slate-300">Enter</kbd> or click to begin
+              Press <kbd className="px-1.5 py-0.5 border border-[#333333] text-[#888888]">↵ Enter</kbd> to begin
             </>
           )}
         </span>

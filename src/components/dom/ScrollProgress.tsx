@@ -15,7 +15,7 @@ export function ScrollProgress() {
     >
       <div
         id="global-scroll-progress-bar"
-        className="h-full w-full origin-left bg-gradient-to-r from-[#00F0FF] via-[#A855F7] to-[#FFB800] shadow-[0_0_12px_rgba(0,240,255,0.8)] will-change-transform"
+        className="h-full w-full origin-left bg-[#FF4D00] will-change-transform"
         style={{ transform: 'scaleX(0)' }}
       />
     </div>

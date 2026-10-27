@@ -31,7 +31,7 @@ export default function HomePage() {
       <EntryGate />
 
       <SmoothScroll>
-        <div className="relative min-h-screen w-full bg-[#050816] text-slate-100 overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200">
+        <div className="relative min-h-screen w-full bg-[#080808] text-[#E8E4DE] overflow-x-hidden selection:bg-[#FF4D00] selection:text-[#080808]">
           {/* Dynamic Reactive Chromatic Auroras (z-index: 0) */}
           <ChromaticBackdrop />
 
