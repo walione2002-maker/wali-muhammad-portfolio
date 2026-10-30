@@ -61,7 +61,7 @@ export function ProcessSection() {
     >
       {/* Section Header */}
       <div className="mb-16 sm:mb-24">
-        <div className="text-xs font-mono tracking-[0.25em] uppercase text-[#737373] mb-4">
+        <div className="text-xs font-mono tracking-[0.25em] uppercase text-[#888888] mb-4">
           04 / Working Process
         </div>
         <h2
@@ -70,21 +70,21 @@ export function ProcessSection() {
         >
           How<br />I Work
         </h2>
-        <p className="text-[#888888] text-base sm:text-lg mt-6 max-w-xl font-light">
+        <p className="text-[#B8B8B8] text-base sm:text-xl mt-6 max-w-2xl font-light leading-relaxed">
           A disciplined, transparent delivery framework designed to give remote founders, agencies, and enterprise clients predictable outcomes.
         </p>
       </div>
 
       {/* 3-Step Process Grid */}
-      <div className="border-t border-[#1A1A1A] grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-[#1A1A1A]">
+      <div className="border-t border-[#1C1C1C] grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-[#1C1C1C]">
         {STEPS.map((s) => (
           <div
             key={s.step}
-            className="py-10 lg:py-12 lg:px-8 first:lg:pl-0 last:lg:pr-0 flex flex-col justify-between"
+            className="py-12 lg:py-14 lg:px-8 first:lg:pl-0 last:lg:pr-0 flex flex-col justify-between"
           >
             <div>
               <div className="flex items-baseline justify-between mb-8">
-                <span className="font-display font-extrabold text-4xl text-[#333333]">
+                <span className="font-display font-extrabold text-4xl text-[#555555]">
                   {s.step}
                 </span>
                 <span className="text-xs font-mono uppercase tracking-widest text-[#FF4D00]">
@@ -96,16 +96,16 @@ export function ProcessSection() {
                 {s.title}
               </h3>
 
-              <p className="text-[#A3A3A3] text-sm sm:text-base leading-relaxed font-light mb-8">
+              <p className="text-[#B8B8B8] text-base leading-relaxed font-light mb-8">
                 {s.description}
               </p>
             </div>
 
-            <ul className="space-y-2 border-t border-[#1A1A1A] pt-6 m-0 p-0 list-none">
+            <ul className="space-y-2.5 border-t border-[#1C1C1C] pt-6 m-0 p-0 list-none">
               {s.details.map((item) => (
                 <li
                   key={item}
-                  className="text-xs font-mono text-[#888888] flex items-baseline gap-2.5"
+                  className="text-xs sm:text-sm font-mono text-[#999999] flex items-baseline gap-2.5"
                 >
                   <span className="text-[#555555] select-none">/</span>
                   <span>{item}</span>

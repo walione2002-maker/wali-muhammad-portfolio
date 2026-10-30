@@ -24,13 +24,13 @@ export function Navbar() {
   const activeSection = usePortfolioStore((s) => s.activeSection);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 bg-[#080808]/90 backdrop-blur-md border-b border-[#1A1A1A] transition-all">
+    <header className="fixed top-0 left-0 right-0 z-40 bg-[#080808]/92 backdrop-blur-md border-b border-[#1C1C1C] transition-all">
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
-        {/* Brand / Logo */}
+        {/* Brand / Wordmark */}
         <div className="flex items-center gap-3">
           <a
             href="#hero"
@@ -41,13 +41,13 @@ export function Navbar() {
               WALI MUHAMMAD
             </span>
           </a>
-          <span className="text-[11px] font-mono text-[#555555] hidden lg:inline">
+          <span className="text-xs font-mono text-[#666666] hidden lg:inline">
             / Karachi (UTC+5)
           </span>
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-7">
+        <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-8">
           <ul className="flex items-center gap-6 m-0 p-0 list-none">
             {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.id;
@@ -55,10 +55,10 @@ export function Navbar() {
                 <li key={item.id}>
                   <a
                     href={item.href}
-                    className={`text-xs font-mono tracking-widest uppercase transition-colors cursor-pointer py-1 ${
+                    className={`text-xs sm:text-sm font-mono tracking-widest uppercase transition-colors cursor-pointer py-1.5 ${
                       isActive
                         ? 'text-[#FF4D00] font-semibold border-b border-[#FF4D00]'
-                        : 'text-[#888888] hover:text-[#E8E4DE]'
+                        : 'text-[#AAAAAA] hover:text-[#E8E4DE]'
                     }`}
                     aria-current={isActive ? 'true' : undefined}
                   >
@@ -69,22 +69,22 @@ export function Navbar() {
             })}
           </ul>
 
-          <div className="w-[1px] h-4 bg-[#222222]" />
+          <div className="w-[1px] h-4 bg-[#262626]" />
 
           {/* Direct Inquiry CTA */}
           <a
             href="#contact"
-            className="inline-flex items-center gap-1.5 text-xs font-mono tracking-widest uppercase text-[#E8E4DE] hover:text-[#FF4D00] transition-colors cursor-pointer group"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-mono tracking-widest uppercase text-[#E8E4DE] hover:text-[#FF4D00] transition-colors cursor-pointer group"
           >
             <span>Let&apos;s Talk</span>
-            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </nav>
 
         {/* Mobile Hamburger Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 min-h-[44px] min-w-[44px] flex items-center justify-center text-[#E8E4DE] hover:text-[#FF4D00] border border-[#222222] active:scale-95 transition-transform touch-manipulation"
+          className="md:hidden p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center text-[#E8E4DE] hover:text-[#FF4D00] border border-[#262626] active:scale-95 transition-transform touch-manipulation"
           aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={mobileMenuOpen}
         >
@@ -94,7 +94,7 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#080808] border-b border-[#1A1A1A] px-6 py-6 pb-8 flex flex-col gap-4 safe-bottom">
+        <div className="md:hidden bg-[#080808] border-b border-[#1C1C1C] px-6 py-6 pb-8 flex flex-col gap-4 safe-bottom">
           <nav aria-label="Mobile Navigation">
             <ul className="flex flex-col gap-3 m-0 p-0 list-none">
               {NAV_ITEMS.map((item) => (
@@ -102,10 +102,10 @@ export function Navbar() {
                   <a
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`text-sm font-mono tracking-widest uppercase py-2 min-h-[44px] flex items-center transition-colors ${
+                    className={`text-sm font-mono tracking-widest uppercase py-2.5 min-h-[44px] flex items-center transition-colors ${
                       activeSection === item.id
                         ? 'text-[#FF4D00] font-semibold'
-                        : 'text-[#888888] hover:text-[#E8E4DE]'
+                        : 'text-[#AAAAAA] hover:text-[#E8E4DE]'
                     }`}
                   >
                     {item.label}

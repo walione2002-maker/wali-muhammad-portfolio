@@ -4,21 +4,21 @@
 
 :root {
   --bg-primary: #080808;
-  --bg-secondary: #111111;
-  --bg-elevated: #161616;
+  --bg-secondary: #0F0F0F;
+  --bg-elevated: #151515;
   --text-primary: #E8E4DE;
-  --text-secondary: #9CA3AF;
-  --text-muted: #6B7280;
-  --text-dim: #4B5563;
+  --text-secondary: #B8B8B8;
+  --text-muted: #808080;
+  --text-dim: #555555;
   --accent: #FF4D00;
   --accent-hover: #FF6622;
-  --border-subtle: #1A1A1A;
+  --border-subtle: #1C1C1C;
   --border-active: #333333;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 5.5rem;
   background-color: #080808;
   color: #E8E4DE;
   color-scheme: dark;
@@ -35,7 +35,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }
 
 /* Skip link styling for accessibility */
@@ -59,15 +58,15 @@ body {
 
 /* iOS Safe Area Utilities */
 .safe-bottom {
-  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
 }
 
 .safe-top {
-  padding-top: max(1rem, env(safe-area-inset-top, 0px));
+  padding-top: max(1.25rem, env(safe-area-inset-top, 0px));
 }
 
 .margin-safe-bottom {
-  margin-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  margin-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
 }
 
 /* Custom Minimalist Scrollbar */
@@ -78,7 +77,7 @@ body {
   background: #080808;
 }
 ::-webkit-scrollbar-thumb {
-  background: #222222;
+  background: #262626;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -98,6 +97,11 @@ input:focus-visible,
 textarea:focus-visible {
   outline: 2px solid #FF4D00;
   outline-offset: 3px;
+}
+
+/* Ensure 3D Canvas gestures do not trap vertical page scroll on touch devices */
+canvas {
+  touch-action: pan-y;
 }
 
 /* Accessibility: Reduced Motion */

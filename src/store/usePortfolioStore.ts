@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { type LabVisualMode } from '@/types';
+import { type LabExperimentId } from '@/types';
 
 export type QualityTier = 'high' | 'medium' | 'low';
 export type SectionName =
@@ -31,7 +31,8 @@ export interface PortfolioState {
   activeProjectId: string | null;
 
   // 3D Spatial Lab Controls
-  labMode: LabVisualMode;
+  activeExperiment: LabExperimentId;
+  experimentModes: Record<LabExperimentId, string>;
   isLabInView: boolean;
 
   // Performance & Device State
@@ -43,7 +44,8 @@ export interface PortfolioState {
   setScrollProgress: (val: number) => void;
   setActiveSection: (section: SectionName) => void;
   setActiveProjectId: (id: string | null) => void;
-  setLabMode: (mode: LabVisualMode) => void;
+  setActiveExperiment: (id: LabExperimentId) => void;
+  setExperimentMode: (expId: LabExperimentId, mode: string) => void;
   setIsLabInView: (inView: boolean) => void;
   setQualityTier: (tier: QualityTier) => void;
   setIsMobile: (val: boolean) => void;
@@ -57,7 +59,15 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
 
   activeProjectId: null,
 
-  labMode: 'refraction',
+  activeExperiment: '01-gyroscopic',
+  experimentModes: {
+    '01-gyroscopic': 'refraction',
+    '02-spatial-system': 'assembled',
+    '03-kinetic-type': 'harmonic',
+    '04-signal-architecture': 'continuous',
+    '05-layout-engine': 'balanced',
+    '06-topographic-shader': 'frequencies',
+  },
   isLabInView: false,
 
   qualityTier: 'high',
@@ -71,7 +81,14 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
       activeSectionIndex: SECTION_INDEX_MAP[section] ?? 0,
     }),
   setActiveProjectId: (id) => set({ activeProjectId: id }),
-  setLabMode: (mode) => set({ labMode: mode }),
+  setActiveExperiment: (id) => set({ activeExperiment: id }),
+  setExperimentMode: (expId, mode) =>
+    set((s) => ({
+      experimentModes: {
+        ...s.experimentModes,
+        [expId]: mode,
+      },
+    })),
   setIsLabInView: (inView) => set({ isLabInView: inView }),
   setQualityTier: (tier) => set({ qualityTier: tier }),
   setIsMobile: (val) => set({ isMobile: val }),

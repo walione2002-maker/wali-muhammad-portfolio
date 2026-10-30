@@ -11,10 +11,14 @@ export interface ProjectData {
   tagline: string;
   /** Full description paragraph */
   description: string;
+  /** Context / commercial rationale */
+  context?: string;
   /** Specific client/user challenge */
   challenge?: string;
   /** Notable implementation / solution */
   solution?: string;
+  /** Key engineering or architectural decision */
+  decision?: string;
   /** Key client outcome / impact metric */
   impactMetric: string;
   /** Role played in development */
@@ -23,6 +27,8 @@ export interface ProjectData {
   year: string;
   /** Whether highlighted as primary case study */
   featured: boolean;
+  /** Featured layout variant for visual variety */
+  layoutVariant?: 'showcase' | 'split-reversed' | 'editorial' | 'compact';
   /** Technology stack badges */
   stack: string[];
   /** Category / vertical label */
@@ -43,4 +49,21 @@ export interface ProjectData {
   orbitalRadius: number;
 }
 
-export type LabVisualMode = 'refraction' | 'wireframe' | 'kinetic';
+export type LabExperimentId =
+  | '01-gyroscopic'
+  | '02-spatial-system'
+  | '03-kinetic-type'
+  | '04-signal-architecture'
+  | '05-layout-engine'
+  | '06-topographic-shader';
+
+export interface LabExperimentMeta {
+  id: LabExperimentId;
+  number: string;
+  title: string;
+  tagline: string;
+  description: string;
+  interactionHint: string;
+  technology: string[];
+  modes: string[];
+}

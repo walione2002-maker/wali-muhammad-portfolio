@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { PROJECTS } from '@/data/projects';
 import { ProjectCard } from '@/components/dom/ProjectCard';
 import { ArrowUpRight, Github } from 'lucide-react';
@@ -17,7 +18,7 @@ export function WebsitesSection() {
     >
       {/* Section Header */}
       <div className="mb-16 sm:mb-24">
-        <div className="text-xs font-mono tracking-[0.25em] uppercase text-[#737373] mb-4">
+        <div className="text-xs font-mono tracking-[0.25em] uppercase text-[#888888] mb-4">
           01 / Selected Work
         </div>
         <h2
@@ -26,13 +27,13 @@ export function WebsitesSection() {
         >
           Featured<br />Projects
         </h2>
-        <p className="text-[#888888] text-base sm:text-lg mt-6 max-w-xl font-light">
-          A curated selection of live production websites, e-commerce platforms, and interactive 3D web products engineered for international clients and growing brands.
+        <p className="text-[#A3A3A3] text-base sm:text-xl mt-6 max-w-2xl font-light leading-relaxed">
+          Detailed case studies across commercial e-commerce storefronts, high-end corporate platforms, and interactive 3D WebGL applications.
         </p>
       </div>
 
       {/* Primary Featured Case Studies */}
-      <div className="border-b border-[#1A1A1A]">
+      <div className="border-b border-[#1C1C1C]">
         {featuredProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
@@ -40,40 +41,52 @@ export function WebsitesSection() {
 
       {/* Secondary Project Archive */}
       {archiveProjects.length > 0 && (
-        <div className="mt-20 pt-12 border-t border-[#1A1A1A]">
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 mb-8">
-            <div>
-              <h3 className="font-display font-bold text-2xl sm:text-3xl text-[#E8E4DE] tracking-tight">
-                Project Archive &amp; Experiments
-              </h3>
-              <p className="text-[#737373] text-xs sm:text-sm font-mono mt-1">
-                Additional client deliveries and specialized web applications.
-              </p>
-            </div>
+        <div className="mt-24 pt-12 border-t border-[#1C1C1C]">
+          <div className="mb-8">
+            <h3 className="font-display font-bold text-2xl sm:text-3xl text-[#E8E4DE] tracking-tight">
+              Selected Archive &amp; Specialized Work
+            </h3>
+            <p className="text-[#888888] text-sm font-mono mt-1">
+              Production catalogs and interactive digital event suites.
+            </p>
           </div>
 
-          <div className="divide-y divide-[#1A1A1A] border-y border-[#1A1A1A]">
+          <div className="divide-y divide-[#1C1C1C] border-y border-[#1C1C1C]">
             {archiveProjects.map((proj) => (
               <div
                 key={proj.id}
-                className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#111111]/30 transition-colors px-2"
+                className="py-8 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-[#111111]/30 transition-colors px-3 group"
               >
-                <div className="flex items-baseline gap-4 min-w-0">
-                  <span className="font-mono text-xs text-[#555555]">
+                <div className="flex items-center gap-6 min-w-0">
+                  <span className="font-mono text-sm text-[#555555] group-hover:text-[#FF4D00] transition-colors">
                     {String(proj.index + 1).padStart(2, '0')}
                   </span>
-                  <div>
-                    <h4 className="font-display font-bold text-lg text-[#E8E4DE]">
+
+                  {/* Thumbnail */}
+                  {proj.image && (
+                    <div className="relative w-20 h-14 sm:w-24 sm:h-16 rounded overflow-hidden border border-[#222222] shrink-0 bg-[#121212]">
+                      <Image
+                        src={proj.image}
+                        alt={`Thumbnail of ${proj.title}`}
+                        fill
+                        className="object-cover object-top filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                        unoptimized
+                      />
+                    </div>
+                  )}
+
+                  <div className="min-w-0">
+                    <h4 className="font-display font-bold text-lg sm:text-xl text-[#E8E4DE] group-hover:text-white transition-colors">
                       {proj.title}
                     </h4>
-                    <p className="text-xs text-[#888888] font-light mt-0.5">
+                    <p className="text-sm text-[#888888] font-light mt-0.5 max-w-xl">
                       {proj.description}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-6 self-start md:self-auto shrink-0 text-xs font-mono">
-                  <div className="hidden sm:flex items-center gap-2 text-[#666666]">
+                  <div className="hidden lg:flex items-center gap-2 text-[#666666]">
                     {proj.stack.slice(0, 3).join(' · ')}
                   </div>
 
@@ -81,7 +94,7 @@ export function WebsitesSection() {
                     href={proj.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-[#E8E4DE] hover:text-[#FF4D00] transition-colors"
+                    className="inline-flex items-center gap-1.5 text-[#E8E4DE] hover:text-[#FF4D00] transition-colors px-3 py-1.5 border border-[#262626] hover:border-[#444444]"
                     aria-label={`View live site for ${proj.title}`}
                   >
                     <span>Live Site</span>
@@ -93,10 +106,10 @@ export function WebsitesSection() {
                       href={proj.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[#737373] hover:text-[#E8E4DE] transition-colors"
+                      className="p-1.5 text-[#737373] hover:text-[#E8E4DE] transition-colors"
                       aria-label={`View GitHub repository for ${proj.title}`}
                     >
-                      <Github className="w-3.5 h-3.5" />
+                      <Github className="w-4 h-4" />
                     </a>
                   )}
                 </div>
