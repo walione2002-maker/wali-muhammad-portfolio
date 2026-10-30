@@ -1,32 +1,56 @@
 'use client';
 
+import { useEffect } from 'react';
 import { usePortfolioStore, type SectionName } from '@/store/usePortfolioStore';
 
-/**
- * Resolves section name and index from normalized scroll progress.
- */
-export function resolveSectionFromProgress(progress: number): {
-  section: SectionName;
-  index: number;
-} {
-  if (progress >= 0.82) {
-    return { section: 'contact', index: 3 };
-  } else if (progress >= 0.65) {
-    return { section: 'services', index: 2 };
-  } else if (progress >= 0.20) {
-    return { section: 'websites', index: 1 };
-  }
-  return { section: 'hero', index: 0 };
-}
+const SECTIONS: SectionName[] = [
+  'hero',
+  'work',
+  'capabilities',
+  'lab',
+  'process',
+  'about',
+  'contact',
+];
 
 /**
- * Hook to read current section state without continuous 60Hz re-renders.
+ * Initializes IntersectionObserver to track currently visible section cleanly.
  */
-export function useSectionDetection() {
-  const activeSection = usePortfolioStore((s) => s.activeSection);
-  const activeSectionIndex = usePortfolioStore((s) => s.activeSectionIndex);
+export function useSectionObserver() {
+  const setActiveSection = usePortfolioStore((s) => s.setActiveSection);
 
-  return { activeSection, activeSectionIndex };
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find visible section with highest intersection ratio
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visibleEntry && visibleEntry.target.id) {
+          const id = visibleEntry.target.id as SectionName;
+          if (SECTIONS.includes(id)) {
+            setActiveSection(id);
+          }
+        }
+      },
+      {
+        rootMargin: '-20% 0px -40% 0px',
+        threshold: [0.1, 0.25, 0.5],
+      }
+    );
+
+    SECTIONS.forEach((secId) => {
+      const el = document.getElementById(secId);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [setActiveSection]);
 }
 
-export default useSectionDetection;
+export default useSectionObserver;

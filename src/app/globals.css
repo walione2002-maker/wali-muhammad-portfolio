@@ -5,11 +5,15 @@
 :root {
   --bg-primary: #080808;
   --bg-secondary: #111111;
+  --bg-elevated: #161616;
   --text-primary: #E8E4DE;
   --text-secondary: #9CA3AF;
   --text-muted: #6B7280;
+  --text-dim: #4B5563;
   --accent: #FF4D00;
+  --accent-hover: #FF6622;
   --border-subtle: #1A1A1A;
+  --border-active: #333333;
 }
 
 html {
@@ -32,6 +36,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+}
+
+/* Skip link styling for accessibility */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background-color: #FF4D00;
+  color: #080808;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: top 0.2s ease-in-out;
+}
+.skip-link:focus {
+  top: 1rem;
 }
 
 /* iOS Safe Area Utilities */
@@ -68,6 +91,15 @@ body {
   color: #080808;
 }
 
+/* Strict keyboard focus outlines */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #FF4D00;
+  outline-offset: 3px;
+}
+
 /* Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -76,8 +108,8 @@ body {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0.001ms !important;
   }
 }

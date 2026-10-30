@@ -1,56 +1,38 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import { QualityGate } from '@/components/shared/QualityGate';
-import { ContextLossHandler } from '@/components/shared/ContextLossHandler';
+import React from 'react';
 import { SmoothScroll } from '@/components/shared/SmoothScroll';
-import { ChromaticBackdrop } from '@/components/shared/ChromaticBackdrop';
-import { EntryGate } from '@/components/dom/EntryGate';
 import { Navbar } from '@/components/dom/Navbar';
 import { HeroSection } from '@/components/dom/HeroSection';
 import { WebsitesSection } from '@/components/dom/WebsitesSection';
 import { ServicesSection } from '@/components/dom/ServicesSection';
+import { InteractiveLab } from '@/components/dom/InteractiveLab';
+import { ProcessSection } from '@/components/dom/ProcessSection';
+import { AboutSection } from '@/components/dom/AboutSection';
 import { ContactSection } from '@/components/dom/ContactSection';
+import { SiteFooter } from '@/components/dom/SiteFooter';
 import { ScrollProgress } from '@/components/dom/ScrollProgress';
-import { usePortfolioStore } from '@/store/usePortfolioStore';
-
-const Experience = dynamic(() => import('@/components/canvas/Experience'), {
-  ssr: false,
-});
 
 export default function HomePage() {
-  const hasEntered = usePortfolioStore((s) => s.hasEntered);
-
   return (
     <>
-      <QualityGate />
-      <ContextLossHandler />
       <ScrollProgress />
-
-      {/* Cinematic Entry Gate */}
-      <EntryGate />
 
       <SmoothScroll>
         <div className="relative min-h-screen w-full bg-[#080808] text-[#E8E4DE] overflow-x-hidden selection:bg-[#FF4D00] selection:text-[#080808]">
-          {/* Dynamic Reactive Chromatic Auroras (z-index: 0) */}
-          <ChromaticBackdrop />
-
-          {/* Fixed 3D Canvas Scene (z-index: 0) */}
-          <Experience />
-
-          {/* Fixed Navigation Bar (z-index: 40) */}
+          {/* Main Navigation Header */}
           <Navbar />
 
-          {/* Natural Vertically Flowing Content Sections (z-index: 10) */}
-          <main
-            className={`relative z-10 w-full transition-opacity duration-700 ${
-              hasEntered ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-            }`}
-          >
+          {/* Core Flowing Architectural Sections */}
+          <main id="main-content" className="relative z-10 w-full">
             <HeroSection />
             <WebsitesSection />
             <ServicesSection />
+            <InteractiveLab />
+            <ProcessSection />
+            <AboutSection />
             <ContactSection />
+            <SiteFooter />
           </main>
         </div>
       </SmoothScroll>

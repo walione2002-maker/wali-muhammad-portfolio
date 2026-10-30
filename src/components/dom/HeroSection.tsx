@@ -1,36 +1,39 @@
 'use client';
 
 import React from 'react';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
 
 export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-[92vh] flex flex-col justify-between max-w-7xl mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-16 z-10"
-      aria-label="Wali Muhammad Hero Section"
+      className="relative min-h-[90vh] flex flex-col justify-between max-w-7xl mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-16 z-10"
+      aria-label="Introduction & Overview"
     >
       <div>
-        {/* Subtle Mono Label */}
-        <div className="text-xs sm:text-sm font-mono tracking-[0.25em] uppercase text-[#737373] mb-8">
-          Web Developer &amp; Product Engineer
+        {/* Editorial Eyebrow */}
+        <div className="flex items-center gap-3 text-xs sm:text-sm font-mono tracking-[0.25em] uppercase text-[#737373] mb-8">
+          <span className="w-2 h-2 rounded-full bg-[#10B981] inline-block animate-pulse" />
+          <span>Web Developer &amp; Product Engineer</span>
+          <span className="text-[#333333]">/</span>
+          <span className="text-[#A3A3A3]">Karachi, Pakistan</span>
         </div>
 
         {/* Viewport-Dominating Monumental Headline */}
-        <h1 className="font-display font-extrabold text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] text-[#E8E4DE] tracking-tight leading-[0.92] uppercase mb-8">
+        <h1 className="font-display font-extrabold text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] text-[#E8E4DE] tracking-tight leading-[0.92] uppercase mb-8">
           Wali<br className="hidden sm:inline" /> Muhammad
         </h1>
 
-        {/* Candid, Real Statement */}
+        {/* Precise, Believable Commercial Value Proposition */}
         <p className="text-[#A3A3A3] text-lg sm:text-2xl font-light leading-relaxed max-w-2xl mb-12">
-          I build high-performance commercial websites, responsive web apps, and interactive digital products.
+          I engineer high-converting commercial storefronts, modern web applications, and interactive 3D digital products with Next.js, TypeScript, and Three.js.
         </p>
 
-        {/* Minimal Scroll Cue */}
-        <div className="flex items-center gap-6">
+        {/* Dual High-Contrast Actions */}
+        <div className="flex flex-wrap items-center gap-6">
           <a
-            href="#websites"
-            className="group inline-flex items-center gap-3 text-sm sm:text-base font-mono tracking-widest uppercase text-[#E8E4DE] hover:text-[#FF4D00] border-b border-[#E8E4DE] hover:border-[#FF4D00] pb-1.5 transition-all cursor-pointer"
+            href="#work"
+            className="group inline-flex items-center gap-3 px-6 py-3.5 border border-[#E8E4DE] bg-[#E8E4DE] text-[#080808] hover:bg-transparent hover:text-[#E8E4DE] text-xs sm:text-sm font-mono tracking-widest uppercase transition-all duration-200 cursor-pointer"
           >
             <span>Selected Work</span>
             <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
@@ -38,23 +41,27 @@ export function HeroSection() {
 
           <a
             href="#contact"
-            className="text-sm sm:text-base font-mono tracking-widest uppercase text-[#737373] hover:text-[#E8E4DE] pb-1.5 transition-colors cursor-pointer"
+            className="group inline-flex items-center gap-2 px-6 py-3.5 border border-[#222222] hover:border-[#444444] text-[#E8E4DE] hover:text-[#FF4D00] text-xs sm:text-sm font-mono tracking-widest uppercase transition-colors cursor-pointer"
           >
-            Contact
+            <span>Start a Project</span>
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </div>
       </div>
 
-      {/* Grounded Status Banner */}
-      <div className="pt-12 mt-12 border-t border-[#1A1A1A] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-[#737373]">
-        <div className="flex items-center gap-3">
-          <span className="w-2 h-2 rounded-full bg-[#10B981]" />
-          <span className="text-[#A3A3A3]">Based in Karachi, Pakistan</span>
-          <span>·</span>
-          <span>FAST-NUCES</span>
+      {/* Grounded Trust & Context Footer */}
+      <div className="pt-12 mt-12 border-t border-[#1A1A1A] grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs font-mono text-[#737373]">
+        <div>
+          <span className="text-[#555555] block uppercase tracking-wider mb-1">Background</span>
+          <span className="text-[#E8E4DE]">FinTech @ FAST-NUCES Karachi</span>
         </div>
-        <div className="text-[#A3A3A3]">
-          6 Production Projects Live
+        <div>
+          <span className="text-[#555555] block uppercase tracking-wider mb-1">Core Architecture</span>
+          <span className="text-[#E8E4DE]">Next.js 14 · TypeScript · Three.js</span>
+        </div>
+        <div>
+          <span className="text-[#555555] block uppercase tracking-wider mb-1">Production Track Record</span>
+          <span className="text-[#E8E4DE]">6 Production Deployments Live</span>
         </div>
       </div>
     </section>
