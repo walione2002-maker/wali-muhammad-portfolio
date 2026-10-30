@@ -16,10 +16,25 @@ import { Exp06TopographicShader } from './experiments/Exp06TopographicShader';
 export function LabCanvas() {
   const activeExperiment = usePortfolioStore((s) => s.activeExperiment);
   const [settings, setSettings] = useState<GraphicsSettings>(graphicsManager.getSettings());
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
 
   useEffect(() => {
-    return graphicsManager.subscribe((newSettings) => setSettings(newSettings));
+    const checkMobile = () => {
+      setIsMobileScreen(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    const unsub = graphicsManager.subscribe((newSettings) => setSettings(newSettings));
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      unsub();
+    };
   }, []);
+
+  // Responsive camera framing: pull camera back on mobile portrait screens so wide objects never clip
+  const cameraZ = isMobileScreen ? 9.2 : 7.8;
+  const cameraY = isMobileScreen ? 0.9 : 1.2;
+  const cameraFov = isMobileScreen ? 48 : 45;
 
   return (
     <Canvas
@@ -29,7 +44,7 @@ export function LabCanvas() {
         alpha: true,
       }}
       dpr={settings.dpr}
-      camera={{ fov: 45, position: [0, 1.2, 7.8] }}
+      camera={{ fov: cameraFov, position: [0, cameraY, cameraZ] }}
       style={{ width: '100%', height: '100%' }}
     >
       {/* High-Fidelity Architectural Studio Lighting Rig */}

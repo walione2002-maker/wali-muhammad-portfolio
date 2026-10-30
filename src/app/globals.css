@@ -22,11 +22,15 @@ html {
   background-color: #080808;
   color: #E8E4DE;
   color-scheme: dark;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  min-width: 320px;
   background-color: #080808;
   color: #E8E4DE;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -35,6 +39,29 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Defensive Box-Sizing & Flow Restraints to Eliminate Accidental Overflow */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+/* Flexible Media Boundaries */
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Canvas Gesture Policy: Never Trap Vertical Page Scrolling */
+canvas {
+  touch-action: pan-y;
+  user-select: none;
 }
 
 /* Skip link styling for accessibility */
@@ -56,7 +83,7 @@ body {
   top: 1rem;
 }
 
-/* iOS Safe Area Utilities */
+/* iOS & Android Safe Area Utilities */
 .safe-bottom {
   padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
 }
@@ -97,11 +124,6 @@ input:focus-visible,
 textarea:focus-visible {
   outline: 2px solid #FF4D00;
   outline-offset: 3px;
-}
-
-/* Ensure 3D Canvas gestures do not trap vertical page scroll on touch devices */
-canvas {
-  touch-action: pan-y;
 }
 
 /* Accessibility: Reduced Motion */

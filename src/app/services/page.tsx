@@ -143,11 +143,11 @@ export default function ServicesPage() {
 
       <div className="min-h-screen bg-[#080808] text-[#E8E4DE] selection:bg-[#FF4D00] selection:text-[#080808]">
         {/* Navigation Header */}
-        <header className="border-b border-[#1C1C1C] bg-[#080808]/90 backdrop-blur-md sticky top-0 z-40">
-          <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
+        <header className="border-b border-[#1C1C1C] bg-[#080808]/90 backdrop-blur-md sticky top-0 z-40 safe-top">
+          <div className="max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 h-16 sm:h-20 flex items-center justify-between">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-[#E8E4DE] transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-[#E8E4DE] transition-colors min-h-[44px]"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Home</span>
@@ -155,70 +155,70 @@ export default function ServicesPage() {
 
             <Link
               href="/"
-              className="font-display font-extrabold text-sm sm:text-base text-[#E8E4DE] tracking-tight hover:text-[#FF4D00] transition-colors"
+              className="font-display font-extrabold text-xs sm:text-base text-[#E8E4DE] tracking-tight hover:text-[#FF4D00] transition-colors truncate"
             >
               WALI MUHAMMAD
             </Link>
           </div>
         </header>
 
-        <main className="max-w-7xl mx-auto px-4 sm:px-8 py-16 sm:py-24">
+        <main className="max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-10 sm:py-16">
           {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumb" className="mb-6 text-xs font-mono text-[#666666] flex items-center gap-2">
+          <nav aria-label="Breadcrumb" className="mb-6 text-[11px] sm:text-xs font-mono text-[#666666] flex items-center gap-2">
             <Link href="/" className="hover:text-[#E8E4DE]">Home</Link>
             <span>/</span>
             <span className="text-[#FF4D00]">Services</span>
           </nav>
 
-          {/* Page Heading */}
-          <div className="mb-16 border-b border-[#1C1C1C] pb-10">
-            <div className="text-xs font-mono tracking-[0.25em] uppercase text-[#888888] mb-3">
+          {/* Page Heading (Centered on mobile, left on desktop) */}
+          <div className="mb-12 sm:mb-16 border-b border-[#1C1C1C] pb-8 sm:pb-12 text-center sm:text-left">
+            <div className="text-[11px] sm:text-xs font-mono tracking-[0.25em] uppercase text-[#888888] mb-3">
               Capabilities &amp; Commercial Offerings
             </div>
-            <h1 className="font-display font-black text-4xl sm:text-6xl lg:text-7xl text-[#E8E4DE] tracking-tight uppercase leading-[0.95] mb-6">
+            <h1 className="font-display font-black text-3xl xs:text-4xl sm:text-6xl lg:text-7xl text-[#E8E4DE] tracking-tight uppercase leading-[0.95] mb-4 sm:mb-6">
               Engineering Services &amp;<br />Digital Solutions
             </h1>
-            <p className="text-base sm:text-xl text-[#A3A3A3] font-light max-w-2xl leading-relaxed">
+            <p className="text-sm xs:text-base sm:text-xl text-[#A3A3A3] font-light max-w-2xl leading-relaxed mx-auto sm:mx-0">
               Tailored frontend architecture and product engineering for companies that demand performance, design distinction, and reliable delivery.
             </p>
           </div>
 
           {/* Services Detailed List */}
-          <div className="space-y-12 mb-24">
+          <div className="space-y-8 sm:space-y-12 mb-16 sm:mb-24">
             {SERVICES.map((s) => {
               const IconComp = s.icon;
               return (
                 <article
                   key={s.number}
-                  className="p-8 sm:p-12 bg-[#0C0C0C] border border-[#1C1C1C] hover:border-[#333333] transition-all grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+                  className="p-6 sm:p-12 bg-[#0C0C0C] border border-[#1C1C1C] hover:border-[#333333] transition-all grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start"
                 >
-                  <div className="lg:col-span-5">
-                    <div className="flex items-center gap-3 mb-4">
+                  <div className="lg:col-span-5 text-center lg:text-left">
+                    <div className="flex items-center justify-center lg:justify-start gap-2.5 mb-3 sm:mb-4">
                       <span className="text-xs font-mono font-bold text-[#FF4D00]">
                         SERVICE {s.number}
                       </span>
-                      <div className="p-2 bg-[#141414] border border-[#222222] text-[#E8E4DE]">
-                        <IconComp className="w-5 h-5" />
+                      <div className="p-1.5 sm:p-2 bg-[#141414] border border-[#222222] text-[#E8E4DE]">
+                        <IconComp className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
                     </div>
 
-                    <h2 className="font-display font-black text-2xl sm:text-4xl text-[#E8E4DE] uppercase tracking-tight mb-3">
+                    <h2 className="font-display font-black text-xl xs:text-2xl sm:text-4xl text-[#E8E4DE] uppercase tracking-tight mb-2 sm:mb-3">
                       {s.title}
                     </h2>
 
-                    <p className="text-xs font-mono uppercase tracking-wider text-[#FF4D00] mb-4">
+                    <p className="text-[11px] sm:text-xs font-mono uppercase tracking-wider text-[#FF4D00] mb-3 sm:mb-4">
                       {s.tagline}
                     </p>
 
-                    <p className="text-sm sm:text-base text-[#A0A0A0] font-light leading-relaxed mb-6">
+                    <p className="text-xs sm:text-base text-[#A0A0A0] font-light leading-relaxed mb-6 text-left">
                       {s.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-1.5">
                       {s.tech.map((t) => (
                         <span
                           key={t}
-                          className="px-2.5 py-1 bg-[#141414] border border-[#222222] font-mono text-[11px] text-[#888888]"
+                          className="px-2.5 py-1 bg-[#141414] border border-[#222222] font-mono text-[10px] sm:text-[11px] text-[#888888]"
                         >
                           {t}
                         </span>
@@ -226,14 +226,14 @@ export default function ServicesPage() {
                     </div>
                   </div>
 
-                  <div className="lg:col-span-7 bg-[#0E0E0E] p-6 sm:p-8 border border-[#1A1A1A]">
-                    <span className="text-xs font-mono uppercase tracking-widest text-[#777777] block mb-4">
+                  <div className="lg:col-span-7 bg-[#0E0E0E] p-5 sm:p-8 border border-[#1A1A1A] w-full text-left">
+                    <span className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-[#777777] block mb-3 sm:mb-4 text-center sm:text-left">
                       Core Client Deliverables
                     </span>
-                    <ul className="space-y-3 m-0 p-0 list-none">
+                    <ul className="space-y-2.5 sm:space-y-3 m-0 p-0 list-none">
                       {s.deliverables.map((del, i) => (
-                        <li key={i} className="flex items-start gap-3 text-sm sm:text-base text-[#CCCCCC] font-light">
-                          <CheckCircle2 className="w-4 h-4 text-[#FF4D00] flex-shrink-0 mt-1" />
+                        <li key={i} className="flex items-start gap-2.5 text-xs sm:text-base text-[#CCCCCC] font-light">
+                          <CheckCircle2 className="w-4 h-4 text-[#FF4D00] shrink-0 mt-0.5" />
                           <span>{del}</span>
                         </li>
                       ))}
@@ -245,21 +245,21 @@ export default function ServicesPage() {
           </div>
 
           {/* Frequently Asked Questions */}
-          <section aria-labelledby="faq-title" className="mb-24 pt-12 border-t border-[#1C1C1C]">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#FF4D00] mb-3">
+          <section aria-labelledby="faq-title" className="mb-16 sm:mb-24 pt-8 sm:pt-12 border-t border-[#1C1C1C]">
+            <div className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-[#FF4D00] mb-2 sm:mb-3 text-center sm:text-left">
               Client Consultation
             </div>
-            <h2 id="faq-title" className="font-display font-black text-3xl sm:text-5xl text-[#E8E4DE] uppercase tracking-tight mb-12">
+            <h2 id="faq-title" className="font-display font-black text-2xl xs:text-3xl sm:text-5xl text-[#E8E4DE] uppercase tracking-tight mb-8 sm:mb-12 text-center sm:text-left">
               Frequently Asked Questions
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
               {FAQS.map((faq, i) => (
-                <div key={i} className="p-6 sm:p-8 bg-[#0B0B0B] border border-[#1C1C1C]">
-                  <h3 className="font-display font-bold text-lg sm:text-xl text-[#E8E4DE] mb-3">
+                <div key={i} className="p-5 sm:p-8 bg-[#0B0B0B] border border-[#1C1C1C] text-left">
+                  <h3 className="font-display font-bold text-base sm:text-xl text-[#E8E4DE] mb-2 sm:mb-3">
                     {faq.q}
                   </h3>
-                  <p className="text-sm sm:text-base text-[#999999] font-light leading-relaxed">
+                  <p className="text-xs sm:text-base text-[#999999] font-light leading-relaxed">
                     {faq.a}
                   </p>
                 </div>
@@ -268,19 +268,19 @@ export default function ServicesPage() {
           </section>
 
           {/* Consultation CTA Banner */}
-          <div className="p-8 sm:p-12 bg-[#0E0E0E] border border-[#222222] text-center">
-            <h3 className="font-display font-black text-2xl sm:text-4xl text-[#E8E4DE] uppercase tracking-tight mb-4">
+          <div className="p-6 sm:p-12 bg-[#0E0E0E] border border-[#222222] text-center">
+            <h3 className="font-display font-black text-2xl sm:text-4xl text-[#E8E4DE] uppercase tracking-tight mb-3 sm:mb-4">
               Have a Project in Mind?
             </h3>
-            <p className="text-[#999999] text-sm sm:text-base max-w-xl mx-auto mb-8 font-light">
+            <p className="text-[#999999] text-xs sm:text-base max-w-xl mx-auto mb-6 sm:mb-8 font-light leading-relaxed">
               Send an inquiry with your project scope, timeline, and goals. I respond within 24 hours.
             </p>
             <Link
               href="/#contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#FF4D00] text-[#080808] font-mono text-xs uppercase tracking-widest font-bold hover:bg-[#E8E4DE] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-[#FF4D00] text-[#080808] font-mono text-xs uppercase tracking-widest font-bold hover:bg-[#E8E4DE] transition-colors min-h-[46px] w-full sm:w-auto"
             >
               <span>Schedule Direct Project Inquiry</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 shrink-0" />
             </Link>
           </div>
         </main>

@@ -56,21 +56,21 @@ export function ServicesSection() {
   return (
     <section
       id="capabilities"
-      className="relative max-w-7xl mx-auto px-4 sm:px-8 py-24 sm:py-36 z-10"
+      className="relative max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-12 sm:py-16 lg:py-20 z-10"
       aria-labelledby="capabilities-title"
     >
-      {/* Section Header */}
-      <div className="mb-16 sm:mb-24">
-        <div className="text-xs font-mono tracking-[0.25em] uppercase text-[#888888] mb-4">
+      {/* Section Header (Centered on mobile, left on desktop) */}
+      <div className="mb-10 sm:mb-14 lg:mb-16 text-center lg:text-left">
+        <div className="text-[11px] sm:text-xs font-mono tracking-[0.25em] uppercase text-[#888888] mb-3 sm:mb-4">
           02 / Capabilities
         </div>
         <h2
           id="capabilities-title"
-          className="font-display font-extrabold text-5xl sm:text-7xl lg:text-8xl text-[#E8E4DE] tracking-tight leading-[0.95] uppercase"
+          className="font-display font-extrabold text-4xl xs:text-5xl sm:text-7xl lg:text-8xl text-[#E8E4DE] tracking-tight leading-[0.95] uppercase"
         >
           What<br />I Deliver
         </h2>
-        <p className="text-[#B8B8B8] text-base sm:text-xl mt-6 max-w-2xl font-light leading-relaxed">
+        <p className="text-[#B8B8B8] text-sm xs:text-base sm:text-xl mt-4 sm:mt-6 max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
           Engineering digital products from architectural specification through to global edge deployment, prioritizing performance, code clarity, and commercial outcomes.
         </p>
       </div>
@@ -80,40 +80,40 @@ export function ServicesSection() {
         {CAPABILITIES.map((cap) => (
           <div
             key={cap.number}
-            className="py-14 sm:py-16 border-b border-[#1C1C1C] grid grid-cols-1 lg:grid-cols-12 gap-8 items-start group hover:bg-[#111111]/25 transition-colors px-2"
+            className="py-8 sm:py-12 lg:py-14 border-b border-[#1C1C1C] grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start group hover:bg-[#111111]/25 transition-colors px-1 sm:px-2"
           >
-            {/* Number & Focus */}
-            <div className="lg:col-span-2">
-              <span className="font-display font-extrabold text-4xl sm:text-5xl text-[#555555] group-hover:text-[#FF4D00] transition-colors block">
+            {/* Number & Focus (Centered on mobile, left on desktop) */}
+            <div className="lg:col-span-2 text-center lg:text-left">
+              <span className="font-display font-extrabold text-3xl xs:text-4xl sm:text-5xl text-[#555555] group-hover:text-[#FF4D00] transition-colors block">
                 {cap.number}
               </span>
-              <span className="text-xs font-mono uppercase tracking-wider text-[#888888] mt-2 block">
+              <span className="text-[11px] sm:text-xs font-mono uppercase tracking-wider text-[#888888] mt-1 sm:mt-2 block">
                 {cap.focus}
               </span>
             </div>
 
             {/* Title & Core Description */}
-            <div className="lg:col-span-5 pr-0 lg:pr-8">
-              <h3 className="font-display font-bold text-2xl sm:text-3xl text-[#E8E4DE] tracking-tight mb-4 group-hover:text-white transition-colors">
+            <div className="lg:col-span-5 pr-0 lg:pr-8 text-center lg:text-left">
+              <h3 className="font-display font-bold text-xl xs:text-2xl sm:text-3xl text-[#E8E4DE] tracking-tight mb-3 sm:mb-4 group-hover:text-white transition-colors">
                 {cap.title}
               </h3>
-              <p className="text-[#B8B8B8] text-base sm:text-lg font-light leading-relaxed">
+              <p className="text-[#B8B8B8] text-sm sm:text-base lg:text-lg font-light leading-relaxed text-left">
                 {cap.description}
               </p>
             </div>
 
-            {/* Deliverables / Details */}
+            {/* Deliverables / Details (Left-aligned for reading) */}
             <div className="lg:col-span-5 pt-2 lg:pt-0">
-              <div className="text-xs font-mono tracking-widest uppercase text-[#777777] mb-4">
+              <div className="text-[11px] sm:text-xs font-mono tracking-widest uppercase text-[#777777] mb-3 text-center lg:text-left">
                 Core Deliverables
               </div>
-              <ul className="space-y-3 m-0 p-0 list-none">
+              <ul className="space-y-2.5 sm:space-y-3 m-0 p-0 list-none text-left">
                 {cap.deliverables.map((item) => (
                   <li
                     key={item}
-                    className="text-sm font-mono text-[#A8A8A8] flex items-baseline gap-3"
+                    className="text-xs sm:text-sm font-mono text-[#A8A8A8] flex items-baseline gap-2.5"
                   >
-                    <span className="text-[#FF4D00] select-none font-bold">—</span>
+                    <span className="text-[#FF4D00] select-none font-bold shrink-0">—</span>
                     <span>{item}</span>
                   </li>
                 ))}

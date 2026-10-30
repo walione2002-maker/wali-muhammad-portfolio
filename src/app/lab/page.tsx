@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE_URL, getBreadcrumbJsonLd } from '@/lib/seo';
-import { ArrowLeft, ArrowRight, Layers, Sparkles, Cpu, Eye } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { InteractiveLab } from '@/components/dom/InteractiveLab';
 import { SiteFooter } from '@/components/dom/SiteFooter';
 
@@ -99,11 +99,11 @@ export default function LabPage() {
 
       <div className="min-h-screen bg-[#080808] text-[#E8E4DE] selection:bg-[#FF4D00] selection:text-[#080808]">
         {/* Navigation Header */}
-        <header className="border-b border-[#1C1C1C] bg-[#080808]/90 backdrop-blur-md sticky top-0 z-40">
-          <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
+        <header className="border-b border-[#1C1C1C] bg-[#080808]/90 backdrop-blur-md sticky top-0 z-40 safe-top">
+          <div className="max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 h-16 sm:h-20 flex items-center justify-between">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-[#E8E4DE] transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-[#E8E4DE] transition-colors min-h-[44px]"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Home</span>
@@ -111,7 +111,7 @@ export default function LabPage() {
 
             <Link
               href="/"
-              className="font-display font-extrabold text-sm sm:text-base text-[#E8E4DE] tracking-tight hover:text-[#FF4D00] transition-colors"
+              className="font-display font-extrabold text-xs sm:text-base text-[#E8E4DE] tracking-tight hover:text-[#FF4D00] transition-colors truncate"
             >
               WALI MUHAMMAD
             </Link>
@@ -120,8 +120,8 @@ export default function LabPage() {
 
         <main className="w-full">
           {/* Breadcrumbs */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-8">
-            <nav aria-label="Breadcrumb" className="text-xs font-mono text-[#666666] flex items-center gap-2">
+          <div className="max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 pt-6 sm:pt-8">
+            <nav aria-label="Breadcrumb" className="text-[11px] sm:text-xs font-mono text-[#666666] flex items-center gap-2">
               <Link href="/" className="hover:text-[#E8E4DE]">Home</Link>
               <span>/</span>
               <span className="text-[#FF4D00]">Interactive 3D Lab</span>
@@ -132,15 +132,15 @@ export default function LabPage() {
           <InteractiveLab />
 
           {/* Deep Indexable Semantic Text Documentation for Search Engines & Assistive Tech */}
-          <section className="max-w-7xl mx-auto px-4 sm:px-8 py-20 border-t border-[#1C1C1C]" aria-labelledby="lab-docs-title">
-            <div className="mb-12">
-              <div className="text-xs font-mono uppercase tracking-widest text-[#FF4D00] mb-2">
+          <section className="max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-10 sm:py-16 border-t border-[#1C1C1C]" aria-labelledby="lab-docs-title">
+            <div className="mb-10 sm:mb-12 text-center lg:text-left">
+              <div className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-[#FF4D00] mb-2 sm:mb-3">
                 Engineering Specification
               </div>
-              <h2 id="lab-docs-title" className="font-display font-black text-3xl sm:text-5xl text-[#E8E4DE] uppercase tracking-tight mb-4">
+              <h2 id="lab-docs-title" className="font-display font-black text-2xl xs:text-3xl sm:text-5xl text-[#E8E4DE] uppercase tracking-tight mb-3 sm:mb-4">
                 Architecture &amp; Shader Research
               </h2>
-              <p className="text-[#A0A0A0] text-base sm:text-lg max-w-3xl font-light leading-relaxed">
+              <p className="text-[#A0A0A0] text-xs sm:text-base lg:text-lg max-w-3xl font-light leading-relaxed mx-auto lg:mx-0">
                 Complete technical documentation for the six real-time experiments. All shaders, materials, and physics calculations are engineered for 60 FPS frame pacing with hardware-clamped DPR.
               </p>
             </div>
@@ -149,31 +149,31 @@ export default function LabPage() {
               {EXPERIMENT_DEEP_DIVES.map((exp) => (
                 <article
                   key={exp.num}
-                  className="p-6 sm:p-8 bg-[#0C0C0C] border border-[#1A1A1A] hover:border-[#333333] transition-all flex flex-col justify-between"
+                  className="p-5 sm:p-8 bg-[#0C0C0C] border border-[#1A1A1A] hover:border-[#333333] transition-all flex flex-col justify-between text-left"
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
                       <span className="text-xs font-mono font-bold text-[#FF4D00]">
                         EXPERIMENT {exp.num}
                       </span>
-                      <span className="text-[11px] font-mono text-[#666666] uppercase">
+                      <span className="text-[10px] sm:text-[11px] font-mono text-[#666666] uppercase">
                         Real-time WebGL
                       </span>
                     </div>
 
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-[#E8E4DE] mb-2">
+                    <h3 className="font-display font-bold text-lg sm:text-2xl text-[#E8E4DE] mb-2">
                       {exp.title}
                     </h3>
 
-                    <p className="text-xs font-mono text-[#888888] mb-4">
+                    <p className="text-[11px] sm:text-xs font-mono text-[#888888] mb-4">
                       {exp.category}
                     </p>
 
-                    <p className="text-sm text-[#A0A0A0] font-light leading-relaxed mb-6">
+                    <p className="text-xs sm:text-sm text-[#A0A0A0] font-light leading-relaxed mb-6">
                       {exp.summary}
                     </p>
 
-                    <div className="p-4 bg-[#111111] border border-[#1C1C1C] text-xs font-mono text-[#CCCCCC] space-y-2 mb-6">
+                    <div className="p-3.5 sm:p-4 bg-[#111111] border border-[#1C1C1C] text-[11px] sm:text-xs font-mono text-[#CCCCCC] space-y-2 mb-6">
                       <div>
                         <span className="text-[#FF4D00] block uppercase text-[10px] tracking-wider mb-0.5">
                           Shader / Architecture:
@@ -193,19 +193,19 @@ export default function LabPage() {
             </div>
 
             {/* Consultation CTA Banner */}
-            <div className="mt-20 p-8 sm:p-12 bg-[#0E0E0E] border border-[#222222] text-center">
-              <h3 className="font-display font-black text-2xl sm:text-4xl text-[#E8E4DE] uppercase tracking-tight mb-4">
+            <div className="mt-14 sm:mt-20 p-6 sm:p-12 bg-[#0E0E0E] border border-[#222222] text-center">
+              <h3 className="font-display font-black text-2xl sm:text-4xl text-[#E8E4DE] uppercase tracking-tight mb-3 sm:mb-4">
                 Need Custom 3D Web Experiences?
               </h3>
-              <p className="text-[#999999] text-sm sm:text-base max-w-xl mx-auto mb-8 font-light">
+              <p className="text-[#999999] text-xs sm:text-base max-w-xl mx-auto mb-6 sm:mb-8 font-light leading-relaxed">
                 I build high-performance WebGL product visualizers and interactive 3D tools that run seamlessly across both mobile and desktop hardware.
               </p>
               <Link
                 href="/#contact"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[#FF4D00] text-[#080808] font-mono text-xs uppercase tracking-widest font-bold hover:bg-[#E8E4DE] transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-[#FF4D00] text-[#080808] font-mono text-xs uppercase tracking-widest font-bold hover:bg-[#E8E4DE] transition-colors min-h-[46px] w-full sm:w-auto"
               >
                 <span>Discuss a 3D Web Project</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 shrink-0" />
               </Link>
             </div>
           </section>
