@@ -4,15 +4,16 @@ import React, { useRef, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { type LabExperimentId, type LabExperimentMeta } from '@/types';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, Cpu } from 'lucide-react';
+import { graphicsManager, type GraphicsSettings } from '@/lib/graphics/quality';
 
 // Dynamic import with SSR false for strict client-side WebGL lifecycle
 const LabCanvas = dynamic(() => import('@/components/canvas/LabCanvas'), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-full flex flex-col items-center justify-center text-[#666666] font-mono text-xs uppercase tracking-widest gap-2 bg-[#080808]">
+    <div className="w-full h-full flex flex-col items-center justify-center text-[#666666] font-mono text-xs uppercase tracking-widest gap-3 bg-[#080808]">
       <div className="w-6 h-6 border-2 border-[#333333] border-t-[#FF4D00] rounded-full animate-spin" />
-      <span>Initializing WebGL Shaders...</span>
+      <span>Initializing WebGL Pipeline...</span>
     </div>
   ),
 });
@@ -46,9 +47,9 @@ const EXPERIMENTS: LabExperimentMeta[] = [
     title: 'Kinetic Typographic Field',
     tagline: 'Dynamic Velocity Displacement Sculpture',
     description:
-      '3D architectural typographic blocks forming "BUILD WITH INTENT". Pointer velocity generates elastic displacement waves with damped return.',
-    interactionHint: 'Move Cursor Across Blocks to Generate Force Wave',
-    technology: ['3D Typography', 'Elastic Springs', 'Velocity Physics'],
+      'Beveled 3D letterforms forming "BUILD WITH INTENT". Pointer velocity generates elastic displacement waves with damped return.',
+    interactionHint: 'Move Cursor Across Letters to Generate Force Wave',
+    technology: ['3D Extruded Glyphs', 'Elastic Springs', 'Velocity Physics'],
     modes: ['harmonic', 'velocity', 'grid'],
   },
   {
@@ -89,11 +90,16 @@ const EXPERIMENTS: LabExperimentMeta[] = [
 export function InteractiveLab() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInViewport, setIsInViewport] = useState(false);
+  const [settings, setSettings] = useState<GraphicsSettings>(graphicsManager.getSettings());
 
   const activeExpId = usePortfolioStore((s) => s.activeExperiment);
   const setActiveExp = usePortfolioStore((s) => s.setActiveExperiment);
   const experimentModes = usePortfolioStore((s) => s.experimentModes);
   const setExperimentMode = usePortfolioStore((s) => s.setExperimentMode);
+
+  useEffect(() => {
+    return graphicsManager.subscribe((s) => setSettings(s));
+  }, []);
 
   // Viewport intersection observer to completely halt WebGL rendering off-screen
   useEffect(() => {
@@ -144,16 +150,16 @@ export function InteractiveLab() {
             <button
               key={exp.id}
               onClick={() => setActiveExp(exp.id)}
-              className={`p-3 sm:p-4 text-left border transition-all cursor-pointer ${
+              className={`p-3 sm:p-4 text-left border transition-all cursor-pointer flex flex-col justify-between ${
                 isSelected
                   ? 'border-[#FF4D00] bg-[#141414] text-[#E8E4DE]'
                   : 'border-[#1C1C1C] bg-[#0A0A0A] text-[#777777] hover:text-[#CCCCCC] hover:border-[#333333]'
               }`}
               aria-pressed={isSelected}
             >
-              <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center justify-between mb-2">
                 <span
-                  className={`text-xs font-mono font-bold ${
+                  className={`text-[11px] font-mono font-bold tracking-wider ${
                     isSelected ? 'text-[#FF4D00]' : 'text-[#555555]'
                   }`}
                 >
@@ -163,7 +169,7 @@ export function InteractiveLab() {
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FF4D00] animate-pulse" />
                 )}
               </div>
-              <div className="font-display font-bold text-xs sm:text-sm tracking-tight leading-snug line-clamp-1">
+              <div className="font-display font-bold text-xs sm:text-sm tracking-tight leading-snug break-words">
                 {exp.title}
               </div>
             </button>
@@ -190,8 +196,14 @@ export function InteractiveLab() {
             </p>
           </div>
 
-          <div className="text-xs font-mono text-[#777777] bg-[#141414] px-3 py-1.5 border border-[#222222]">
-            {activeExp.interactionHint}
+          <div className="flex items-center gap-2">
+            <div className="text-xs font-mono text-[#777777] bg-[#141414] px-3 py-1.5 border border-[#222222] flex items-center gap-2">
+              <Cpu className="w-3.5 h-3.5 text-[#FF4D00]" />
+              <span className="uppercase">{settings.tier} TIER</span>
+            </div>
+            <div className="text-xs font-mono text-[#777777] bg-[#141414] px-3 py-1.5 border border-[#222222] hidden sm:block">
+              {activeExp.interactionHint}
+            </div>
           </div>
         </div>
 
@@ -243,7 +255,7 @@ export function InteractiveLab() {
           </div>
           <div>
             <span className="text-[#555555] block uppercase mb-0.5">Performance Lifecycle</span>
-            <span className="text-[#10B981]">Hardware Clamped · Auto-Pause Active</span>
+            <span className="text-[#10B981]">DPR {settings.dpr.toFixed(1)} Clamped · Auto-Pause Active</span>
           </div>
         </div>
       </div>

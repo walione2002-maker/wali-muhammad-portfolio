@@ -2,9 +2,10 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { PROJECTS } from '@/data/projects';
 import { ProjectCard } from '@/components/dom/ProjectCard';
-import { ArrowUpRight, Github } from 'lucide-react';
+import { ArrowUpRight, Github, ArrowRight } from 'lucide-react';
 
 export function WebsitesSection() {
   const featuredProjects = PROJECTS.filter((p) => p.featured);
@@ -17,19 +18,29 @@ export function WebsitesSection() {
       aria-labelledby="selected-work-title"
     >
       {/* Section Header */}
-      <div className="mb-16 sm:mb-24">
-        <div className="text-xs font-mono tracking-[0.25em] uppercase text-[#888888] mb-4">
-          01 / Selected Work
+      <div className="mb-16 sm:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div>
+          <div className="text-xs font-mono tracking-[0.25em] uppercase text-[#888888] mb-4">
+            01 / Selected Work
+          </div>
+          <h2
+            id="selected-work-title"
+            className="font-display font-extrabold text-5xl sm:text-7xl lg:text-8xl text-[#E8E4DE] tracking-tight leading-[0.95] uppercase"
+          >
+            Featured<br />Projects
+          </h2>
+          <p className="text-[#A3A3A3] text-base sm:text-xl mt-6 max-w-2xl font-light leading-relaxed">
+            Detailed case studies across commercial e-commerce storefronts, high-end corporate platforms, and interactive 3D WebGL applications.
+          </p>
         </div>
-        <h2
-          id="selected-work-title"
-          className="font-display font-extrabold text-5xl sm:text-7xl lg:text-8xl text-[#E8E4DE] tracking-tight leading-[0.95] uppercase"
+
+        <Link
+          href="/work"
+          className="inline-flex items-center gap-2 px-6 py-3 border border-[#262626] bg-[#0E0E0E] text-[#E8E4DE] hover:border-[#FF4D00] hover:text-[#FF4D00] font-mono text-xs uppercase tracking-widest transition-colors self-start md:self-end"
         >
-          Featured<br />Projects
-        </h2>
-        <p className="text-[#A3A3A3] text-base sm:text-xl mt-6 max-w-2xl font-light leading-relaxed">
-          Detailed case studies across commercial e-commerce storefronts, high-end corporate platforms, and interactive 3D WebGL applications.
-        </p>
+          <span>View All Case Studies ({PROJECTS.length})</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
       </div>
 
       {/* Primary Featured Case Studies */}
@@ -77,7 +88,7 @@ export function WebsitesSection() {
 
                   <div className="min-w-0">
                     <h4 className="font-display font-bold text-lg sm:text-xl text-[#E8E4DE] group-hover:text-white transition-colors">
-                      {proj.title}
+                      <Link href={`/work/${proj.id}`}>{proj.title}</Link>
                     </h4>
                     <p className="text-sm text-[#888888] font-light mt-0.5 max-w-xl">
                       {proj.description}
@@ -85,10 +96,18 @@ export function WebsitesSection() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-6 self-start md:self-auto shrink-0 text-xs font-mono">
+                <div className="flex items-center gap-4 sm:gap-6 self-start md:self-auto shrink-0 text-xs font-mono">
                   <div className="hidden lg:flex items-center gap-2 text-[#666666]">
                     {proj.stack.slice(0, 3).join(' · ')}
                   </div>
+
+                  <Link
+                    href={`/work/${proj.id}`}
+                    className="inline-flex items-center gap-1.5 text-[#FF4D00] hover:text-[#E8E4DE] transition-colors px-3 py-1.5 border border-[#262626] hover:border-[#FF4D00]"
+                  >
+                    <span>Case Study</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
 
                   <a
                     href={proj.liveUrl}

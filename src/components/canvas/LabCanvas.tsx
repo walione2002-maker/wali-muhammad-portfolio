@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
+import { graphicsManager, type GraphicsSettings } from '@/lib/graphics/quality';
 
 import { Exp01Gyroscopic } from './experiments/Exp01Gyroscopic';
 import { Exp02SpatialSystem } from './experiments/Exp02SpatialSystem';
@@ -14,22 +15,29 @@ import { Exp06TopographicShader } from './experiments/Exp06TopographicShader';
 
 export function LabCanvas() {
   const activeExperiment = usePortfolioStore((s) => s.activeExperiment);
+  const [settings, setSettings] = useState<GraphicsSettings>(graphicsManager.getSettings());
+
+  useEffect(() => {
+    return graphicsManager.subscribe((newSettings) => setSettings(newSettings));
+  }, []);
 
   return (
     <Canvas
       gl={{
-        antialias: true,
-        powerPreference: 'high-performance',
+        antialias: settings.antialiasing,
+        powerPreference: settings.powerPreference,
         alpha: true,
       }}
-      dpr={[1, 1.5]}
-      camera={{ fov: 45, position: [0, 1.2, 8] }}
+      dpr={settings.dpr}
+      camera={{ fov: 45, position: [0, 1.2, 7.8] }}
       style={{ width: '100%', height: '100%' }}
     >
-      <ambientLight intensity={0.65} />
-      <directionalLight position={[10, 12, 8]} intensity={1.5} />
-      <directionalLight position={[-10, -5, -8]} intensity={0.6} color="#FF4D00" />
-      <pointLight position={[0, 0, 0]} intensity={0.9} color="#FF4D00" />
+      {/* High-Fidelity Architectural Studio Lighting Rig */}
+      <ambientLight intensity={0.55} />
+      <directionalLight position={[9, 14, 8]} intensity={1.8} />
+      <directionalLight position={[-8, -5, -7]} intensity={0.75} color="#FF4D00" />
+      <directionalLight position={[6, -4, 4]} intensity={0.4} color="#38BDF8" />
+      <pointLight position={[0, 0, 0]} intensity={0.8} color="#FF4D00" />
 
       {/* Render strictly the active experiment */}
       {activeExperiment === '01-gyroscopic' && <Exp01Gyroscopic />}
@@ -43,7 +51,7 @@ export function LabCanvas() {
         enableZoom={false}
         enablePan={false}
         autoRotate={false}
-        rotateSpeed={0.8}
+        rotateSpeed={0.75}
         dampingFactor={0.05}
       />
     </Canvas>

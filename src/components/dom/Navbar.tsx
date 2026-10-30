@@ -1,22 +1,22 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { usePortfolioStore, type SectionName } from '@/store/usePortfolioStore';
 
 interface NavItem {
   label: string;
   href: string;
-  id: SectionName;
+  id: SectionName | string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Work', href: '#work', id: 'work' },
-  { label: 'Capabilities', href: '#capabilities', id: 'capabilities' },
-  { label: '3D Lab', href: '#lab', id: 'lab' },
-  { label: 'Process', href: '#process', id: 'process' },
-  { label: 'About', href: '#about', id: 'about' },
-  { label: 'Contact', href: '#contact', id: 'contact' },
+  { label: 'Work', href: '/#work', id: 'work' },
+  { label: 'Services', href: '/services', id: 'services' },
+  { label: '3D Lab', href: '/lab', id: 'lab' },
+  { label: 'About', href: '/about', id: 'about' },
+  { label: 'Contact', href: '/contact', id: 'contact' },
 ];
 
 export function Navbar() {
@@ -32,15 +32,15 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
         {/* Brand / Wordmark */}
         <div className="flex items-center gap-3">
-          <a
-            href="#hero"
+          <Link
+            href="/"
             className="group cursor-pointer flex items-center gap-2"
             aria-label="Wali Muhammad — Home"
           >
             <span className="font-display font-extrabold text-base sm:text-lg text-[#E8E4DE] tracking-tight group-hover:text-[#FF4D00] transition-colors">
               WALI MUHAMMAD
             </span>
-          </a>
+          </Link>
           <span className="text-xs font-mono text-[#666666] hidden lg:inline">
             / Karachi (UTC+5)
           </span>
@@ -53,7 +53,7 @@ export function Navbar() {
               const isActive = activeSection === item.id;
               return (
                 <li key={item.id}>
-                  <a
+                  <Link
                     href={item.href}
                     className={`text-xs sm:text-sm font-mono tracking-widest uppercase transition-colors cursor-pointer py-1.5 ${
                       isActive
@@ -63,7 +63,7 @@ export function Navbar() {
                     aria-current={isActive ? 'true' : undefined}
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               );
             })}
@@ -72,13 +72,13 @@ export function Navbar() {
           <div className="w-[1px] h-4 bg-[#262626]" />
 
           {/* Direct Inquiry CTA */}
-          <a
-            href="#contact"
+          <Link
+            href="/contact"
             className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-mono tracking-widest uppercase text-[#E8E4DE] hover:text-[#FF4D00] transition-colors cursor-pointer group"
           >
             <span>Let&apos;s Talk</span>
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </a>
+          </Link>
         </nav>
 
         {/* Mobile Hamburger Toggle */}
@@ -99,7 +99,7 @@ export function Navbar() {
             <ul className="flex flex-col gap-3 m-0 p-0 list-none">
               {NAV_ITEMS.map((item) => (
                 <li key={item.id}>
-                  <a
+                  <Link
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`text-sm font-mono tracking-widest uppercase py-2.5 min-h-[44px] flex items-center transition-colors ${
@@ -109,19 +109,19 @@ export function Navbar() {
                     }`}
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </nav>
-          <a
-            href="#contact"
+          <Link
+            href="/contact"
             onClick={() => setMobileMenuOpen(false)}
             className="inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[48px] border border-[#E8E4DE] text-[#E8E4DE] hover:bg-[#E8E4DE] hover:text-[#080808] font-mono text-xs tracking-widest uppercase mt-2 transition-colors touch-manipulation"
           >
             <span>Start a Project</span>
             <ArrowUpRight className="w-4 h-4" />
-          </a>
+          </Link>
         </div>
       )}
     </header>

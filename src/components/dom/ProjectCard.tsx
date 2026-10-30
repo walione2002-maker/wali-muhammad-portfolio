@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { ArrowUpRight, Github } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowUpRight, Github, BookOpen } from 'lucide-react';
 import { type ProjectData } from '@/types';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 
@@ -83,7 +84,7 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
             id={`project-title-${project.id}`}
             className="font-display font-bold text-3xl sm:text-4xl text-[#E8E4DE] group-hover:text-white tracking-tight mb-2 transition-colors"
           >
-            {project.title}
+            <Link href={`/work/${project.id}`}>{project.title}</Link>
           </h3>
 
           <div className="text-xs font-mono text-[#FF4D00] mb-4">
@@ -133,11 +134,19 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
 
           {/* Action Links */}
           <div className="flex items-center gap-6">
+            <Link
+              href={`/work/${project.id}`}
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono tracking-widest uppercase text-[#FF4D00] hover:text-[#E8E4DE] border-b border-[#FF4D00] hover:border-[#E8E4DE] pb-1 transition-all cursor-pointer font-semibold"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>Case Study</span>
+            </Link>
+
             <a
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono tracking-widest uppercase text-[#E8E4DE] hover:text-[#FF4D00] border-b border-[#E8E4DE] hover:border-[#FF4D00] pb-1 transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-mono tracking-widest uppercase text-[#E8E4DE] hover:text-[#FF4D00] border-b border-[#E8E4DE] hover:border-[#FF4D00] pb-1 transition-all cursor-pointer"
               aria-label={`Visit live website for ${project.title} (opens in new tab)`}
             >
               <span>Visit Deployment</span>
