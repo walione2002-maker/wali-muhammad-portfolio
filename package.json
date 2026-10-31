@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy:cf": "next build && wrangler pages deploy out --project-name=devwalimuhammad"
+    "deploy:cf": "next build && npx wrangler pages deploy out --project-name=devwalimuhammad"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
