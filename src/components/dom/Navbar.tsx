@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, ArrowUpRight, MapPin, Clock } from 'lucide-react';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { type DoorCategoryId } from '@/types';
@@ -19,6 +20,9 @@ const DOOR_ITEMS: NavDoorItem[] = [
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
+  const router = useRouter();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [timeString, setTimeString] = useState<string>('');
 
@@ -30,7 +34,7 @@ export function Navbar() {
 
   const isDark = themeMode === 'dark' || activeDoorId !== null;
 
-  // Live ticking clock in Asia/Karachi timezone
+  // Live ticking clock in Asia/Karachi timezone (e.g. 11:15pm · 31 October, 2026)
   useEffect(() => {
     const updateKarachiTime = () => {
       const now = new Date();
@@ -67,7 +71,7 @@ export function Navbar() {
     return () => clearInterval(interval);
   }, []);
 
-  // Close mobile menu on Escape key
+  // Close mobile menu on Escape key & manage body scroll
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setMobileMenuOpen(false);
@@ -89,15 +93,24 @@ export function Navbar() {
     if (activeDoorId !== null) {
       closeDoorRoom();
     }
+    if (pathname !== '/') {
+      router.push('/');
+      return;
+    }
     const el = document.getElementById('hero');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     } else {
-      window.location.href = '/#hero';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleDoorClick = (doorId: DoorCategoryId) => {
+    if (pathname !== '/') {
+      openDoorRoom(doorId);
+      router.push('/');
+      return;
+    }
     openDoorRoom(doorId);
     const doorsSection = document.getElementById('doors-section');
     if (doorsSection) {
@@ -110,17 +123,23 @@ export function Navbar() {
     if (activeDoorId !== null) {
       closeDoorRoom();
     }
+    if (pathname !== '/') {
+      router.push('/#my-story');
+      return;
+    }
     const el = document.getElementById('my-story') || document.getElementById('about');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.href = '/#my-story';
     }
   };
 
   const handleContactClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setProjectModalOpen(true, 'Web & E-Commerce');
+    if (pathname !== '/') {
+      router.push('/#contact');
+      return;
+    }
     const el = document.getElementById('contact');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
@@ -129,157 +148,92 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+      className={`fixed top-0 inset-x-0 z-50 h-14 px-6 md:px-12 flex items-center justify-between text-xs font-medium border-b transition-colors duration-300 ${
         isDark
-          ? 'bg-[#0B0D0C]/90 backdrop-blur-md text-[#F4F3EE] border-b border-white/10'
-          : 'bg-[#F4F3EE]/90 backdrop-blur-md text-[#141413] border-b border-black/10'
+          ? 'bg-[#0B0D0C]/90 backdrop-blur-md text-[#F4F3EE] border-white/10'
+          : 'bg-[#F4F3EE]/90 backdrop-blur-md text-[#141413] border-black/10'
       }`}
     >
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
 
-      <div className="max-w-[1440px] mx-auto px-5 sm:px-8 md:px-12 h-16 sm:h-20 flex items-center justify-between">
-        {/* Left Side: Brand Name & Navigation Items */}
-        <div className="flex items-center gap-6 xl:gap-8">
-          {/* Brand Wordmark */}
-          <Link
-            href="/"
-            onClick={handleHomeClick}
-            className="group flex items-center gap-2 cursor-pointer shrink-0"
-            aria-label="Wali Muhammad — Home"
-          >
-            <span
-              className={`font-sans font-bold text-base sm:text-lg tracking-tight transition-colors ${
-                isDark ? 'text-[#F4F3EE]' : 'text-[#141413]'
-              }`}
-            >
-              Wali Muhammad
-            </span>
-          </Link>
+      {/* Left Navigation Links (Sitting flush on bottom navbar border) */}
+      <nav aria-label="Main Navigation" className="flex items-center gap-5 sm:gap-6 lg:gap-7 h-14">
+        {/* Home Link */}
+        <button
+          onClick={handleHomeClick}
+          className={`h-14 flex items-center px-1 border-b-2 transition-colors cursor-pointer tracking-tight ${
+            pathname === '/' && activeDoorId === null
+              ? 'border-current font-semibold text-current'
+              : 'border-transparent text-current/75 hover:text-current'
+          }`}
+        >
+          Home
+        </button>
 
-          {/* Desktop Navigation Links */}
-          <nav aria-label="Main Navigation" className="hidden lg:flex items-center gap-5 xl:gap-6">
-            {/* Home Link */}
+        {/* 4 Architectural Doors */}
+        {DOOR_ITEMS.map((door) => {
+          const isActive = activeDoorId === door.id;
+          return (
             <button
-              onClick={handleHomeClick}
-              className={`relative py-1 text-xs xl:text-sm font-medium tracking-tight transition-colors ${
-                activeDoorId === null
-                  ? isDark
-                    ? 'text-[#F4F3EE]'
-                    : 'text-[#141413]'
-                  : isDark
-                  ? 'text-zinc-400 hover:text-white'
-                  : 'text-zinc-600 hover:text-black'
+              key={door.id}
+              onClick={() => handleDoorClick(door.id)}
+              className={`h-14 hidden md:flex items-center px-1 border-b-2 transition-colors cursor-pointer tracking-tight ${
+                isActive
+                  ? 'border-current font-semibold text-current'
+                  : 'border-transparent text-current/75 hover:text-current'
               }`}
             >
-              Home
-              {activeDoorId === null && (
-                <span
-                  className={`absolute -bottom-1 left-0 right-0 h-[2px] rounded-full ${
-                    isDark ? 'bg-[#F4F3EE]' : 'bg-[#141413]'
-                  }`}
-                />
-              )}
+              {door.label}
             </button>
+          );
+        })}
 
-            {/* 4 Architectural Doors */}
-            {DOOR_ITEMS.map((door) => {
-              const isActive = activeDoorId === door.id;
-              return (
-                <button
-                  key={door.id}
-                  onClick={() => handleDoorClick(door.id)}
-                  className={`relative py-1 text-xs xl:text-sm font-medium tracking-tight transition-colors ${
-                    isActive
-                      ? isDark
-                        ? 'text-[#F4F3EE]'
-                        : 'text-[#141413]'
-                      : isDark
-                      ? 'text-zinc-400 hover:text-white'
-                      : 'text-zinc-600 hover:text-black'
-                  }`}
-                >
-                  {door.label}
-                  {isActive && (
-                    <span
-                      className={`absolute -bottom-1 left-0 right-0 h-[2px] rounded-full ${
-                        isDark ? 'bg-[#F4F3EE]' : 'bg-[#141413]'
-                      }`}
-                    />
-                  )}
-                </button>
-              );
-            })}
+        {/* My Story */}
+        <button
+          onClick={handleStoryClick}
+          className="h-14 hidden lg:flex items-center px-1 border-b-2 border-transparent transition-colors cursor-pointer tracking-tight text-current/75 hover:text-current"
+        >
+          My Story
+        </button>
 
-            {/* My Story */}
-            <button
-              onClick={handleStoryClick}
-              className={`relative py-1 text-xs xl:text-sm font-medium tracking-tight transition-colors ${
-                isDark ? 'text-zinc-400 hover:text-white' : 'text-zinc-600 hover:text-black'
-              }`}
-            >
-              My Story
-            </button>
+        {/* Contact */}
+        <button
+          onClick={handleContactClick}
+          className="h-14 hidden sm:flex items-center px-1 border-b-2 border-transparent transition-colors cursor-pointer tracking-tight text-current/75 hover:text-current"
+        >
+          Contact
+        </button>
+      </nav>
 
-            {/* Contact */}
-            <button
-              onClick={handleContactClick}
-              className={`relative py-1 text-xs xl:text-sm font-medium tracking-tight transition-colors ${
-                isDark ? 'text-zinc-400 hover:text-white' : 'text-zinc-600 hover:text-black'
-              }`}
-            >
-              Contact
-            </button>
-          </nav>
+      {/* Right Telemetry Strip (Exact video match) */}
+      <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+        <div className="flex items-center gap-3 text-[11px] sm:text-xs font-mono tracking-wider opacity-85">
+          <span className="flex items-center gap-1.5">
+            <MapPin className="w-3.5 h-3.5 opacity-70" />
+            <span>Location: Karachi</span>
+          </span>
+          <span className="opacity-40">|</span>
+          <span className="flex items-center gap-1.5 tabular-nums hidden xs:flex" suppressHydrationWarning>
+            <Clock className="w-3.5 h-3.5 opacity-70" />
+            <span>{timeString || '11:15pm · 31 October, 2026'}</span>
+          </span>
         </div>
 
-        {/* Right Side: Live Telemetry Strip & Quick Action */}
-        <div className="flex items-center gap-4 sm:gap-6">
-          {/* Live Ticking Telemetry Strip */}
-          <div
-            className={`hidden md:flex items-center gap-3 text-xs font-mono tracking-wider transition-colors ${
-              isDark ? 'text-zinc-400' : 'text-zinc-600'
-            }`}
-          >
-            <span className="flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 opacity-70" />
-              <span>Location: Karachi</span>
-            </span>
-            <span className="opacity-40">|</span>
-            <span className="flex items-center gap-1.5 tabular-nums" suppressHydrationWarning>
-              <Clock className="w-3.5 h-3.5 opacity-70" />
-              <span>{timeString || '10:22pm · 31 October, 2026'}</span>
-            </span>
-          </div>
-
-          {/* Quick Talk CTA (Visible on lg+) */}
-          <button
-            onClick={() => setProjectModalOpen(true, 'Web Development')}
-            className={`hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium border transition-all ${
-              isDark
-                ? 'border-white/20 text-[#F4F3EE] hover:bg-white/10'
-                : 'border-black/20 text-[#141413] hover:bg-black/5'
-            }`}
-          >
-            <span>Let&apos;s Talk</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </button>
-
-          {/* Mobile Hamburger Toggle (44px min tap target) */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`lg:hidden p-2 rounded-lg border transition-all min-h-[44px] min-w-[44px] flex items-center justify-center ${
-              isDark
-                ? 'border-white/20 text-[#F4F3EE] hover:bg-white/10'
-                : 'border-black/20 text-[#141413] hover:bg-black/5'
-            }`}
-            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            aria-expanded={mobileMenuOpen}
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
+        {/* Mobile Hamburger Toggle (44px tap target) */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className={`md:hidden p-2 rounded-lg border transition-all min-h-[40px] min-w-[40px] flex items-center justify-center ${
+            isDark
+              ? 'border-white/20 text-[#F4F3EE] hover:bg-white/10'
+              : 'border-black/20 text-[#141413] hover:bg-black/5'
+          }`}
+          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileMenuOpen}
+        >
+          {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+        </button>
       </div>
 
       {/* Mobile Navigation Sheet Overlay */}
@@ -288,7 +242,7 @@ export function Navbar() {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile Navigation Menu"
-          className={`lg:hidden fixed inset-x-0 top-16 sm:top-20 bottom-0 px-6 py-8 flex flex-col justify-between overflow-y-auto safe-bottom z-50 ${
+          className={`md:hidden fixed inset-x-0 top-14 bottom-0 px-6 py-8 flex flex-col justify-between overflow-y-auto safe-bottom z-50 ${
             isDark
               ? 'bg-[#0B0D0C]/98 backdrop-blur-xl text-[#F4F3EE]'
               : 'bg-[#F4F3EE]/98 backdrop-blur-xl text-[#141413]'
@@ -303,7 +257,7 @@ export function Navbar() {
                     setMobileMenuOpen(false);
                   }}
                   className={`text-xl font-bold tracking-tight py-2 transition-colors ${
-                    activeDoorId === null ? 'text-emerald-500 font-extrabold' : 'opacity-80'
+                    pathname === '/' && activeDoorId === null ? 'text-emerald-500 font-extrabold' : 'opacity-80'
                   }`}
                 >
                   Home
@@ -361,7 +315,7 @@ export function Navbar() {
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                setProjectModalOpen(true, 'Web Development');
+                setProjectModalOpen(true, 'Web & E-Commerce');
               }}
               className="w-full py-3.5 rounded-full bg-[#141413] text-[#F4F3EE] font-medium text-sm flex items-center justify-center gap-2 shadow-lg"
             >

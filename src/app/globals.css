@@ -15,8 +15,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
-  background-color: #0B0D0C;
-  color: #F4F3EE;
+  background-color: #F4F3EE;
+  color: #141413;
   width: 100%;
   overflow-x: hidden;
 }
@@ -26,17 +26,18 @@ body {
   padding: 0;
   width: 100%;
   min-width: 320px;
-  background-color: #0B0D0C;
-  color: #F4F3EE;
+  background-color: #F4F3EE;
+  color: #141413;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* 3D Perspective & Hardware-Accelerated Transforms */
+/* 3D Hardware-Accelerated Perspective & Transform Utilities */
 .perspective-1200 {
   perspective: 1200px;
 }
@@ -45,12 +46,45 @@ body {
   perspective: 1600px;
 }
 
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
 .transform-style-3d {
   transform-style: preserve-3d;
 }
 
 .backface-hidden {
   backface-visibility: hidden;
+}
+
+/* Mechanical Split-Flap Spring Swing Keyframes */
+@keyframes flapSwing {
+  0% {
+    transform: rotateX(-85deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  70% {
+    transform: rotateX(14deg);
+  }
+  85% {
+    transform: rotateX(5deg);
+  }
+  100% {
+    transform: rotateX(8deg);
+    opacity: 1;
+  }
+}
+
+.animate-flap-swing {
+  animation: flapSwing 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 /* Defensive Box-Sizing & Flow Restraints to Eliminate Accidental Overflow */
@@ -115,20 +149,20 @@ canvas {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0D0C;
+  background: #F4F3EE;
 }
 ::-webkit-scrollbar-thumb {
-  background: #272B28;
+  background: #C8C7C0;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4B524D;
+  background: #888780;
 }
 
 /* Editorial Selection */
 ::selection {
-  background: #10B981;
-  color: #0B0D0C;
+  background: #141413;
+  color: #F4F3EE;
 }
 
 /* Strict Keyboard Focus Outlines */
@@ -137,7 +171,7 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid #10B981;
+  outline: 2px solid #141413;
   outline-offset: 3px;
 }
 

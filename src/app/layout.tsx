@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Syne } from 'next/font/google';
 import './globals.css';
 import { getJsonLdSchema } from '@/lib/seo';
+import { CustomCursor } from '@/components/dom/CustomCursor';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -16,7 +17,7 @@ const syne = Syne({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#050816',
+  themeColor: '#F4F3EE',
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
@@ -25,13 +26,12 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://devwalimuhammad.pages.dev'),
   title: {
-    default: 'Wali Muhammad | Web Developer & Software Engineer in Karachi, Pakistan — Official Portfolio',
+    default: 'Wali Muhammad | Full-Stack Engineer, FinTech Systems Architect & Creative Developer',
     template: '%s | Wali Muhammad',
   },
   description:
-    'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore live client websites and web applications built by Wali Muhammad.',
+    'Official portfolio of Wali Muhammad — Full-Stack Engineer, FinTech Systems Architect at FAST-NUCES Karachi, and Creative 3D WebGL Developer. Explore live client platforms, commercial storefronts, and spatial systems.',
   keywords: [
-    // Primary Name & Local Keywords
     'Wali Muhammad',
     'Wali Muhammad Karachi',
     'Wali Muhammad Pakistan',
@@ -39,17 +39,11 @@ export const metadata: Metadata = {
     'Wali Muhammad Software Engineer',
     'Wali Muhammad FAST-NUCES',
     'Wali Muhammad Portfolio',
-    'Web Developer Karachi',
-    'Web Developer Pakistan',
     'Full-Stack Developer Karachi',
-    // Services & Client Queries
-    'Freelance Web Developer Karachi',
-    'Next.js Developer Pakistan',
-    'React Developer Karachi',
-    'E-Commerce Website Developer Karachi',
-    'Custom Web Application Development',
-    'Interactive 3D Web Developer',
-    'FinTech Web Developer',
+    'FinTech Software Architect',
+    'Three.js Developer Pakistan',
+    'Next.js 14 Developer',
+    'Creative Technologist',
   ],
   authors: [{ name: 'Wali Muhammad', url: 'https://devwalimuhammad.pages.dev' }],
   creator: 'Wali Muhammad',
@@ -58,30 +52,30 @@ export const metadata: Metadata = {
     'geo.region': 'PK-SD',
     'geo.placename': 'Karachi, Sindh, Pakistan',
     'geo.position': '24.8607;67.0011',
-    'ICBM': '24.8607, 67.0011',
+    ICBM: '24.8607, 67.0011',
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://devwalimuhammad.pages.dev',
-    siteName: 'Wali Muhammad — Web Developer Portfolio',
-    title: 'Wali Muhammad | Web Developer & Software Engineer in Karachi, Pakistan — Official Portfolio',
+    siteName: 'Wali Muhammad — Engineering Portfolio',
+    title: 'Wali Muhammad | Full-Stack Engineer, FinTech Systems Architect & Creative Developer',
     description:
-      'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore live client websites and web applications built by Wali Muhammad.',
+      'Official portfolio of Wali Muhammad — Full-Stack Engineer, FinTech Systems Architect at FAST-NUCES Karachi, and Creative 3D WebGL Developer.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Wali Muhammad — Web Developer & Software Engineer Portfolio',
+        alt: 'Wali Muhammad — Full-Stack Engineer & FinTech Architect Portfolio',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Wali Muhammad | Web Developer & Software Engineer in Karachi, Pakistan',
+    title: 'Wali Muhammad | Full-Stack Engineer & FinTech Architect',
     description:
-      'Official portfolio of Wali Muhammad — Full-Stack Web Developer, FinTech Student at FAST-NUCES Karachi, and Digital Product Creator in Pakistan. Explore live client websites and web applications built by Wali Muhammad.',
+      'Official portfolio of Wali Muhammad — Full-Stack Engineer, FinTech Systems Architect at FAST-NUCES Karachi & 3D WebGL Developer.',
     images: ['/og-image.png'],
     creator: '@walione2002',
   },
@@ -109,14 +103,16 @@ export default function RootLayout({
   const jsonLd = getJsonLdSchema();
 
   return (
-    <html lang="en" className={`${inter.variable} ${syne.variable} dark scroll-smooth`}>
+    <html lang="en" className={`${inter.variable} ${syne.variable} scroll-smooth`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#080808] text-[#E8E4DE] antialiased selection:bg-[#FF4D00] selection:text-[#080808] overflow-x-hidden">
+      <body className="bg-[#F4F3EE] text-[#141413] antialiased selection:bg-[#141413] selection:text-[#F4F3EE] transition-colors duration-500 overflow-x-hidden">
+        {/* Global Custom Magnetic Cursor */}
+        <CustomCursor />
         {children}
       </body>
     </html>

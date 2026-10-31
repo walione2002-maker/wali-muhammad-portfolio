@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { SmoothScroll } from '@/components/shared/SmoothScroll';
 import { ScrollProgress } from '@/components/dom/ScrollProgress';
-import { CustomCursor } from '@/components/dom/CustomCursor';
 import { Navbar } from '@/components/dom/Navbar';
 import { HeroSection } from '@/components/dom/HeroSection';
 import { ServicesSection } from '@/components/dom/ServicesSection';
@@ -22,9 +21,6 @@ export default function HomePage() {
     <>
       {/* Top Global Scroll Progress Indicator */}
       <ScrollProgress />
-
-      {/* Awwwards-Tier Custom Magnetic Cursor */}
-      <CustomCursor />
 
       <SmoothScroll>
         <div
