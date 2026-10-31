@@ -3,25 +3,20 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary: #080808;
-  --bg-secondary: #0F0F0F;
-  --bg-elevated: #151515;
-  --text-primary: #E8E4DE;
-  --text-secondary: #B8B8B8;
-  --text-muted: #808080;
-  --text-dim: #555555;
-  --accent: #FF4D00;
-  --accent-hover: #FF6622;
-  --border-subtle: #1C1C1C;
-  --border-active: #333333;
+  --bg-primary: #0B0D0C;
+  --bg-light: #F4F3EE;
+  --text-dark: #141413;
+  --text-light: #F4F3EE;
+  --accent-emerald: #10B981;
+  --accent-amber: #F59E0B;
+  --accent-blue: #3B82F6;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem;
-  background-color: #080808;
-  color: #E8E4DE;
-  color-scheme: dark;
+  scroll-padding-top: 5rem;
+  background-color: #0B0D0C;
+  color: #F4F3EE;
   width: 100%;
   overflow-x: hidden;
 }
@@ -31,14 +26,31 @@ body {
   padding: 0;
   width: 100%;
   min-width: 320px;
-  background-color: #080808;
-  color: #E8E4DE;
+  background-color: #0B0D0C;
+  color: #F4F3EE;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* 3D Perspective & Hardware-Accelerated Transforms */
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.perspective-1600 {
+  perspective: 1600px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
 }
 
 /* Defensive Box-Sizing & Flow Restraints to Eliminate Accidental Overflow */
@@ -71,13 +83,15 @@ canvas {
   left: 1rem;
   z-index: 100;
   padding: 0.75rem 1.25rem;
-  background-color: #FF4D00;
-  color: #080808;
+  background-color: #F4F3EE;
+  color: #141413;
   font-weight: 700;
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: top 0.2s ease-in-out;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .skip-link:focus {
   top: 1rem;
@@ -96,33 +110,34 @@ canvas {
   margin-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
 }
 
-/* Custom Minimalist Scrollbar */
+/* Custom Minimalist Studio Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #080808;
+  background: #0B0D0C;
 }
 ::-webkit-scrollbar-thumb {
-  background: #262626;
+  background: #272B28;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF4D00;
+  background: #4B524D;
 }
 
-/* Editorial selection */
+/* Editorial Selection */
 ::selection {
-  background: #FF4D00;
-  color: #080808;
+  background: #10B981;
+  color: #0B0D0C;
 }
 
-/* Strict keyboard focus outlines */
+/* Strict Keyboard Focus Outlines */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid #FF4D00;
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #10B981;
   outline-offset: 3px;
 }
 

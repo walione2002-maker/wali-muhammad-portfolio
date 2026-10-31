@@ -67,3 +67,46 @@ export interface LabExperimentMeta {
   technology: string[];
   modes: string[];
 }
+
+export type DoorCategoryId =
+  | 'web-development'
+  | 'fintech-apps'
+  | 'spatial-web'
+  | 'systems-archive';
+
+export interface DoorConfig {
+  id: DoorCategoryId;
+  navLabel: string;
+  nameplate: string;
+  title: string;
+  subtitleBadge: string;
+  roomTitle: string;
+  roomDescription: string;
+  colors: {
+    primary: string;
+    panelDark: string;
+    trim: string;
+    glow: string;
+    accentHex: string;
+  };
+  checklist: string[];
+  projectSlugs: string[];
+  includeLab?: boolean;
+}
+
+export interface TimelineMilestone {
+  id: string;
+  stepIndex: string;
+  year: string;
+  dateRange: string;
+  badgeText: string;
+  title: string;
+  subtitle: string;
+  bullets: string[];
+}
+
+export interface FlipRoleItem {
+  label: string;
+  badgeNote: string;
+  accentClass: string;
+}

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { type LabExperimentId } from '@/types';
+import { type LabExperimentId, type DoorCategoryId } from '@/types';
 
 export type QualityTier = 'high' | 'medium' | 'low';
 export type SectionName =
@@ -40,6 +40,13 @@ export interface PortfolioState {
   isMobile: boolean;
   contextLossCount: number;
 
+  // 3D Architectural Doors & Room Navigation
+  activeDoorId: DoorCategoryId | null;
+  openingDoorId: DoorCategoryId | null;
+  themeMode: 'light' | 'dark';
+  isProjectModalOpen: boolean;
+  selectedDoorForInquiry: string;
+
   // Actions
   setScrollProgress: (val: number) => void;
   setActiveSection: (section: SectionName) => void;
@@ -50,6 +57,13 @@ export interface PortfolioState {
   setQualityTier: (tier: QualityTier) => void;
   setIsMobile: (val: boolean) => void;
   incrementContextLoss: () => void;
+
+  // Door & Modal Actions
+  openDoorRoom: (id: DoorCategoryId) => void;
+  closeDoorRoom: () => void;
+  setOpeningDoorId: (id: DoorCategoryId | null) => void;
+  setThemeMode: (mode: 'light' | 'dark') => void;
+  setProjectModalOpen: (open: boolean, defaultService?: string) => void;
 }
 
 export const usePortfolioStore = create<PortfolioState>((set) => ({
@@ -74,6 +88,13 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
   isMobile: false,
   contextLossCount: 0,
 
+  // Initial Doors & Theme State
+  activeDoorId: null,
+  openingDoorId: null,
+  themeMode: 'light',
+  isProjectModalOpen: false,
+  selectedDoorForInquiry: 'Web & E-Commerce',
+
   setScrollProgress: (val) => set({ scrollProgress: val }),
   setActiveSection: (section) =>
     set({
@@ -94,4 +115,23 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
   setIsMobile: (val) => set({ isMobile: val }),
   incrementContextLoss: () =>
     set((s) => ({ contextLossCount: s.contextLossCount + 1 })),
+
+  openDoorRoom: (id) =>
+    set({
+      activeDoorId: id,
+      openingDoorId: null,
+      themeMode: 'dark',
+    }),
+  closeDoorRoom: () =>
+    set({
+      activeDoorId: null,
+      openingDoorId: null,
+    }),
+  setOpeningDoorId: (id) => set({ openingDoorId: id }),
+  setThemeMode: (mode) => set({ themeMode: mode }),
+  setProjectModalOpen: (open, defaultService) =>
+    set((s) => ({
+      isProjectModalOpen: open,
+      ...(defaultService ? { selectedDoorForInquiry: defaultService } : {}),
+    })),
 }));
