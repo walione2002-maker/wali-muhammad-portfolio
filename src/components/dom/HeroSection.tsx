@@ -34,6 +34,10 @@ export function HeroSection() {
 
   const handleSeeWork = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (typeof window !== 'undefined' && window.__scrollToDoorsLineup) {
+      window.__scrollToDoorsLineup();
+      return;
+    }
     const el = document.getElementById('doors-section') || document.getElementById('doors-lineup');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
@@ -293,9 +297,9 @@ export function HeroSection() {
               </svg>
 
               {/* Hand-drawn editorial annotation label */}
-              <div className="bg-[#141413]/70 backdrop-blur-sm px-3 py-1.5 rounded-xl border border-white/20 shadow-lg">
+              <div className="bg-[#141413]/70 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-white/20 shadow-lg">
                 <span className="font-serif italic font-semibold text-base sm:text-lg text-[#F4F3EE] tracking-tight leading-none block">
-                  My chilly jacket
+                  My FinTech blazer
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-300 font-medium block mt-0.5">
                   FAST-NUCES · 6 Live Sites

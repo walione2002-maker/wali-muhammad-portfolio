@@ -80,6 +80,10 @@ export function ContactSection() {
 
   const handleSeeWork = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (typeof window !== 'undefined' && window.__scrollToDoorsLineup) {
+      window.__scrollToDoorsLineup();
+      return;
+    }
     const lineup = document.getElementById('doors-lineup') || document.getElementById('doors-section');
     if (lineup) {
       lineup.scrollIntoView({ behavior: 'smooth' });
@@ -113,7 +117,7 @@ export function ContactSection() {
       <div className="max-w-[1360px] mx-auto">
         {/* 1. Top Availability Eyebrow (00:10) */}
         <div className="flex items-center gap-3 select-none">
-          <div className="w-3 h-3 rounded-[2px] bg-emerald-400 shadow-[0_0_12px_#34d399] animate-pulse" />
+          <div className="w-3 h-3 rounded-[2px] bg-[#34D399] shadow-[0_0_12px_#34D399] animate-pulse" />
           <span className="text-xs font-mono uppercase tracking-[0.18em] text-zinc-300 font-semibold">
             AVAILABLE FOR NEW WORK
           </span>
@@ -127,7 +131,7 @@ export function ContactSection() {
 
         {/* 3. Editorial Subtext */}
         <p className="max-w-xl text-zinc-400 text-base sm:text-lg leading-relaxed mt-6 font-light">
-          I&apos;m taking on new freelance work and engineering contracts: commercial websites, FinTech web apps, 3D WebGL interfaces and visual systems. Tell me what you&apos;re building and I&apos;ll get back to you within a day.
+          I&apos;m taking on new freelance work: websites, FinTech web apps, 3D WebGL interfaces and visual systems. Tell me what you&apos;re building and I&apos;ll get back to you within a day.
         </p>
 
         {/* 4. CTA Row (00:10) */}

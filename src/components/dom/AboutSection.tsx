@@ -145,7 +145,7 @@ export function AboutSection() {
       id="my-story"
       ref={sectionRef}
       aria-label="Wali Muhammad Career Timeline & Story"
-      className="bg-[#0B0D0C] text-[#F4F3EE] relative overflow-hidden -mt-12 pt-0 pb-28 border-t border-white/10 z-10"
+      className="bg-[#0B0D0C] text-[#F4F3EE] relative overflow-hidden -mt-16 pt-0 pb-28 border-t border-white/10 z-10"
     >
       {/* 1. TOP RADIAL TIME-MACHINE COMPASS DIAL ARC (00:07 & 00:13) */}
       {/* Bleeds directly beneath the floor line of the 4 Doors */}
@@ -155,7 +155,7 @@ export function AboutSection() {
           className="absolute inset-0 z-0"
           style={{
             background:
-              'radial-gradient(50% 90% at 50% 0%, rgba(217, 119, 6, 0.28) 0%, rgba(11, 13, 12, 0) 100%)',
+              'radial-gradient(50% 90% at 50% 0%, rgba(217, 119, 6, 0.25) 0%, transparent 100%)',
           }}
         />
 

@@ -6,6 +6,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        studio: {
+          light: '#F4F3EE',
+          card: '#F7F6F2',
+          dark: '#0B0D0C',
+          ink: '#141413',
+          emerald: '#34D399',
+        },
         background: {
           DEFAULT: '#080808',
           secondary: '#111111',

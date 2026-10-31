@@ -3,6 +3,7 @@ import { Inter, Syne } from 'next/font/google';
 import './globals.css';
 import { getJsonLdSchema } from '@/lib/seo';
 import { CustomCursor } from '@/components/dom/CustomCursor';
+import { SmoothScroll } from '@/components/shared/SmoothScroll';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -113,7 +114,8 @@ export default function RootLayout({
       <body className="bg-[#F4F3EE] text-[#141413] antialiased selection:bg-[#141413] selection:text-[#F4F3EE] transition-colors duration-500 overflow-x-hidden">
         {/* Global Custom Magnetic Cursor */}
         <CustomCursor />
-        {children}
+        {/* Global Lenis / GSAP Smooth Scroll */}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );

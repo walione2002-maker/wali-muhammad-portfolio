@@ -11,7 +11,11 @@ export function SiteFooter() {
 
   const handleScrollTop = (e: React.MouseEvent) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (typeof window !== 'undefined' && window.__lenis) {
+      window.__lenis.scrollTo(0);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
