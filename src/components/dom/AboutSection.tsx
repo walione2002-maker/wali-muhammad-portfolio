@@ -15,6 +15,7 @@ export function AboutSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const compassSvgRef = useRef<SVGSVGElement>(null);
   const [activeIdx, setActiveIdx] = useState(0);
+  const [isTimelineInView, setIsTimelineInView] = useState(false);
 
   // Generate 144 ticks around compass circle (r = 500, center = 550, 550)
   const ticks = useMemo(() => {
@@ -57,6 +58,7 @@ export function AboutSection() {
     if (typeof window === 'undefined') return;
 
     let compassST: ScrollTrigger | null = null;
+    let visibilityST: ScrollTrigger | null = null;
 
     if (sectionRef.current && compassSvgRef.current) {
       const tween = gsap.to(compassSvgRef.current, {
@@ -71,10 +73,21 @@ export function AboutSection() {
       });
 
       compassST = tween.scrollTrigger ?? null;
+
+      visibilityST = ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top 70%',
+        end: 'bottom 20%',
+        onEnter: () => setIsTimelineInView(true),
+        onLeave: () => setIsTimelineInView(false),
+        onEnterBack: () => setIsTimelineInView(true),
+        onLeaveBack: () => setIsTimelineInView(false),
+      });
     }
 
     return () => {
       if (compassST) compassST.kill();
+      if (visibilityST) visibilityST.kill();
     };
   }, []);
 
@@ -132,16 +145,17 @@ export function AboutSection() {
       id="my-story"
       ref={sectionRef}
       aria-label="Wali Muhammad Career Timeline & Story"
-      className="bg-[#0B0D0C] text-[#F4F3EE] relative overflow-hidden pt-8 pb-28 border-t border-white/10"
+      className="bg-[#0B0D0C] text-[#F4F3EE] relative overflow-hidden -mt-12 pt-0 pb-28 border-t border-white/10 z-10"
     >
       {/* 1. TOP RADIAL TIME-MACHINE COMPASS DIAL ARC (00:07 & 00:13) */}
+      {/* Bleeds directly beneath the floor line of the 4 Doors */}
       <div className="h-44 sm:h-56 w-full overflow-hidden relative flex justify-center items-start select-none pointer-events-none">
         {/* Warm copper/amber atmospheric radial glow */}
         <div
           className="absolute inset-0 z-0"
           style={{
             background:
-              'radial-gradient(50% 90% at 50% 0%, rgba(217, 119, 6, 0.22) 0%, rgba(11, 13, 12, 0) 100%)',
+              'radial-gradient(50% 90% at 50% 0%, rgba(217, 119, 6, 0.28) 0%, rgba(11, 13, 12, 0) 100%)',
           }}
         />
 
@@ -153,9 +167,9 @@ export function AboutSection() {
           viewBox="0 0 1100 1100"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute -top-[880px] sm:-top-[840px] z-10 transition-transform will-change-transform drop-shadow-[0_0_35px_rgba(245,158,11,0.2)]"
+          className="absolute -top-[880px] sm:-top-[840px] z-10 transition-transform will-change-transform drop-shadow-[0_0_35px_rgba(245,158,11,0.25)]"
         >
-          {/* Concentric Outer Ring */}
+          {/* Concentric Outer Rings */}
           <circle cx="550" cy="550" r="500" stroke="#F59E0B" strokeOpacity="0.4" strokeWidth="2" />
           <circle
             cx="550"
@@ -187,7 +201,7 @@ export function AboutSection() {
           <circle cx="550" cy="550" r="28" stroke="#F59E0B" strokeOpacity="0.5" strokeWidth="1.5" />
         </svg>
 
-        {/* Center Golden Index Triangle Needle */}
+        {/* Center Golden Index Triangle Needle (00:07 & 00:13) */}
         <div className="absolute top-2 z-20 flex flex-col items-center">
           <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[10px] border-t-amber-400 drop-shadow-[0_0_8px_#F59E0B]" />
           <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-amber-400/90 mt-1 font-semibold">
@@ -196,9 +210,31 @@ export function AboutSection() {
         </div>
       </div>
 
-      {/* 2. TWO-COLUMN STICKY TIME-MACHINE LAYOUT */}
+      {/* 2. RIGHT-EDGE VERTICAL GREEN SCROLL RAIL (00:08 – 00:11) */}
+      <div
+        className={`hidden lg:flex fixed right-5 xl:right-8 top-1/2 -translate-y-1/2 z-30 flex-col items-center gap-2 select-none pointer-events-none transition-opacity duration-300 ${
+          isTimelineInView ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
+        <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold tabular-nums">
+          0{activeIdx + 1} / 06
+        </span>
+        <div className="w-1 h-44 xl:h-52 bg-white/10 rounded-full relative overflow-hidden backdrop-blur-sm">
+          <div
+            className="w-full bg-gradient-to-b from-amber-400 via-emerald-400 to-emerald-500 rounded-full transition-all duration-300 shadow-[0_0_12px_#10B981]"
+            style={{
+              height: `${((activeIdx + 1) / 6) * 100}%`,
+            }}
+          />
+        </div>
+        <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-500">
+          2022
+        </span>
+      </div>
+
+      {/* 3. TWO-COLUMN STICKY TIME-MACHINE LAYOUT (00:08 – 00:11) */}
       <div className="max-w-[1360px] mx-auto px-6 md:px-12 py-8 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-        {/* Left Sticky Column (lg:col-span-5 lg:sticky lg:top-32) */}
+        {/* Left Sticky Column */}
         <div className="lg:col-span-5 lg:sticky lg:top-32 flex flex-col items-start select-none">
           {/* Eyebrow */}
           <div className="text-zinc-400 text-sm font-medium flex items-center gap-2 mb-2">
@@ -263,7 +299,7 @@ export function AboutSection() {
           </div>
         </div>
 
-        {/* Right Scrolling Milestones Column (lg:col-span-7 space-y-20 sm:space-y-28 py-6) */}
+        {/* Right Scrolling Milestones Column */}
         <div className="lg:col-span-7 space-y-16 sm:space-y-24 py-4">
           {TIMELINE_DATA.map((milestone, idx) => {
             const isActive = activeIdx === idx;
