@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE_URL, getBreadcrumbJsonLd } from '@/lib/seo';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Box, Sparkles } from 'lucide-react';
 import { InteractiveLab } from '@/components/dom/InteractiveLab';
 import { SiteFooter } from '@/components/dom/SiteFooter';
 
@@ -97,118 +97,88 @@ export default function LabPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
-      <div className="min-h-screen bg-[#080808] text-[#E8E4DE] selection:bg-[#FF4D00] selection:text-[#080808]">
+      <div className="min-h-screen bg-[#0B0D0C] text-[#F4F3EE] selection:bg-emerald-500 selection:text-black">
         {/* Navigation Header */}
-        <header className="border-b border-[#1C1C1C] bg-[#080808]/90 backdrop-blur-md sticky top-0 z-40 safe-top">
-          <div className="max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 h-16 sm:h-20 flex items-center justify-between">
+        <header className="border-b border-white/10 bg-[#0B0D0C]/90 backdrop-blur-md sticky top-0 z-40 safe-top">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
             <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-[#E8E4DE] transition-colors min-h-[44px]"
+              href="/#doors-section"
+              className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Back to Home</span>
+              <span>Back to the doors</span>
             </Link>
 
             <Link
               href="/"
-              className="font-display font-extrabold text-xs sm:text-base text-[#E8E4DE] tracking-tight hover:text-[#FF4D00] transition-colors truncate"
+              className="text-xs sm:text-sm font-bold text-[#F4F3EE] tracking-tight hover:text-emerald-400 transition-colors"
             >
-              WALI MUHAMMAD
+              WALI MUHAMMAD · 3D LAB
             </Link>
           </div>
         </header>
 
-        <main className="w-full">
+        <main className="max-w-[1400px] mx-auto px-6 md:px-12 py-12 sm:py-20">
           {/* Breadcrumbs */}
-          <div className="max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 pt-6 sm:pt-8">
-            <nav aria-label="Breadcrumb" className="text-[11px] sm:text-xs font-mono text-[#666666] flex items-center gap-2">
-              <Link href="/" className="hover:text-[#E8E4DE]">Home</Link>
-              <span>/</span>
-              <span className="text-[#FF4D00]">Interactive 3D Lab</span>
-            </nav>
+          <nav aria-label="Breadcrumb" className="mb-6 text-xs font-mono text-zinc-500 flex items-center gap-2">
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+            <span>/</span>
+            <span className="text-emerald-400">3D Engineering Lab</span>
+          </nav>
+
+          {/* Heading */}
+          <div className="mb-14 border-b border-white/10 pb-10 text-left">
+            <div className="inline-flex items-center gap-2 text-xs font-mono tracking-[0.2em] uppercase text-zinc-400 mb-3">
+              <Box className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Three.js · WebGL · 60 FPS Render Loops</span>
+            </div>
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#F4F3EE] mb-4">
+              Real-Time Spatial Lab
+            </h1>
+            <p className="text-base sm:text-xl text-zinc-300 font-light max-w-3xl leading-relaxed">
+              Six contained WebGL and Three.js experiments exploring physical transmission optics, 3D kinetic typography, spatial interface architecture, and custom GLSL vertex displacement shaders.
+            </p>
           </div>
 
-          {/* Mount the Real-Time WebGL Lab Console */}
-          <InteractiveLab />
+          {/* Mount the Interactive Lab Canvas */}
+          <div className="mb-20">
+            <InteractiveLab />
+          </div>
 
-          {/* Deep Indexable Semantic Text Documentation for Search Engines & Assistive Tech */}
-          <section className="max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-10 sm:py-16 border-t border-[#1C1C1C]" aria-labelledby="lab-docs-title">
-            <div className="mb-10 sm:mb-12 text-center lg:text-left">
-              <div className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-[#FF4D00] mb-2 sm:mb-3">
-                Engineering Specification
-              </div>
-              <h2 id="lab-docs-title" className="font-display font-black text-2xl xs:text-3xl sm:text-5xl text-[#E8E4DE] uppercase tracking-tight mb-3 sm:mb-4">
-                Architecture &amp; Shader Research
-              </h2>
-              <p className="text-[#A0A0A0] text-xs sm:text-base lg:text-lg max-w-3xl font-light leading-relaxed mx-auto lg:mx-0">
-                Complete technical documentation for the six real-time experiments. All shaders, materials, and physics calculations are engineered for 60 FPS frame pacing with hardware-clamped DPR.
-              </p>
-            </div>
+          {/* Technical Deep Dives for All 6 Experiments */}
+          <div className="border-t border-white/10 pt-16 mb-20">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#F4F3EE] tracking-tight mb-10">
+              Architectural Specifications
+            </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {EXPERIMENT_DEEP_DIVES.map((exp) => (
-                <article
+                <div
                   key={exp.num}
-                  className="p-5 sm:p-8 bg-[#0C0C0C] border border-[#1A1A1A] hover:border-[#333333] transition-all flex flex-col justify-between text-left"
+                  className="p-6 bg-white/[0.03] border border-white/10 rounded-2xl flex flex-col justify-between"
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-3 sm:mb-4">
-                      <span className="text-xs font-mono font-bold text-[#FF4D00]">
-                        EXPERIMENT {exp.num}
-                      </span>
-                      <span className="text-[10px] sm:text-[11px] font-mono text-[#666666] uppercase">
-                        Real-time WebGL
-                      </span>
-                    </div>
-
-                    <h3 className="font-display font-bold text-lg sm:text-2xl text-[#E8E4DE] mb-2">
+                    <span className="text-xs font-mono text-emerald-400 block mb-2 font-bold">
+                      STUDY {exp.num} · {exp.category.toUpperCase()}
+                    </span>
+                    <h3 className="text-xl font-bold text-[#F4F3EE] mb-3">
                       {exp.title}
                     </h3>
-
-                    <p className="text-[11px] sm:text-xs font-mono text-[#888888] mb-4">
-                      {exp.category}
-                    </p>
-
-                    <p className="text-xs sm:text-sm text-[#A0A0A0] font-light leading-relaxed mb-6">
+                    <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-light mb-4">
                       {exp.summary}
                     </p>
-
-                    <div className="p-3.5 sm:p-4 bg-[#111111] border border-[#1C1C1C] text-[11px] sm:text-xs font-mono text-[#CCCCCC] space-y-2 mb-6">
-                      <div>
-                        <span className="text-[#FF4D00] block uppercase text-[10px] tracking-wider mb-0.5">
-                          Shader / Architecture:
-                        </span>
-                        <span>{exp.shaderDetails}</span>
-                      </div>
-                      <div>
-                        <span className="text-[#777777] block uppercase text-[10px] tracking-wider mb-0.5">
-                          Interaction:
-                        </span>
-                        <span className="text-[#999999]">{exp.interaction}</span>
-                      </div>
+                    <div className="p-3 bg-black/40 border border-white/10 rounded-lg text-xs font-mono text-zinc-400 mb-4">
+                      {exp.shaderDetails}
                     </div>
                   </div>
-                </article>
+
+                  <span className="text-[11px] font-mono text-zinc-500 pt-3 border-t border-white/10">
+                    {exp.interaction}
+                  </span>
+                </div>
               ))}
             </div>
-
-            {/* Consultation CTA Banner */}
-            <div className="mt-14 sm:mt-20 p-6 sm:p-12 bg-[#0E0E0E] border border-[#222222] text-center">
-              <h3 className="font-display font-black text-2xl sm:text-4xl text-[#E8E4DE] uppercase tracking-tight mb-3 sm:mb-4">
-                Need Custom 3D Web Experiences?
-              </h3>
-              <p className="text-[#999999] text-xs sm:text-base max-w-xl mx-auto mb-6 sm:mb-8 font-light leading-relaxed">
-                I build high-performance WebGL product visualizers and interactive 3D tools that run seamlessly across both mobile and desktop hardware.
-              </p>
-              <Link
-                href="/#contact"
-                className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-[#FF4D00] text-[#080808] font-mono text-xs uppercase tracking-widest font-bold hover:bg-[#E8E4DE] transition-colors min-h-[46px] w-full sm:w-auto"
-              >
-                <span>Discuss a 3D Web Project</span>
-                <ArrowRight className="w-4 h-4 shrink-0" />
-              </Link>
-            </div>
-          </section>
+          </div>
         </main>
 
         <SiteFooter />
