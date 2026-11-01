@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, memo } from 'react';
 import { type DoorConfig, type DoorCategoryId } from '@/types';
 
 export interface ArchitecturalDoorProps {
@@ -12,7 +12,7 @@ export interface ArchitecturalDoorProps {
   className?: string;
 }
 
-export function ArchitecturalDoor({
+export const ArchitecturalDoor = memo(function ArchitecturalDoor({
   door,
   isOpen = false,
   isOpening = false,
@@ -44,7 +44,7 @@ export function ArchitecturalDoor({
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative select-none cursor-pointer group [perspective:1600px] transition-transform duration-300 ${
+      className={`relative select-none cursor-pointer group [perspective:1600px] transition-transform duration-300 transform-gpu ${
         compact
           ? 'w-[230px] sm:w-[260px] h-[390px] sm:h-[450px]'
           : 'w-[250px] sm:w-[285px] h-[430px] sm:h-[490px]'
@@ -91,7 +91,7 @@ export function ArchitecturalDoor({
 
           {/* 3. 3D SWINGING DOOR SLAB WITH REAL SIDE-EDGE THICKNESS (00:04 – 00:14) */}
           <div
-            className="absolute inset-0 rounded-t-[10px] [transform-style:preserve-3d] pointer-events-none"
+            className="absolute inset-0 rounded-t-[10px] [transform-style:preserve-3d] pointer-events-none will-change-transform transform-gpu"
             style={{
               transformOrigin: 'left center',
               transform: `rotateY(${doorRotationY}deg)`,
@@ -174,7 +174,7 @@ export function ArchitecturalDoor({
 
                 {/* Sculpted 3D Horizontal Gold Lever Handle Bar */}
                 <div
-                  className="w-11 h-2.5 rounded-full bg-gradient-to-b from-[#FFF3A8] via-[#D4AF37] to-[#785A0A] shadow-[0_5px_12px_rgba(0,0,0,0.75)] origin-right transition-transform duration-300 absolute right-2.5 sm:right-3"
+                  className="w-11 h-2.5 rounded-full bg-gradient-to-b from-[#FFF3A8] via-[#D4AF37] to-[#785A0A] shadow-[0_5px_12px_rgba(0,0,0,0.75)] origin-right transition-transform duration-300 absolute right-2.5 sm:right-3 will-change-transform transform-gpu"
                   style={{
                     transform: `rotate(${handleRotation}deg)`,
                   }}
@@ -206,6 +206,6 @@ export function ArchitecturalDoor({
       </div>
     </div>
   );
-}
+});
 
 export default ArchitecturalDoor;

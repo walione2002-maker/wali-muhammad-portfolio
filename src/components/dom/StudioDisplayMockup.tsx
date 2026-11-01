@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { memo } from 'react';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -13,7 +13,7 @@ export interface StudioDisplayMockupProps {
   priority?: boolean;
 }
 
-export function StudioDisplayMockup({
+export const StudioDisplayMockup = memo(function StudioDisplayMockup({
   image,
   title = 'Project Preview',
   liveUrl,
@@ -21,27 +21,22 @@ export function StudioDisplayMockup({
   className = '',
   priority = false,
 }: StudioDisplayMockupProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className={`relative p-4 sm:p-8 rounded-2xl overflow-hidden flex flex-col items-center justify-center group select-none ${className}`}
     >
       {/* 1. SOFT EMERALD-TEAL RADIAL BACKLIGHT GLOW (00:15 – 00:18) */}
       <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-700"
+        className="absolute inset-0 pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity duration-700"
         style={{
           background:
             'radial-gradient(circle at 50% 45%, rgba(45, 106, 88, 0.38) 0%, rgba(11, 13, 12, 0) 72%)',
-          opacity: isHovered ? 1 : 0.82,
         }}
       />
 
       {/* 2. THE 3D HARDWARE MONITOR WRAPPER */}
       <div
-        className="relative z-10 w-full max-w-[640px] flex flex-col items-center [perspective:1400px] transition-transform duration-700 ease-out group-hover:rotate-y-[-2.5deg] group-hover:rotate-x-[2deg]"
+        className="relative z-10 w-full max-w-[640px] flex flex-col items-center [perspective:1400px] transition-transform duration-700 ease-out group-hover:rotate-y-[-2.5deg] group-hover:rotate-x-[2deg] transform-gpu will-change-transform"
         style={{
           transformStyle: 'preserve-3d',
         }}
@@ -80,6 +75,7 @@ export function StudioDisplayMockup({
                   alt={`${title} preview displayed in Apple Studio Display`}
                   fill
                   priority={priority}
+                  loading={priority ? undefined : 'lazy'}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 640px"
                   className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   unoptimized
@@ -134,6 +130,6 @@ export function StudioDisplayMockup({
       </div>
     </div>
   );
-}
+});
 
 export default StudioDisplayMockup;

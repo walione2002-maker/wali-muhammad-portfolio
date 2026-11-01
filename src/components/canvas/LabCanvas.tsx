@@ -39,11 +39,13 @@ export function LabCanvas() {
   return (
     <Canvas
       gl={{
-        antialias: settings.antialiasing,
-        powerPreference: settings.powerPreference,
+        antialias: false,
+        powerPreference: 'high-performance',
         alpha: true,
+        stencil: false,
+        depth: true,
       }}
-      dpr={settings.dpr}
+      dpr={[1, 1.25]}
       camera={{ fov: cameraFov, position: [0, cameraY, cameraZ] }}
       style={{ width: '100%', height: '100%' }}
     >

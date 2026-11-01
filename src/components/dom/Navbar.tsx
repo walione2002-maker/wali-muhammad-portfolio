@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect, memo } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, ArrowUpRight, MapPin, Clock } from 'lucide-react';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
@@ -19,27 +18,18 @@ const DOOR_ITEMS: NavDoorItem[] = [
   { id: 'systems-archive', label: 'B2B & Digital Suites' },
 ];
 
-export function Navbar() {
-  const pathname = usePathname();
-  const router = useRouter();
+/**
+ * Isolated Karachi Live Clock subcomponent
+ * Self-contained 15s interval so the parent Navbar NEVER re-renders during scrolling!
+ */
+export const KarachiLiveClock = memo(function KarachiLiveClock() {
+  const [timeStr, setTimeStr] = useState<string>('11:15pm · 31 October, 2026');
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [timeString, setTimeString] = useState<string>('');
-
-  const themeMode = usePortfolioStore((s) => s.themeMode);
-  const activeDoorId = usePortfolioStore((s) => s.activeDoorId);
-  const openDoorRoom = usePortfolioStore((s) => s.openDoorRoom);
-  const closeDoorRoom = usePortfolioStore((s) => s.closeDoorRoom);
-  const setProjectModalOpen = usePortfolioStore((s) => s.setProjectModalOpen);
-
-  const isDark = themeMode === 'dark' || activeDoorId !== null;
-
-  // Live ticking clock in Asia/Karachi timezone (e.g. 11:15pm · 31 October, 2026)
   useEffect(() => {
-    const updateKarachiTime = () => {
+    const updateTime = () => {
       const now = new Date();
       try {
-        const timeStr = now
+        const timePart = now
           .toLocaleTimeString('en-US', {
             timeZone: 'Asia/Karachi',
             hour: 'numeric',
@@ -60,16 +50,34 @@ export function Navbar() {
         const month = parts.find((p) => p.type === 'month')?.value ?? '';
         const year = parts.find((p) => p.type === 'year')?.value ?? '';
 
-        setTimeString(`${timeStr} · ${day} ${month}, ${year}`);
+        setTimeStr(`${timePart} · ${day} ${month}, ${year}`);
       } catch {
-        setTimeString('Karachi, PK (UTC+5)');
+        setTimeStr('Karachi, PK (UTC+5)');
       }
     };
 
-    updateKarachiTime();
-    const interval = setInterval(updateKarachiTime, 1000);
-    return () => clearInterval(interval);
+    updateTime();
+    // Update every 15s instead of 1000ms to preserve CPU
+    const timer = setInterval(updateTime, 15000);
+    return () => clearInterval(timer);
   }, []);
+
+  return <span suppressHydrationWarning>{timeStr}</span>;
+});
+
+export function Navbar() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const themeMode = usePortfolioStore((s) => s.themeMode);
+  const activeDoorId = usePortfolioStore((s) => s.activeDoorId);
+  const openDoorRoom = usePortfolioStore((s) => s.openDoorRoom);
+  const closeDoorRoom = usePortfolioStore((s) => s.closeDoorRoom);
+  const setProjectModalOpen = usePortfolioStore((s) => s.setProjectModalOpen);
+
+  const isDark = themeMode === 'dark' || activeDoorId !== null;
 
   // Close mobile menu on Escape key & manage body scroll
   useEffect(() => {
@@ -148,7 +156,7 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 h-14 px-6 md:px-12 flex items-center justify-between text-xs font-medium border-b transition-colors duration-300 ${
+      className={`fixed top-0 inset-x-0 z-50 h-14 px-6 md:px-12 flex items-center justify-between text-xs font-medium border-b transition-colors duration-300 transform-gpu ${
         isDark
           ? 'bg-[#0B0D0C]/90 backdrop-blur-md text-[#F4F3EE] border-white/10'
           : 'bg-[#F4F3EE]/90 backdrop-blur-md text-[#141413] border-black/10'
@@ -215,9 +223,9 @@ export function Navbar() {
             <span>Location: Karachi</span>
           </span>
           <span className="opacity-40">|</span>
-          <span className="flex items-center gap-1.5 tabular-nums hidden xs:flex" suppressHydrationWarning>
+          <span className="flex items-center gap-1.5 tabular-nums hidden xs:flex">
             <Clock className="w-3.5 h-3.5 opacity-70" />
-            <span>{timeString || '11:15pm · 31 October, 2026'}</span>
+            <KarachiLiveClock />
           </span>
         </div>
 
@@ -325,7 +333,7 @@ export function Navbar() {
 
             <div className="text-xs font-mono opacity-60 tracking-wider">
               <span>Location: Karachi · </span>
-              <span suppressHydrationWarning>{timeString || 'Asia/Karachi (UTC+5)'}</span>
+              <KarachiLiveClock />
             </div>
           </div>
         </div>

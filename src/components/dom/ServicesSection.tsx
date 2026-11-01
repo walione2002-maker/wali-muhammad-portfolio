@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { DOORS_DATA } from '@/data/projects';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { ArchitecturalDoor } from './ArchitecturalDoor';
 import { type DoorCategoryId } from '@/types';
-import { ArrowRight, Sparkles, LockOpen } from 'lucide-react';
+import { ArrowRight, LockOpen } from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -29,13 +29,25 @@ export function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const pinContainerRef = useRef<HTMLDivElement>(null);
   const sliderTrackRef = useRef<HTMLDivElement>(null);
-
-  const [activeSlide, setActiveSlide] = useState(0);
+  const currentSlideRef = useRef<number>(0);
+  const dotsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const openingDoorId = usePortfolioStore((s) => s.openingDoorId);
   const setOpeningDoorId = usePortfolioStore((s) => s.setOpeningDoorId);
   const openDoorRoom = usePortfolioStore((s) => s.openDoorRoom);
   const setThemeMode = usePortfolioStore((s) => s.setThemeMode);
+
+  // Directly update indicator dots on DOM refs to prevent 60/120fps React re-renders
+  const updateDots = useCallback((activeIdx: number) => {
+    dotsRef.current.forEach((dot, idx) => {
+      if (!dot) return;
+      if (idx === activeIdx) {
+        dot.className = 'h-1.5 rounded-full transition-all duration-300 w-10 bg-white';
+      } else {
+        dot.className = 'h-1.5 rounded-full transition-all duration-300 w-2 bg-white/20';
+      }
+    });
+  }, []);
 
   // Setup GSAP ScrollTrigger for pinned horizontal walkthrough
   useEffect(() => {
@@ -66,10 +78,14 @@ export function ServicesSection() {
           start: 'top top',
           end: '+=400%',
           anticipatePin: 1,
+          fastScrollEnd: true,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
-            const progress = self.progress;
-            const slideIndex = Math.min(4, Math.floor(progress * 5));
-            setActiveSlide(slideIndex);
+            const slideIndex = Math.min(4, Math.floor(self.progress * 5));
+            if (slideIndex !== currentSlideRef.current) {
+              currentSlideRef.current = slideIndex;
+              updateDots(slideIndex);
+            }
           },
         },
       });
@@ -86,7 +102,7 @@ export function ServicesSection() {
       themeTrigger.kill();
       if (horizontalST) horizontalST.kill();
     };
-  }, [setThemeMode]);
+  }, [setThemeMode, updateDots]);
 
   // Stage 4 (00:13 – 00:14): The Close-Up Handle & Doorway Fly-Through Portal Animation
   const handleDoorClick = (doorId: DoorCategoryId, element: HTMLElement) => {
@@ -150,61 +166,42 @@ export function ServicesSection() {
         <span className="text-zinc-300">BASED IN KARACHI, PK</span>
       </div>
 
-      {/* Main Section Header (00:03 – 00:04) */}
-      <div className="pt-10 sm:pt-14 pb-4 px-6 text-center max-w-4xl mx-auto select-none">
-        <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-zinc-400 mb-3">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>02 / Capabilities &amp; Architecture</span>
-        </div>
-        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-[#F4F3EE]">
-          Magic happens behind the doors
-        </h2>
-        <p className="text-zinc-400 text-sm sm:text-base md:text-lg mt-3 max-w-2xl mx-auto font-light">
-          Step into 4 specialized production chambers engineered for performance, precision, and conversion.
-        </p>
-      </div>
-
-      {/* 2. PINNED VIEWPORT CONTAINER FOR HORIZONTAL SCRUB (Stage 2 — 00:04 – 00:06) */}
-      <div ref={pinContainerRef} className="relative w-full overflow-hidden">
-        {/* Subtle Curved Orbital Spotlight Arc & Floor Line Background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-          {/* Soft emerald-slate radial glow */}
+      {/* 2. THE HORIZONTAL PINNED GALLERY CONTAINER */}
+      <div ref={pinContainerRef} className="w-full relative min-h-screen flex flex-col justify-between overflow-hidden">
+        {/* Architectural Ambient Background Floor Glow */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] rounded-full blur-[120px] opacity-20 pointer-events-none"
+            className="w-full h-full opacity-30"
             style={{
-              background: 'radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(59, 130, 246, 0.15) 50%, transparent 80%)',
+              background:
+                'radial-gradient(ellipse 80% 45% at 50% 65%, rgba(16, 185, 129, 0.08) 0%, rgba(11, 13, 12, 0) 80%)',
             }}
           />
 
-          {/* Curved Orbital Arc SVG Stroke */}
-          <svg
-            className="w-full h-full opacity-35"
-            viewBox="0 0 1440 800"
-            fill="none"
-            preserveAspectRatio="none"
-          >
-            <ellipse
-              cx="720"
-              cy="430"
-              rx="680"
-              ry="260"
-              stroke="rgba(255,255,255,0.08)"
-              strokeWidth="1.5"
-              strokeDasharray="6 8"
-            />
+          {/* Perspective Floor Grid lines converging on horizon */}
+          <svg className="absolute bottom-0 inset-x-0 w-full h-44 opacity-15" preserveAspectRatio="none">
+            <line x1="0%" y1="100%" x2="50%" y2="0%" stroke="white" strokeWidth="1" />
+            <line x1="20%" y1="100%" x2="50%" y2="0%" stroke="white" strokeWidth="1" />
+            <line x1="40%" y1="100%" x2="50%" y2="0%" stroke="white" strokeWidth="1" />
+            <line x1="60%" y1="100%" x2="50%" y2="0%" stroke="white" strokeWidth="1" />
+            <line x1="80%" y1="100%" x2="50%" y2="0%" stroke="white" strokeWidth="1" />
+            <line x1="100%" y1="100%" x2="50%" y2="0%" stroke="white" strokeWidth="1" />
           </svg>
 
           {/* Continuous Horizontal Floor Line */}
           <div className="w-full h-[1px] bg-white/15 absolute bottom-0 left-0 right-0 z-10" />
         </div>
 
-        {/* Desktop Slide Indicator Dots */}
+        {/* Desktop Slide Indicator Dots (Driven directly via DOM refs) */}
         <div className="hidden lg:flex items-center justify-center gap-3 py-4 z-20 relative select-none">
           {['Terracotta', 'Purple', 'Green', 'Cobalt', '4-Door Lineup'].map((name, i) => (
             <div
               key={name}
+              ref={(el) => {
+                dotsRef.current[i] = el;
+              }}
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                activeSlide === i ? 'w-10 bg-white' : 'w-2 bg-white/20'
+                i === 0 ? 'w-10 bg-white' : 'w-2 bg-white/20'
               }`}
               title={name}
             />
@@ -214,7 +211,7 @@ export function ServicesSection() {
         {/* Horizontal Slider Track (5 Panels: 4 Slides + 1 Finale) */}
         <div
           ref={sliderTrackRef}
-          className="flex flex-col lg:flex-row w-full lg:w-[500vw] items-stretch min-h-[640px] lg:h-[720px] relative z-10"
+          className="flex flex-col lg:flex-row w-full lg:w-[500vw] items-stretch min-h-[640px] lg:h-[720px] relative z-10 will-change-transform transform-gpu"
         >
           {/* SLIDES 1 to 4: Alternating Doors & Checklists */}
           {slidesData.map((door, index) => {

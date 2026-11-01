@@ -1,24 +1,43 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FLIP_ROLES } from '@/data/projects';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 
 export function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null);
   const [activeRoleIndex, setActiveRoleIndex] = useState(0);
   const [imageError, setImageError] = useState(false);
+  const [isInView, setIsInView] = useState(true);
 
   const setProjectModalOpen = usePortfolioStore((s) => s.setProjectModalOpen);
 
-  // Split-flap auto-rotation every 2500ms
+  // Monitor visibility so 3D split-flap rotation is paused when scrolled offscreen
   useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Split-flap auto-rotation every 2500ms, paused when out of viewport
+  useEffect(() => {
+    if (!isInView) return;
     const timer = setInterval(() => {
       setActiveRoleIndex((prev) => (prev + 1) % FLIP_ROLES.length);
     }, 2500);
     return () => clearInterval(timer);
-  }, []);
+  }, [isInView]);
 
   const handleManualFlip = () => {
     setActiveRoleIndex((prev) => (prev + 1) % FLIP_ROLES.length);
@@ -51,6 +70,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
+      ref={sectionRef}
       aria-label="Wali Muhammad Portfolio Introduction"
       className="min-h-screen pt-14 bg-[#F4F3EE] text-[#141413] flex flex-col justify-between relative overflow-hidden"
     >

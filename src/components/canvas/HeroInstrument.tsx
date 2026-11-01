@@ -218,11 +218,13 @@ export function HeroInstrument() {
 
       <Canvas
         gl={{
-          antialias: settings.antialiasing,
+          antialias: false,
           alpha: true,
-          powerPreference: settings.powerPreference,
+          powerPreference: 'high-performance',
+          stencil: false,
+          depth: true,
         }}
-        dpr={settings.dpr}
+        dpr={[1, 1.25]}
         camera={{ position: [0, 0, cameraZ], fov: cameraFov }}
         style={{ width: '100%', height: '100%' }}
       >

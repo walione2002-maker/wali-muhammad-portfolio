@@ -25,7 +25,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const prevDoorIdRef = useRef<string | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis with smooth physics
+    // 120FPS Lenis physics configuration with smooth decel
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -33,24 +33,23 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 2,
+      touchMultiplier: 1.5,
     });
 
     lenisRef.current = lenis;
     window.__lenis = lenis;
 
-    // Bridge Lenis scroll events to GSAP ScrollTrigger
+    // Direct DOM progress bar update without React re-renders or Zustand churn
+    const progressBar = document.getElementById('global-scroll-progress-bar');
+
     lenis.on('scroll', (e: { scroll: number; limit: number; progress: number }) => {
       ScrollTrigger.update();
-      usePortfolioStore.setState({ scrollProgress: e.progress });
-
-      const progressBar = document.getElementById('global-scroll-progress-bar');
       if (progressBar) {
         progressBar.style.transform = `scaleX(${e.progress})`;
       }
     });
 
-    // Synchronize animation ticker with Lenis requestAnimationFrame
+    // Single synchronized ticker loop tied to hardware refresh rate (60/120Hz)
     const tickerCallback = (time: number) => {
       lenis.raf(time * 1000);
     };
@@ -100,26 +99,21 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  // Watch activeDoorId:
-  // 1. Entering a door room (null -> id at 00:14): immediate scroll to top 0
-  // 2. Exiting a door room (id -> null at 00:15 - 00:18): restore scroll directly to #doors-lineup
+  // When switching between Spatial Door Room and Main Journey, reset scroll position cleanly
   useEffect(() => {
-    const lenis = lenisRef.current;
-    if (!lenis) return;
+    if (activeDoorId !== prevDoorIdRef.current) {
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(0, { immediate: true });
+      } else if (typeof window !== 'undefined') {
+        window.scrollTo(0, 0);
+      }
+      prevDoorIdRef.current = activeDoorId;
 
-    if (prevDoorIdRef.current === null && activeDoorId !== null) {
-      // Entered spatial door room: jump to top immediately
-      window.scrollTo(0, 0);
-      lenis.scrollTo(0, { immediate: true });
-    } else if (prevDoorIdRef.current !== null && activeDoorId === null) {
-      // Returned from door room: glide back directly to 4-Door Lineup (#doors-lineup)
+      // Refresh ScrollTrigger after DOM swap
       setTimeout(() => {
         ScrollTrigger.refresh();
-        window.__scrollToDoorsLineup?.(false);
-      }, 80);
+      }, 100);
     }
-
-    prevDoorIdRef.current = activeDoorId;
   }, [activeDoorId]);
 
   return <>{children}</>;

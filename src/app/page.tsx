@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { ScrollProgress } from '@/components/dom/ScrollProgress';
@@ -10,7 +11,20 @@ import { ServicesSection } from '@/components/dom/ServicesSection';
 import { AboutSection } from '@/components/dom/AboutSection';
 import { ContactSection } from '@/components/dom/ContactSection';
 import { SiteFooter } from '@/components/dom/SiteFooter';
-import { DoorProjectRoom } from '@/components/dom/DoorProjectRoom';
+
+// Code-split heavy interior Door Project Room & 3D Three.js canvas away from initial landing bundle
+const DoorProjectRoom = dynamic(
+  () => import('@/components/dom/DoorProjectRoom').then((mod) => mod.DoorProjectRoom),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#0B0D0C] text-zinc-400 font-mono text-xs uppercase tracking-widest gap-3">
+        <div className="w-8 h-8 rounded-full border-2 border-emerald-500/20 border-t-emerald-400 animate-spin" />
+        <span>Entering Spatial Room...</span>
+      </div>
+    ),
+  }
+);
 
 export default function HomePage() {
   const activeDoorId = usePortfolioStore((s) => s.activeDoorId);
@@ -59,7 +73,7 @@ export default function HomePage() {
               transition={{ duration: 0.35 }}
               className="relative z-10 w-full overflow-x-hidden"
             >
-              {/* 1. Hero Section (#hero — Light Studio #F4F3EE with 3D Mechanical Split-Flap Role Switcher & Annotated Portrait/3D Instrument) */}
+              {/* 1. Hero Section (#hero — Light Studio #F4F3EE with 3D Mechanical Split-Flap Role Switcher & Annotated Portrait) */}
               <HeroSection />
 
               {/* 2. Services / Architectural Doors Section (#doors-section — Dark Obsidian #0B0D0C GSAP Pinned Horizontal Walkthrough + 4-Door Lineup) */}

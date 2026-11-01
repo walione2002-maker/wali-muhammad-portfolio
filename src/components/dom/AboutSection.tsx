@@ -14,10 +14,11 @@ if (typeof window !== 'undefined') {
 export function AboutSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const compassSvgRef = useRef<SVGSVGElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const activeIdxRef = useRef<number>(0);
   const [activeIdx, setActiveIdx] = useState(0);
-  const [isTimelineInView, setIsTimelineInView] = useState(false);
 
-  // Generate 144 ticks around compass circle (r = 500, center = 550, 550)
+  // 72 static memoized radial ticks around compass circle (r = 500, center = 550, 550) for 120FPS rendering
   const ticks = useMemo(() => {
     const list: Array<{
       x1: number;
@@ -31,10 +32,10 @@ export function AboutSection() {
     const cy = 550;
     const outerR = 500;
 
-    for (let i = 0; i < 144; i++) {
-      const angleDeg = (i * 360) / 144;
+    for (let i = 0; i < 72; i++) {
+      const angleDeg = (i * 360) / 72;
       const angleRad = (angleDeg * Math.PI) / 180;
-      const isMajor = i % 6 === 0;
+      const isMajor = i % 3 === 0;
       const length = isMajor ? 24 : 12;
       const innerR = outerR - length;
 
@@ -69,20 +70,26 @@ export function AboutSection() {
           start: 'top center',
           end: 'bottom bottom',
           scrub: 1.2,
+          fastScrollEnd: true,
+          invalidateOnRefresh: true,
         },
       });
 
       compassST = tween.scrollTrigger ?? null;
 
-      visibilityST = ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top 70%',
-        end: 'bottom 20%',
-        onEnter: () => setIsTimelineInView(true),
-        onLeave: () => setIsTimelineInView(false),
-        onEnterBack: () => setIsTimelineInView(true),
-        onLeaveBack: () => setIsTimelineInView(false),
-      });
+      // Direct autoAlpha on DOM rail ref instead of React state re-render
+      if (railRef.current) {
+        gsap.set(railRef.current, { autoAlpha: 0 });
+        visibilityST = ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: 'top 70%',
+          end: 'bottom 20%',
+          onEnter: () => gsap.to(railRef.current, { autoAlpha: 1, duration: 0.3, overwrite: 'auto' }),
+          onLeave: () => gsap.to(railRef.current, { autoAlpha: 0, duration: 0.3, overwrite: 'auto' }),
+          onEnterBack: () => gsap.to(railRef.current, { autoAlpha: 1, duration: 0.3, overwrite: 'auto' }),
+          onLeaveBack: () => gsap.to(railRef.current, { autoAlpha: 0, duration: 0.3, overwrite: 'auto' }),
+        });
+      }
     }
 
     return () => {
@@ -91,7 +98,7 @@ export function AboutSection() {
     };
   }, []);
 
-  // Setup IntersectionObserver for each milestone card in the right column
+  // Setup IntersectionObserver for milestone cards — throttled via activeIdxRef to prevent redundant re-renders
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -101,7 +108,8 @@ export function AboutSection() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const index = Number(entry.target.getAttribute('data-index'));
-            if (!isNaN(index)) {
+            if (!isNaN(index) && index !== activeIdxRef.current) {
+              activeIdxRef.current = index;
               setActiveIdx(index);
             }
           }
@@ -167,7 +175,7 @@ export function AboutSection() {
           viewBox="0 0 1100 1100"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute -top-[880px] sm:-top-[840px] z-10 transition-transform will-change-transform drop-shadow-[0_0_35px_rgba(245,158,11,0.25)]"
+          className="absolute -top-[880px] sm:-top-[840px] z-10 transition-transform will-change-transform transform-gpu drop-shadow-[0_0_35px_rgba(245,158,11,0.25)]"
         >
           {/* Concentric Outer Rings */}
           <circle cx="550" cy="550" r="500" stroke="#F59E0B" strokeOpacity="0.4" strokeWidth="2" />
@@ -182,7 +190,7 @@ export function AboutSection() {
           />
           <circle cx="550" cy="550" r="440" stroke="#F59E0B" strokeOpacity="0.18" strokeWidth="1" />
 
-          {/* 144 Radial Tick Marks */}
+          {/* 72 Radial Tick Marks */}
           {ticks.map((t, i) => (
             <line
               key={i}
@@ -212,9 +220,8 @@ export function AboutSection() {
 
       {/* 2. RIGHT-EDGE VERTICAL GREEN SCROLL RAIL (00:08 – 00:11) */}
       <div
-        className={`hidden lg:flex fixed right-5 xl:right-8 top-1/2 -translate-y-1/2 z-30 flex-col items-center gap-2 select-none pointer-events-none transition-opacity duration-300 ${
-          isTimelineInView ? 'opacity-100' : 'opacity-0'
-        }`}
+        ref={railRef}
+        className="hidden lg:flex fixed right-5 xl:right-8 top-1/2 -translate-y-1/2 z-30 flex-col items-center gap-2 select-none pointer-events-none transition-opacity duration-300"
       >
         <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold tabular-nums">
           0{activeIdx + 1} / 06
